@@ -1,6 +1,7 @@
 const state = {
   user: {
     token: null,
+    authError: null,
     peers: [],
   },
 };

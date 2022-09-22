@@ -1,8 +1,9 @@
 import axios from "axios";
-import { types } from "../../types";
-import { refreshToken, getNewToken } from "../../services/auth";
-import { getMyPeers } from "../../services/peers";
+import { types } from "@/types";
+import { refreshToken, getNewToken } from "@/services/auth";
+import { getMyPeers } from "@/services/peers";
 import Cockies from "vue-cookies";
+import router from "@/router";
 
 const actions = {
   async startApp({ commit }, { cookieToken }) {
@@ -14,19 +15,24 @@ const actions = {
     }
   },
 
-  async getToken({ commit, $cookies }) {
+  async getToken({ commit }, { username, password }) {
     try {
       const token = await getNewToken({
-        username: "+79876543211",
-        password: "123",
+        username,
+        password,
       });
 
       Cockies.set("refresh_token", token.refresh, "1y");
       localStorage.token = token.access;
 
-      console.log("Получен новый токен");
+      commit("SET_AUTH", { token: token.access, error: false });
+
+      console.log("Успешная авторизация");
+
+      router.push("/");
     } catch (e) {
-      console.log(e);
+      console.log(e.message);
+      commit("SET_AUTH", { error: "Неверный логин или пароль" });
     }
   },
 
