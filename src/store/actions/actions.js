@@ -6,23 +6,20 @@ import Cockies from "vue-cookies";
 import router from "@/router";
 
 const actions = {
-  async refreshAuthToken({ commit, getters }) {
+  async refreshAuthToken({ commit, getters, state }) {
     try {
       const cookieToken = getters.cookieToken;
       const authToken = localStorage.token;
       if (authToken) {
         const timeToken = JSON.parse(atob(authToken.split(".")[1])).exp;
-        console.log(timeToken);
-        console.log(Date.now());
-        console.log(timeToken * 1000);
 
         if (Date.now() >= timeToken * 1000) {
-          console.log("Обновление токена");
           const token = await refreshToken({ refresh: cookieToken });
           localStorage.token = token.access;
         }
 
-        commit("SET_AUTH", { token: localStorage.token, error: false });
+        if (!state.user.token)
+          commit("SET_AUTH", { token: localStorage.token, error: false });
       }
     } catch (e) {
       console.log(e);
@@ -42,8 +39,6 @@ const actions = {
 
       commit("SET_AUTH", { token: token.access, error: false });
 
-      console.log("Успешная авторизация");
-
       router.push("/");
     } catch (e) {
       console.log(e.message);
@@ -53,9 +48,8 @@ const actions = {
 
   async getMyPeers({ commit }) {
     try {
-      console.log("Получение пиров");
-      const test = await getMyPeers();
-      commit(types.SET_PEERS, test);
+      const peers = await getMyPeers();
+      commit(types.SET_PEERS, peers);
     } catch (e) {
       console.log(e);
     }

@@ -29,8 +29,6 @@ export default {
 
   mounted() {
     this.$store.dispatch("getMyPeers");
-
-    console.log(this.user);
   },
 };
 </script>

@@ -51,9 +51,6 @@ export const requestRefreshToken = async (url, method = "POST", data) => {
   } catch (e) {
     console.log(e);
     if (e.response.data.detail) throw new Error(e.response.data.detail);
-    throw new Error(
-      "Произошла ошибка, попробуйте позже или обратитесь в техподдержку"
-    );
   }
 };
 
