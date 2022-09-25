@@ -1,6 +1,6 @@
 import axios from "axios";
 import { types } from "@/types";
-import { refreshToken, getNewToken } from "@/services/auth";
+import { refreshToken, getNewToken, registerUser } from "@/services/auth";
 import { getMyPeers } from "@/services/peers";
 import Cockies from "vue-cookies";
 import router from "@/router";
@@ -43,6 +43,26 @@ const actions = {
     } catch (e) {
       console.log(e.message);
       commit("SET_AUTH", { error: "Неверный логин или пароль" });
+    }
+  },
+
+  async registerNewUser({ commit }, data) {
+    try {
+      const register = await registerUser(data);
+      router.push("/login");
+    } catch (e) {
+      console.log(e.message);
+      //commit("SET_AUTH", { error: "Неверный логин или пароль" });
+    }
+  },
+
+  async userLogout({ commit }) {
+    try {
+      Cockies.remove("refresh_token");
+      localStorage.removeItem("token");
+      router.push("/login");
+    } catch (e) {
+      console.log(e.message);
     }
   },
 

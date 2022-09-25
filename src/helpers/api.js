@@ -5,5 +5,6 @@ const PEERS = MAIN_API + "/peers";
 
 export const refreshTokenAPI = () => AUTH + "/refresh/";
 export const getNewTokenAPI = () => AUTH + "/";
+export const registerUserAPI = () => MAIN_API + "/registration/";
 
 export const getMyPeersAPI = () => PEERS + "/my/";
