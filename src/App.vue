@@ -6,6 +6,20 @@
   <router-view />
 </template>
 
+<script>
+export default {
+  name: "App",
+
+  created() {
+    const cookieToken = this.$store.getters.cookieToken;
+
+    if (!cookieToken) {
+      this.$router.push("/login");
+    }
+  },
+};
+</script>
+
 <style lang="scss">
 @import url("http://fonts.cdnfonts.com/css/gotham-pro");
 @import url(//db.onlinewebfonts.com/c/323b7229abd327d428021a6d49a7413d?family=Gotham+Pro+Light);

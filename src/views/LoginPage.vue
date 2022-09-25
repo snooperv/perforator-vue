@@ -48,7 +48,6 @@
             <div v-if="user.authError">
               <p class="input-error" v-html="user.authError"></p>
             </div>
-            <input type="hidden" name="next" value="" style="display: none" />
           </form>
           <div class="admin fadeIn fourth">
             <button class="adminLogin">Администратор</button>
@@ -90,6 +89,7 @@ export default {
       if (!this.loginError && !this.passwordError) {
         const username = "+" + this.login.replace(/[^0-9]/g, "");
         this.$store.dispatch("getToken", { username, password: this.password });
+        
       }
     },
 

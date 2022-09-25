@@ -5,7 +5,9 @@ import mutations from "./mutations";
 
 export default createStore({
   state,
-  getters: {},
+  getters: {
+    cookieToken: (state) => state.cookieToken,
+  },
   mutations,
   actions,
   modules: {},
