@@ -2,7 +2,7 @@ import axios from "axios";
 import store from "@/store/index";
 
 const request = async (url, method = "GET", data) => {
-  await store.dispatch("startApp");
+  await store.dispatch("refreshAuthToken");
   const authToken = localStorage.token;
 
   let response = null;
@@ -39,7 +39,7 @@ const request = async (url, method = "GET", data) => {
   }
 };
 
-export const refreshAuthToken = async (url, method = "POST", data) => {
+export const requestRefreshToken = async (url, method = "POST", data) => {
   try {
     const response = await axios({
       method,

@@ -6,7 +6,7 @@ import Cockies from "vue-cookies";
 import router from "@/router";
 
 const actions = {
-  async startApp({ commit, getters }) {
+  async refreshAuthToken({ commit, getters }) {
     try {
       const cookieToken = getters.cookieToken;
       const authToken = localStorage.token;
@@ -26,6 +26,7 @@ const actions = {
       }
     } catch (e) {
       console.log(e);
+      router.push("/login");
     }
   },
 
