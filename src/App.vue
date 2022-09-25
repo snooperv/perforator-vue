@@ -1,30 +1,49 @@
 <template>
-  <nav>
+  <!-- <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  </nav> -->
+  <router-view />
 </template>
 
+<script>
+export default {
+  name: "App",
+
+  created() {
+    const cookieToken = this.$store.getters.cookieToken;
+
+    if (!cookieToken) {
+      this.$router.push("/login");
+    }
+  },
+};
+</script>
+
 <style lang="scss">
+@import url("http://fonts.cdnfonts.com/css/gotham-pro");
+@import url(//db.onlinewebfonts.com/c/323b7229abd327d428021a6d49a7413d?family=Gotham+Pro+Light);
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
 }
 
-nav {
-  padding: 30px;
+html {
+  background-color: #f8f8fa;
+}
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+body {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+* {
+  font-family: "Gotham Pro", sans-serif;
+  /* font-family: 'Gotham Pro light', sans-serif; */
 }
 </style>

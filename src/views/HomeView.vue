@@ -28,19 +28,9 @@ export default {
   },
 
   mounted() {
-    const cookieToken = this.$cookies.get("refresh_token");
+    this.$store.dispatch("getMyPeers");
 
-    if (!cookieToken) this.$store.dispatch("getToken");
-
-    if (localStorage.token) {
-      this.$store.dispatch("startApp", {
-        cookieToken,
-      });
-
-      this.$store.dispatch("getMyPeers");
-
-      console.log(this.user);
-    }
+    console.log(this.user);
   },
 };
 </script>

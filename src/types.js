@@ -1,3 +1,5 @@
 export const types = {
-    SET_PEERS: "SET_PEERS",
+  SET_AUTH: "SET_AUTH",
+  CLEAR_AUTH_ERRORS: "CLEAR_AUTH_ERRORS",
+  SET_PEERS: "SET_PEERS",
 };

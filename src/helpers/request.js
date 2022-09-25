@@ -1,6 +1,8 @@
 import axios from "axios";
+import store from "@/store/index";
 
 const request = async (url, method = "GET", data) => {
+  await store.dispatch("startApp");
   const authToken = localStorage.token;
 
   let response = null;
@@ -30,6 +32,25 @@ const request = async (url, method = "GET", data) => {
     return responseData;
   } catch (e) {
     console.log(e);
+    if (e.response.data.detail) throw new Error(e.response.data.detail);
+    throw new Error(
+      "Произошла ошибка, попробуйте позже или обратитесь в техподдержку"
+    );
+  }
+};
+
+export const refreshAuthToken = async (url, method = "POST", data) => {
+  try {
+    const response = await axios({
+      method,
+      url,
+      data,
+    });
+
+    return await response.data;
+  } catch (e) {
+    console.log(e);
+    if (e.response.data.detail) throw new Error(e.response.data.detail);
     throw new Error(
       "Произошла ошибка, попробуйте позже или обратитесь в техподдержку"
     );
