@@ -99,7 +99,7 @@
         <div class="buttons">
           <button class="change" id="btn-change">Изменить данные</button>
           <!--          <a href="">-->
-          <button class="exit">
+          <button class="exit" @click="userLogout">
             <img src="@/assets/exit.png" class="exit-icon" alt="Exit">
             Выйти из аккаунта
           </button>
@@ -113,7 +113,13 @@
 
 <script>
 export default {
-  name: "Header"
+  name: "Header",
+
+  methods: {
+    userLogout() {
+      this.$store.dispatch("userLogout");
+    },
+  },
 }
 </script>
 
