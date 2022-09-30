@@ -112,12 +112,16 @@
 </template>
 
 <script>
+import Cockies from "vue-cookies";
+
 export default {
   name: "Header",
 
   methods: {
     userLogout() {
-      this.$store.dispatch("userLogout");
+      Cockies.remove("refresh_token");
+      localStorage.removeItem("token");
+      window.location = "/login";
     },
   },
 }

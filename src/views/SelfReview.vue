@@ -96,7 +96,19 @@
             <span>Пиры</span> Люди, с которыми вы взаимодействуете по рабочим вопросам. Рекомендуем выбирать
             3-7 человек
           </p>
-          <div id="my_peers"></div> <!--Сюда добавляются выбранные пиры-->
+          <div id="my_peers" v-for="peer in user.peers">
+            <div class="peer-sel" :id="'my-peer-' + peer.user_id">
+              <div class="peers-pic">
+                <img class="avatar" :src="peer.photo" alt="Фото сотрудника" />
+              </div>
+              <div class="peer-info">
+                {{ peer.username }}
+              </div>
+              <a class="close" id="close" onclick="">
+                <i class="close-icon fas fa-times"></i>
+              </a>
+            </div>
+          </div> <!--Сюда добавляются выбранные пиры-->
           <!--<a href="#peers">-->
           <button type="button" class="add-peer" onclick="add_peers()">
             <i class="icon-plus fas fa-plus" aria-hidden="true"></i>
@@ -127,7 +139,9 @@
         </a>
         <h3>Выберите оценивающего</h3>
         <input type="text" class="peers-text">
-        <div id="list_peers"></div> <!--Сюда добавляются все пиры, которых можно выбрать-->
+        <div id="list_peers">
+
+        </div> <!--Сюда добавляются все пиры, которых можно выбрать-->
       </div>
 
       <div class="selection" id="peers" style="visibility: hidden; opacity: 0;">
@@ -143,8 +157,18 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
+
 export default {
-  name: "SelfReview"
+  name: "SelfReview",
+
+  computed: {
+    ...mapState(["user"]),
+  },
+
+  mounted() {
+    this.$store.dispatch("getMyPeers");
+  },
 }
 </script>
 

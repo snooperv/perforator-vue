@@ -58,20 +58,10 @@ const actions = {
     }
   },
 
-  userLogout({ commit }) {
-    try {
-      router.push("/login").then((r) => {
-        Cockies.remove("refresh_token");
-        localStorage.removeItem("token");
-      });
-    } catch (e) {
-      console.log(e.message);
-    }
-  },
-
   async getMyPeers({ commit }) {
     try {
       const peers = await getMyPeers();
+      console.log(peers);
       commit(types.SET_PEERS, peers);
     } catch (e) {
       console.log(e);
