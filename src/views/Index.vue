@@ -1,0 +1,51 @@
+<template>
+  <Header/>
+  <SideBar/>
+  <router-view/>
+</template>
+
+<script>
+import Header from "@/components/Header";
+import SideBar from "@/components/SideBar";
+
+export default {
+  name: "Index",
+  components: {SideBar, Header}
+}
+</script>
+
+<style>
+@import url('http://fonts.cdnfonts.com/css/gotham-pro');
+
+body {
+  overflow-x: hidden;
+  background-color: #F8F8FA;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 20vw auto;
+  grid-template-rows: 75px auto;
+  background-color: #F8F8FA;
+}
+
+.header {
+
+}
+
+.content {
+  background-color: #F8F8FA;
+  grid-column-start: 2;
+  grid-row-start: 2;
+}
+
+@media (max-width: 800px) {
+  .main {
+    grid: unset;
+  }
+
+  .menu {
+    display: none;
+  }
+}
+</style>

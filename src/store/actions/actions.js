@@ -23,7 +23,7 @@ const actions = {
       }
     } catch (e) {
       console.log(e);
-      router.push("/login");
+      await router.push("/login");
     }
   },
 
@@ -39,17 +39,19 @@ const actions = {
 
       commit("SET_AUTH", { token: token.access, error: false });
 
-      router.push("/");
+      await router.push("/self-review");
     } catch (e) {
       console.log(e.message);
-      commit("SET_AUTH", { error: "Неверный логин или пароль" });
+      commit("SET_AUTH", { error: e.message });
     }
   },
 
-  async registerNewUser({ commit }, data) {
+  async registerNewUser({ commit, dispatch }, data) {
     try {
-      const register = await registerUser(data);
-      router.push("/login");
+      const [username, password] = [data.get("phone"), data.get("password")];
+      await registerUser(data);
+      dispatch("getToken", { username, password });
+      await router.push("/self-review");
     } catch (e) {
       console.log(e.message);
       //commit("SET_AUTH", { error: "Неверный логин или пароль" });
@@ -60,7 +62,7 @@ const actions = {
     try {
       Cockies.remove("refresh_token");
       localStorage.removeItem("token");
-      router.push("/login");
+      await router.push("/login");
     } catch (e) {
       console.log(e.message);
     }

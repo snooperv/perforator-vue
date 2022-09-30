@@ -2,13 +2,10 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import LoginPage from "../views/Login/LoginPage.vue";
 import RegisterPage from "../views/Login/RegisterPage.vue";
+import Index from "@/views/Index";
+import SelfReview from "@/views/SelfReview";
 
 const routes = [
-  {
-    path: "/",
-    name: "home",
-    component: HomeView,
-  },
   {
     path: "/about",
     name: "about",
@@ -29,6 +26,18 @@ const routes = [
     name: "registration",
     component: RegisterPage,
     meta: { title: "Регистрация" },
+  },
+  {
+    path: "/",
+    name: "home",
+    component: Index,
+    children: [
+      {
+        path: "/self-review",
+        component: SelfReview,
+        meta: { title: "Self Review" },
+      },
+    ],
   },
 ];
 

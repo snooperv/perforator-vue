@@ -27,15 +27,12 @@ const request = async (url, method = "GET", data) => {
       });
     }
 
-    const responseData = await response.data;
-
-    return responseData;
+    return await response.data;
   } catch (e) {
     console.log(e);
-    if (e.response.data.detail) throw new Error(e.response.data.detail);
-    throw new Error(
-      "Произошла ошибка, попробуйте позже или обратитесь в техподдержку"
-    );
+    if (e.response.data && e.response.data.detail)
+      throw new Error(e.response.data.detail);
+    throw new Error("Произошла ошибка: " + e.message);
   }
 };
 
