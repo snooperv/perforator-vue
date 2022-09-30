@@ -139,17 +139,6 @@
         </a>
         <h3>Выберите оценивающего</h3>
         <input type="text" class="peers-text">
-        <div id="list_peers">
-
-        </div> <!--Сюда добавляются все пиры, которых можно выбрать-->
-      </div>
-
-      <div class="selection" id="peers" style="visibility: hidden; opacity: 0;">
-        <a class="close" id="btn_close1" onclick="close_peers1()">
-          <i class="fas fa-times" aria-hidden="true"></i>
-        </a>
-        <h3>Выберите оценивающего</h3>
-        <input type="text" class="peers-text">
         <div id="list_peers"></div> <!--Сюда добавляются все пиры, которых можно выбрать-->
       </div>
     </div>
