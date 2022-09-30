@@ -1,12 +1,12 @@
 <template>
-  <router-view />
+  <router-view/>
 </template>
 
 <script>
 export default {
   name: "App",
 
-  created() {
+  mounted() {
     const cookieToken = this.$store.getters.cookieToken;
 
     if (!cookieToken) {
@@ -24,7 +24,7 @@ export default {
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  //text-align: center;
   color: #2c3e50;
 }
 
@@ -33,8 +33,8 @@ html {
 }
 
 body {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
