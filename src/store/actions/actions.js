@@ -58,11 +58,12 @@ const actions = {
     }
   },
 
-  async userLogout({ commit }) {
+  userLogout({ commit }) {
     try {
-      Cockies.remove("refresh_token");
-      localStorage.removeItem("token");
-      await router.push("/login");
+      router.push("/login").then((r) => {
+        Cockies.remove("refresh_token");
+        localStorage.removeItem("token");
+      });
     } catch (e) {
       console.log(e.message);
     }
