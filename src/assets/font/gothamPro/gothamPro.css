@@ -1,0 +1,49 @@
+@font-face {
+  font-family: gotham pro;
+  font-style: normal;
+  font-weight: 400;
+  src: local("Gotham Pro"), url(./GothaProReg.woff) format("woff");
+}
+
+@font-face {
+  font-family: gotham pro;
+  font-style: normal;
+  font-weight: 400;
+  src: local("Gotham Pro"), url(./GothaProBla.woff) format("woff");
+}
+
+@font-face {
+  font-family: gotham pro;
+  font-style: normal;
+  font-weight: 400;
+  src: local("Gotham Pro"), url(./GothaProLig.woff) format("woff");
+}
+
+@font-face {
+  font-family: gotham pro;
+  font-style: normal;
+  font-weight: 400;
+  src: local("Gotham Pro"), url(./GothaProMed.woff) format("woff");
+}
+
+@font-face {
+  font-family: gotham pro;
+  font-style: italic;
+  font-weight: 400;
+  src: local("Gotham Pro"), url(./GothaProLigIta.woff) format("woff");
+}
+
+@font-face {
+  font-family: gotham pro;
+  font-style: normal;
+  font-weight: 700;
+  src: local("Gotham Pro"), url(./GothaProBol.woff) format("woff");
+}
+
+@font-face {
+  font-family: gotham pro medium;
+  font-style: italic;
+  font-weight: 500;
+  src: local("Gotham Pro Medium"),
+    url(./GothamProMediumItalic.woff) format("woff");
+}

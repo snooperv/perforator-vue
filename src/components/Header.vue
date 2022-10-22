@@ -2,7 +2,7 @@
   <div class="header">
     <div class="wrapper">
       <div class="logo-div">
-        <img src="@/assets/logo.svg" alt="logo" class="logo">
+        <img src="@/assets/img/logo.svg" alt="logo" class="logo" />
       </div>
       <div class="logo-title">
         <h3>Perforator</h3>
@@ -11,14 +11,19 @@
     <div class="rightWrapper">
       <div class="timer">
         <span class="untill">До завершения Self Review</span>
-        <span class="under" style="margin-left: 3px;">дней</span>
+        <span class="under" style="margin-left: 3px">дней</span>
         <span id="days" class="time">-263</span> :
         <span class="under">часов</span>
         <span id="hours" class="time">-16</span> :
         <span class="under">минут</span>
         <span id="minutes" class="time">-15</span>
       </div>
-      <a href="#popup"><img src="@/assets/settings.svg" alt="settings" class="settings rightIcon btn"></a>
+      <a href="#popup"
+        ><img
+          src="@/assets/img/settings.svg"
+          alt="settings"
+          class="settings rightIcon btn"
+      /></a>
     </div>
 
     <div id="changeData">
@@ -31,37 +36,72 @@
           <h3>Изменение данных</h3>
           <div class="user">
             <div class="header-pic">
-              <img class="avatar" src="@/assets/pic.png" alt="Фото профиля">
+              <img
+                class="avatar"
+                src="@/assets/img/pic.png"
+                alt="Фото профиля"
+              />
             </div>
             <div class="user-info">
-              <input type="hidden" name="csrfmiddlewaretoken"
-                     value="JMooJe9NzzVHIPzMt0Xjp0TVf4c8NhT0YZm0G8lfaXzVEvNQieKdguEmmXObBeP2">
+              <input
+                type="hidden"
+                name="csrfmiddlewaretoken"
+                value="JMooJe9NzzVHIPzMt0Xjp0TVf4c8NhT0YZm0G8lfaXzVEvNQieKdguEmmXObBeP2"
+              />
 
-              <p class="name">Имя и фамилия:
+              <p class="name">
+                Имя и фамилия:
                 <span class="text">
-                                <input type="text" name="name" value="Менеджер Сергей1" placeholder="Имя и фамилия"
-                                       class="fadeIn second" required="" id="id_name">
-                            </span>
+                  <input
+                    type="text"
+                    name="name"
+                    value="Менеджер Сергей1"
+                    placeholder="Имя и фамилия"
+                    class="fadeIn second"
+                    required=""
+                    id="id_name"
+                  />
+                </span>
               </p>
-              <p class="tel">Номер телефона:
+              <p class="tel">
+                Номер телефона:
                 <span class="text">
-                                <input type="text" name="phone" value="+79876543211" placeholder="Номер телефона"
-                                       class="fadeIn second" required="" id="id_phone">
-                            </span>
+                  <input
+                    type="text"
+                    name="phone"
+                    value="+79876543211"
+                    placeholder="Номер телефона"
+                    class="fadeIn second"
+                    required=""
+                    id="id_phone"
+                  />
+                </span>
               </p>
-              <p class="url">Профиль СБИС:
+              <p class="url">
+                Профиль СБИС:
                 <span class="text">
-                                <input type="text" name="sbis" value="https://sbis.com"
-                                       placeholder="Ссылка на профиль СБИС" class="fadeIn second" required=""
-                                       id="id_sbis">
-                            </span>
+                  <input
+                    type="text"
+                    name="sbis"
+                    value="https://sbis.com"
+                    placeholder="Ссылка на профиль СБИС"
+                    class="fadeIn second"
+                    required=""
+                    id="id_sbis"
+                  />
+                </span>
               </p>
             </div>
           </div>
           <div class="buttons">
             <button class="change" type="submit">Сохранить данные</button>
             <!-- Я пока что оставлю эту кнопку, когда созвонюсь с Вовой - уберу -->
-            <input type="button" class="exit" id="btn_cancel" value="Отменить">
+            <input
+              type="button"
+              class="exit"
+              id="btn_cancel"
+              value="Отменить"
+            />
           </div>
         </div>
       </form>
@@ -76,20 +116,19 @@
         <h3>Мои данные</h3>
         <div class="user">
           <div class="header-pic">
-            <img class="avatar" src="@/assets/pic.png" alt="Фото профиля">
+            <img class="avatar" src="@/assets/img/pic.png" alt="Фото профиля" />
           </div>
           <div class="user-info">
-            <p class="name">Имя и фамилия:
-              <span class="text">
-                Менеджер Сергей1
-              </span>
+            <p class="name">
+              Имя и фамилия:
+              <span class="text"> Менеджер Сергей1 </span>
             </p>
-            <p class="tel">Номер телефона:
-              <span class="text">
-                +79876543211
-              </span>
+            <p class="tel">
+              Номер телефона:
+              <span class="text"> +79876543211 </span>
             </p>
-            <p class="url">Профиль СБИС:
+            <p class="url">
+              Профиль СБИС:
               <a class="url-sbis text" href="https://sbis.com" target="_blank">
                 Менеджер Сергей1
               </a>
@@ -100,7 +139,7 @@
           <button class="change" id="btn-change">Изменить данные</button>
           <!--          <a href="">-->
           <button class="exit" @click="userLogout">
-            <img src="@/assets/exit.png" class="exit-icon" alt="Exit">
+            <img src="@/assets/img/exit.png" class="exit-icon" alt="Exit" />
             Выйти из аккаунта
           </button>
           <!--          </a>-->
@@ -124,7 +163,7 @@ export default {
       window.location = "/login";
     },
   },
-}
+};
 </script>
 
 <style scoped>
@@ -144,12 +183,12 @@ export default {
   left: 50%;
   color: #000;
   transform: translate(-50%, -50%);
-  background-color: #F1F1F1;
+  background-color: #f1f1f1;
   visibility: hidden;
   opacity: 0;
-  transition: opacity .5s, linear .5s;
+  transition: opacity 0.5s, linear 0.5s;
   z-index: 1;
-  box-shadow: 0px 10.991px 19.7838px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10.991px 19.7838px rgba(0, 0, 0, 0.25);
 }
 
 #changeData:target {
@@ -169,7 +208,7 @@ export default {
 }
 
 .close-changeData {
-  background-color: rgba(0, 0, 0, .7);
+  background-color: rgba(0, 0, 0, 0.7);
   cursor: default;
   position: fixed;
   top: 0;
@@ -178,7 +217,7 @@ export default {
   bottom: 0;
   opacity: 0;
   visibility: hidden;
-  transition: opacity .5s, visibility 0s linear .5s;
+  transition: opacity 0.5s, visibility 0s linear 0.5s;
 }
 
 #changeData:target + .close-changeData {
@@ -194,7 +233,7 @@ h3 {
 
 p {
   font-size: 18px;
-  font-family: 'Gotham Pro light';
+  font-family: "Gotham Pro light", sans-serif;
   font-weight: 1000;
   color: #222222;
   margin: 0;
@@ -306,7 +345,7 @@ p {
   width: 35px;
   border-radius: 5px;
   display: inline-block;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   font-size: 16px;
   /*color: #A5A4F5;*/
   color: #cb2525;
@@ -367,7 +406,7 @@ label #cancel {
 /* ------------------ Modal window -------------------- */
 
 .btn {
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .popup h3 {
@@ -386,12 +425,12 @@ label #cancel {
   left: 50%;
   color: #000;
   transform: translate(-50%, -50%);
-  background-color: #F1F1F1;
+  background-color: #f1f1f1;
   visibility: hidden;
   opacity: 0;
-  transition: opacity .5s, linear .5s;
+  transition: opacity 0.5s, linear 0.5s;
   z-index: 1;
-  box-shadow: 0px 10.991px 19.7838px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10.991px 19.7838px rgba(0, 0, 0, 0.25);
 }
 
 .popup:target {
@@ -411,7 +450,7 @@ label #cancel {
 }
 
 .close-popup {
-  background-color: rgba(0, 0, 0, .7);
+  background-color: rgba(0, 0, 0, 0.7);
   cursor: default;
   position: fixed;
   top: 0;
@@ -420,7 +459,7 @@ label #cancel {
   bottom: 0;
   opacity: 0;
   visibility: hidden;
-  transition: opacity .5s, visibility 0s linear .5s;
+  transition: opacity 0.5s, visibility 0s linear 0.5s;
 }
 
 .popup:target + .close-popup {
@@ -430,8 +469,8 @@ label #cancel {
 }
 
 .user {
-  background-color: #ECECF2;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background-color: #ececf2;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 1.5em;
   padding: 5px;
   margin-top: 15px;
@@ -457,7 +496,7 @@ label #cancel {
 
 .user-info {
   position: relative;
-  left: 0px;
+  left: 0;
   display: inline-block;
   text-align: left;
 }
@@ -467,13 +506,13 @@ label #cancel {
 }
 
 .text {
-  font-family: 'Gotham Pro light';
+  font-family: "Gotham Pro light", sans-serif;
   font-weight: 1000;
   margin-left: 10px;
 }
 
 .url-sbis {
-  color: #2C286D;
+  color: #2c286d;
 }
 
 .buttons {
@@ -481,8 +520,9 @@ label #cancel {
   margin: 5px;
 }
 
-.change, .exit {
-  font-family: 'Gotham Pro light';
+.change,
+.exit {
+  font-family: "Gotham Pro light", sans-serif;
   font-weight: 1000;
   letter-spacing: 1px;
   background-color: #c1c1ec;
@@ -508,7 +548,8 @@ label #cancel {
   cursor: pointer;
 }
 
-.change:active, .exit:active {
+.change:active,
+.exit:active {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);
@@ -521,7 +562,7 @@ label #cancel {
 }
 
 .exit {
-  background-color: #CD2525;
+  background-color: #cd2525;
 }
 
 .exit-icon {
@@ -556,12 +597,12 @@ label #cancel {
 @media (max-width: 1024px) {
   .avatar {
     float: none;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
   }
 
   .user-info {
-    left: 0px;
+    left: 0;
   }
 
   .buttons {

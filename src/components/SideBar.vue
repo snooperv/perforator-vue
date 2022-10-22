@@ -2,20 +2,21 @@
   <div class="sidebar">
     <div class="profile-div">
       <div class="profile-pic">
-        <img class="photo-sidebar" src="@/assets/pic.png">
+        <img class="photo-sidebar" src="@/assets/img/pic.png" />
       </div>
       <div class="profile-name">
-        <h2>
-
-          Менеджер Сергей1
-
-        </h2>
+        <h2>Менеджер Сергей1</h2>
       </div>
     </div>
 
     <div class="menu-items">
       <div class="perfomance link-container" style="font-size: 22px">
-        <img src="@/assets/perfomance-review-icon.svg" width="20" height="20" alt="perfomance review icon">
+        <img
+          src="@/assets/img/perfomance-review-icon.svg"
+          width="20"
+          height="20"
+          alt="perfomance review icon"
+        />
         Perfomance Review
       </div>
     </div>
@@ -34,7 +35,7 @@
           </div>
         </router-link>
       </nav>
-      <nav class="side-btn small" id="i_manager_button" style="display: block;">
+      <nav class="side-btn small" id="i_manager_button" style="display: block">
         <router-link to="/i-manager">
           <div class="link-container">
             я менеджер
@@ -50,9 +51,14 @@
           <div class="link-container">1-on-1</div>
         </router-link>
       </nav>
-      <router-link to="/last-periods" active-class="active" tag="button" exact="" class="side-btn">
+      <router-link
+        to="/last-periods"
+        active-class="active"
+        tag="button"
+        class="side-btn"
+      >
         <div class="link-container">
-          <img src="@/assets/history.svg" width="20" height="20">
+          <img src="@/assets/img/history.svg" width="20" height="20" />
           Прошлые периоды оценки
         </div>
       </router-link>
@@ -62,8 +68,8 @@
 
 <script>
 export default {
-  name: "SideBar"
-}
+  name: "SideBar",
+};
 </script>
 
 <style scoped>
@@ -84,7 +90,7 @@ a {
   height: 100vh;
   background-color: #f8f8fa;
   border-right: 1px solid #e7e7e7;
-  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.25);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.25);
 }
 
 .profile-div {
@@ -98,7 +104,7 @@ a {
   font-size: 26px;
   font-weight: 1000;
   line-height: 27px;
-  letter-spacing: 0em;
+  letter-spacing: 0;
 }
 
 .profile-div p {
@@ -130,12 +136,12 @@ a {
 .menu-items {
   display: flex;
   flex-direction: column;
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 .side-btn {
   border: none;
-  padding: 10px 0px;
+  padding: 10px 0;
   cursor: pointer;
   font-size: 18px;
   font-weight: 700;
@@ -147,7 +153,7 @@ a {
 
 .perfomance {
   border: none;
-  padding: 10px 0px;
+  padding: 10px 0;
   font-size: 18px;
   font-weight: 700;
   color: #000;
@@ -225,7 +231,7 @@ a {
 
   .profile-name {
     margin-top: -20px;
-    margin-left: 0px;
+    margin-left: 0;
   }
 
   .menu-items {
@@ -267,11 +273,11 @@ a {
   }
 
   .side-btn.small {
-    margin-left: 0px;
+    margin-left: 0;
   }
 
   .side-btn {
-    margin-left: 0px;
+    margin-left: 0;
   }
 }
 

@@ -5,12 +5,14 @@
         <div class="instruction">
           <h3 class="instr-title">Инструкция</h3>
           <p class="instr-p">
-            В данной форме вам нужно будет провести самоанализ по проделанной работе за последние полгода.
-            <br>Это поможет вам найти сильные и слабые стороны в своей работе, оценить ваш профессиональный рост.
-            <br>Убедительная просьба отвечать на вопросы честно, а не "для галочки", так как это инструмент,
-            направленный в первую очередь на улучшение ваших профессиональных навыков.
+            В данной форме вам нужно будет провести самоанализ по проделанной
+            работе за последние полгода.
+            <br />Это поможет вам найти сильные и слабые стороны в своей работе,
+            оценить ваш профессиональный рост. <br />Убедительная просьба
+            отвечать на вопросы честно, а не "для галочки", так как это
+            инструмент, направленный в первую очередь на улучшение ваших
+            профессиональных навыков.
           </p>
-
         </div>
         <h2 class="title">Self Review</h2>
         <div class="form">
@@ -19,56 +21,98 @@
               <!--сюда вставляются все контейнеры с вопросами self-review-->
               <div id="id47" class="introduction">
                 <h4 id="theme47">Вводная часть</h4>
-                <p class="description">Напишите два-три предложения об общем впечатлении от работы за последнее
-                  время</p>
+                <p class="description">
+                  Напишите два-три предложения об общем впечатлении от работы за
+                  последнее время
+                </p>
 
-                <p class="question">Что вам нравится в вашей текущей работе, задачах, отношениях с коллегами, процессах
-                  в
-                  компании и т.д.?</p>
-                <textarea id="imp-zones" maxlength="512" name="plans" rows="5" field="yes" class="ta"
-                          category_id="1"> </textarea>
+                <p class="question">
+                  Что вам нравится в вашей текущей работе, задачах, отношениях с
+                  коллегами, процессах в компании и т.д.?
+                </p>
+                <textarea
+                  id="imp-zones"
+                  maxlength="512"
+                  name="plans"
+                  rows="5"
+                  class="ta"
+                >
+                </textarea>
                 <div class="char-count">
                   <span id="imp-zones-chars" class="chars">1</span>
                   <span id="plan-max" class="max">/ 512 символов</span>
                 </div>
-                <p class="question">Что не нравится, что можно улучшить/ исправить?</p><textarea id="imp-zones"
-                                                                                                 maxlength="512"
-                                                                                                 name="plans" rows="5"
-                                                                                                 field="yes" class="ta"
-                                                                                                 category_id="2"> </textarea>
-                <div class="char-count"><span id="imp-zones-chars" class="chars">1</span>
-                  <span id="plan-max" class="max">/ 512 символов</span></div>
+                <p class="question">
+                  Что не нравится, что можно улучшить/ исправить?
+                </p>
+                <textarea
+                  id="imp-zones"
+                  maxlength="512"
+                  name="plans"
+                  rows="5"
+                  class="ta"
+                >
+                </textarea>
+                <div class="char-count">
+                  <span id="imp-zones-chars" class="chars">1</span>
+                  <span id="plan-max" class="max">/ 512 символов</span>
+                </div>
               </div>
               <div id="id49" class="introduction">
                 <h4 id="theme49">Успехи и неудачи</h4>
-                <p class="description">Расскажите, что было сделано за этот период. Выделите те проекты, которыми
-                  особенно
-                  гордитесь. Чтобы у руководителя была полная картина ваших достижений, укажите название проекта и
-                  продолжительность работы над ним</p>
+                <p class="description">
+                  Расскажите, что было сделано за этот период. Выделите те
+                  проекты, которыми особенно гордитесь. Чтобы у руководителя
+                  была полная картина ваших достижений, укажите название проекта
+                  и продолжительность работы над ним
+                </p>
 
                 <p class="question">Какие у вас были успехи?</p>
-                <textarea id="imp-zones" maxlength="512" name="plans" rows="5" field="yes" class="ta"
-                          category_id="3"> </textarea>
+                <textarea
+                  id="imp-zones"
+                  maxlength="512"
+                  name="plans"
+                  rows="5"
+                  class="ta"
+                >
+                </textarea>
                 <div class="char-count">
                   <span id="imp-zones-chars" class="chars">1</span>
                   <span id="plan-max" class="max">/ 512 символов</span>
                 </div>
-                <p class="question">Какие у вас были неудачи?</p><textarea id="imp-zones" maxlength="512" name="plans"
-                                                                           rows="5" field="yes" class="ta"
-                                                                           category_id="4"> </textarea>
-                <div class="char-count"><span id="imp-zones-chars" class="chars">1</span>
-                  <span id="plan-max" class="max">/ 512 символов</span></div>
+                <p class="question">Какие у вас были неудачи?</p>
+                <textarea
+                  id="imp-zones"
+                  maxlength="512"
+                  name="plans"
+                  rows="5"
+                  class="ta"
+                >
+                </textarea>
+                <div class="char-count">
+                  <span id="imp-zones-chars" class="chars">1</span>
+                  <span id="plan-max" class="max">/ 512 символов</span>
+                </div>
               </div>
               <div id="id51" class="introduction">
                 <h4 id="theme51">Зоны роста</h4>
-                <p class="description">Определите, какие навыки вам важно развивать в ближайшее время и что для этого вы
-                  планируете делать. Если вы не можете вспомнить проблемы с задачами, подумайте, какие компетенции стоит
-                  развивать, чтобы выполнять работу эффективнее. Например, ваша работа страдает из-за того, что сложно
-                  вести
-                  переговоры. Значит, это ваша зона роста.</p>
+                <p class="description">
+                  Определите, какие навыки вам важно развивать в ближайшее время
+                  и что для этого вы планируете делать. Если вы не можете
+                  вспомнить проблемы с задачами, подумайте, какие компетенции
+                  стоит развивать, чтобы выполнять работу эффективнее. Например,
+                  ваша работа страдает из-за того, что сложно вести переговоры.
+                  Значит, это ваша зона роста.
+                </p>
 
-                <textarea id="imp-zones" maxlength="512" name="plans" rows="5" field="yes" class="ta"
-                          category_id="5"> </textarea>
+                <textarea
+                  id="imp-zones"
+                  maxlength="512"
+                  name="plans"
+                  rows="5"
+                  class="ta"
+                >
+                </textarea>
                 <div class="char-count">
                   <span id="imp-zones-chars" class="chars">1</span>
                   <span id="plan-max" class="max">/ 512 символов</span>
@@ -76,11 +120,20 @@
               </div>
               <div id="id52" class="introduction">
                 <h4 id="theme52">Планы на будущее</h4>
-                <p class="description">Напишите долгосрочные планы — к чему хотите прийти в течение следующих нескольких
-                  месяцев, и свои пожелания. Подумайте, что вы хотели бы видеть в вашем следующем селф-ревью.</p>
+                <p class="description">
+                  Напишите долгосрочные планы — к чему хотите прийти в течение
+                  следующих нескольких месяцев, и свои пожелания. Подумайте, что
+                  вы хотели бы видеть в вашем следующем селф-ревью.
+                </p>
 
-                <textarea id="imp-zones" maxlength="512" name="plans" rows="5" field="yes" class="ta"
-                          category_id="6"> </textarea>
+                <textarea
+                  id="imp-zones"
+                  maxlength="512"
+                  name="plans"
+                  rows="5"
+                  class="ta"
+                >
+                </textarea>
                 <div class="char-count">
                   <span id="imp-zones-chars" class="chars">1</span>
                   <span id="plan-max" class="max">/ 512 символов</span>
@@ -93,8 +146,8 @@
         <div class="peers">
           <p>
             <i class="icon-circle fas fa-circle" aria-hidden="true"></i>
-            <span>Пиры</span> Люди, с которыми вы взаимодействуете по рабочим вопросам. Рекомендуем выбирать
-            3-7 человек
+            <span>Пиры</span> Люди, с которыми вы взаимодействуете по рабочим
+            вопросам. Рекомендуем выбирать 3-7 человек
           </p>
           <div id="my_peers" v-for="peer in user.peers">
             <div class="peer-sel" :id="'my-peer-' + peer.user_id">
@@ -108,7 +161,8 @@
                 <i class="close-icon fas fa-times"></i>
               </a>
             </div>
-          </div> <!--Сюда добавляются выбранные пиры-->
+          </div>
+          <!--Сюда добавляются выбранные пиры-->
           <!--<a href="#peers">-->
           <button type="button" class="add-peer" onclick="add_peers()">
             <i class="icon-plus fas fa-plus" aria-hidden="true"></i>
@@ -123,8 +177,10 @@
           <button class="save" onclick="save_self_review(true)">
             Сохранить черновик
           </button>
-          <p id="draft" class="initial_draft">*Черновик сохранен<br>после дедлайна, сохраненный черновик автоматически
-            отправляется</p>
+          <p id="draft" class="initial_draft">
+            *Черновик сохранен<br />после дедлайна, сохраненный черновик
+            автоматически отправляется
+          </p>
         </div>
 
         <div class="feedback">
@@ -133,20 +189,21 @@
         </div>
       </div>
 
-      <div class="selection" id="peers" style="visibility: hidden; opacity: 0;">
+      <div class="selection" id="peers" style="visibility: hidden; opacity: 0">
         <a class="close" id="btn_close1" onclick="close_peers1()">
           <i class="fas fa-times" aria-hidden="true"></i>
         </a>
         <h3>Выберите оценивающего</h3>
-        <input type="text" class="peers-text">
-        <div id="list_peers"></div> <!--Сюда добавляются все пиры, которых можно выбрать-->
+        <input type="text" class="peers-text" />
+        <div id="list_peers"></div>
+        <!--Сюда добавляются все пиры, которых можно выбрать-->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {mapState} from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "SelfReview",
@@ -158,19 +215,21 @@ export default {
   mounted() {
     this.$store.dispatch("getMyPeers");
   },
-}
+};
 </script>
 
 <style src="./peers.css" scoped></style>
 <style scoped>
-h2, h3, h4 {
+h2,
+h3,
+h4 {
   color: #222222;
   margin-top: 15px;
   font-size: 24px;
 }
 
 p {
-  font-family: 'Gotham Pro light', serif;
+  font-family: "Gotham Pro light", sans-serif;
   font-weight: 1000;
   color: #222222;
   margin: 0;
@@ -199,7 +258,7 @@ p {
 
 .instruction {
   width: 85%;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 30px;
   margin-top: 20px;
   padding: 0 15px 20px 15px;
@@ -208,7 +267,7 @@ p {
 }
 
 .instruction p {
-  color: #5C5C5C;
+  color: #5c5c5c;
 }
 
 .title {
@@ -221,20 +280,23 @@ p {
 .form {
   padding-top: 10px;
   width: 90%;
-  background: #FFFFFF;
+  background: #ffffff;
   text-align: left;
   border-radius: 30px;
 }
 
-.name, .job, .experience, .sbis-profile {
+.name,
+.job,
+.experience,
+.sbis-profile {
   display: inline-block;
-  font-family: 'Gotham Pro', serif;
+  font-family: "Gotham Pro", sans-serif;
   font-weight: 400;
   color: #414141;
 }
 
 .info {
-  font-family: 'Gotham Pro', serif;
+  font-family: "Gotham Pro", sans-serif;
   display: inline-block;
   margin: 15px 30px;
   color: #222222;
@@ -254,14 +316,14 @@ p {
 
 .question {
   margin: 15px 0;
-  font-family: 'Gotham Pro', serif;
+  font-family: "Gotham Pro", sans-serif;
   font-weight: 400;
   font-size: 20px;
 }
 
 .peers {
   width: 90%;
-  background: #FFFFFF;
+  background: #ffffff;
   padding: 20px 0;
   border-radius: 30px;
 }
@@ -290,7 +352,7 @@ p {
 .icon-circle {
   font-size: 9px !important;
   margin: 0;
-  color: #EDBD31;
+  color: #edbd31;
   position: relative;
   top: -3px;
 }
@@ -299,8 +361,11 @@ p {
   font-size: 12px !important;
 }
 
-.introduction, #progress, #improvement-zones, #plans {
-  background: #F4F4FA;
+.introduction,
+#progress,
+#improvement-zones,
+#plans {
+  background: #f4f4fa;
   border-radius: 15px;
   padding: 10px 30px;
   margin-top: 20px;
@@ -321,11 +386,12 @@ p {
   border-radius: 15px;
 }
 
-input[type=submit], .send {
-  font-family: 'Gotham Pro light', serif;
+input[type="submit"],
+.send {
+  font-family: "Gotham Pro light", sans-serif;
   font-weight: 1000;
   letter-spacing: 1px;
-  background-color: #A5A4F5;
+  background-color: #a5a4f5;
   border: none;
   color: white;
   padding: 20px 7px;
@@ -340,9 +406,10 @@ input[type=submit], .send {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
 }
 
-input[type=submit]:active, .send:active {
+input[type="submit"]:active,
+.send:active {
   transition: all 0.3s ease-in-out;
-  transform: scale(0.95)
+  transform: scale(0.95);
 }
 
 .ta {
@@ -355,12 +422,12 @@ input[type=submit]:active, .send:active {
 }
 
 .add-peer {
-  font-family: 'Gotham Pro light', serif;
+  font-family: "Gotham Pro light", sans-serif;
   font-weight: 1000;
   font-size: 15px;
   letter-spacing: 1px;
   border: none;
-  background-color: #A5A4F5;
+  background-color: #a5a4f5;
   color: white;
   padding: 20px 0;
   width: 200px;
@@ -374,7 +441,7 @@ input[type=submit]:active, .send:active {
 
 .add-peer:active {
   transition: all 0.3s ease-in-out;
-  transform: scale(0.95)
+  transform: scale(0.95);
 }
 
 .wrapper-submit {
@@ -383,11 +450,11 @@ input[type=submit]:active, .send:active {
 }
 
 .save {
-  font-family: 'Gotham Pro light', serif;
+  font-family: "Gotham Pro light", sans-serif;
   font-weight: 1000;
   font-size: 16px;
   letter-spacing: 1px;
-  border: 1px solid #EDBD31;
+  border: 1px solid #edbd31;
   background-color: transparent;
   color: #222222;
   display: inline-block;
@@ -420,15 +487,12 @@ input[type=submit]:active, .send:active {
 }
 
 @media (max-width: 1580px) {
-
 }
 
 @media (max-width: 1450px) {
-
 }
 
 @media (max-width: 1325px) {
-
 }
 
 .initial_draft {
@@ -481,10 +545,11 @@ input[type=submit]:active, .send:active {
   right: 10%;
 }
 
-.chars, .max {
+.chars,
+.max {
   position: relative;
   display: inline-block;
-  font-family: 'Gotham Pro light', serif;
+  font-family: "Gotham Pro light", sans-serif;
   font-weight: 400;
   color: #979797;
 }
