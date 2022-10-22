@@ -5,7 +5,7 @@
         <div id="formContent">
           <div class="fadeIn first"></div>
           <div class="logo-title">
-            <img src="@/assets/logo.svg" alt="Picture" class="logo" />
+            <img src="@/assets/img/logo.svg" alt="Picture" class="logo" />
             <h1>Perforator</h1>
           </div>
           <form class="log">
@@ -77,7 +77,7 @@ export default {
     const cookieToken = this.$store.getters.cookieToken;
 
     if (cookieToken) {
-      this.$router.push("/");
+      this.$router.push("/self-review");
     }
   },
 

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { types } from "@/types";
 import { refreshToken, getNewToken, registerUser } from "@/services/auth";
 import { getMyPeers } from "@/services/peers";
@@ -61,8 +60,7 @@ const actions = {
   async getMyPeers({ commit }) {
     try {
       const peers = await getMyPeers();
-      console.log(peers);
-      commit(types.SET_PEERS, peers);
+      if (!peers.error) commit(types.SET_PEERS, peers);
     } catch (e) {
       console.log(e);
     }

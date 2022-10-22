@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
-import LoginPage from "../views/Login/LoginPage.vue";
-import RegisterPage from "../views/Login/RegisterPage.vue";
-import Index from "@/views/Index";
-import SelfReview from "@/views/SelfReview";
+import LoginPage from "../pages/Login/LoginPage.vue";
+import RegisterPage from "../pages/Login/RegisterPage.vue";
+import Index from "@/pages/Index";
+import SelfReview from "@/pages/SelfReview";
 
 const routes = [
   {
@@ -12,7 +12,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+      import(/* webpackChunkName: "about" */ "../pages/AboutView.vue"),
   },
   {
     path: "/login",
