@@ -37,7 +37,6 @@
                     maxlength="512"
                     :name="question.id"
                     v-model="question.comment"
-                    @input="test"
                     rows="5"
                     class="ta"
                     :disabled="!selfReview.is_draft"
@@ -61,14 +60,18 @@
             вопросам. Рекомендуем выбирать 3-7 человек
           </p>
           <div id="my_peers" v-for="peer in user.peers">
-            <div class="peer-sel" :id="'my-peer-' + peer.user_id">
+            <div class="peer-sel" :id="'my-peer-' + peer.profile_id">
               <div class="peers-pic">
-                <img class="avatar" :src="peer.photo" alt="Фото сотрудника" />
+                <img
+                  class="avatar"
+                  src="@/assets/img/pic.png"
+                  alt="Фото сотрудника"
+                />
               </div>
               <div class="peer-info">
                 {{ peer.username }}
               </div>
-              <a class="close" id="close" onclick="">
+              <a class="close" id="close" @click="removePeer(peer.profile_id)">
                 <i class="close-icon fas fa-times"></i>
               </a>
             </div>
@@ -78,7 +81,7 @@
           <button
             type="button"
             class="add-peer"
-            onclick="add_peers()"
+            @click="openModalPeers"
             v-if="selfReview.is_draft"
           >
             <i class="icon-plus fas fa-plus" aria-hidden="true"></i>
@@ -118,6 +121,8 @@
 
 <script>
 import { mapState } from "vuex";
+import { openModal } from "jenesius-vue-modal";
+import PeersList from "@/components/modals/PeersList";
 
 export default {
   name: "SelfReview",
@@ -130,13 +135,13 @@ export default {
 
   computed: {
     ...mapState(["user", "selfReview"]),
+
+    openModalPeers() {
+      openModal(PeersList);
+    },
   },
 
   methods: {
-    test() {
-      console.log(this.selfReview);
-    },
-
     saveReview(e, isDraft) {
       this.selfReview.is_draft = isDraft;
       this.$store.dispatch("saveSelfReview", this.selfReview);
@@ -156,6 +161,10 @@ export default {
         }
       }
     },
+
+    removePeer(id) {
+      this.$store.dispatch("removeMyPeer", id);
+    },
   },
 
   mounted() {
@@ -166,7 +175,6 @@ export default {
   watch: {
     selfReview: {
       handler() {
-        console.log(this.selfReview);
         let smallArr = [];
         let title = "";
 
@@ -190,8 +198,6 @@ export default {
           description: smallArr[0].grade_category_preview_description,
           content: smallArr,
         });
-
-        console.log(this.reviewContent);
       },
     },
   },
@@ -323,6 +329,10 @@ p {
 
 .peer-info {
   color: #331969;
+}
+
+.avatar {
+  width: 100%;
 }
 
 .close-icon {

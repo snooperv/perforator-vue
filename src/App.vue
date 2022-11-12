@@ -1,9 +1,13 @@
 <template>
   <router-view />
+  <widget-container-modal />
 </template>
 
 <script>
+import { container } from "jenesius-vue-modal";
+
 export default {
+  components: { WidgetContainerModal: container },
   name: "App",
 
   mounted() {
@@ -40,5 +44,10 @@ body {
 
 * {
   font-family: "Gotham Pro", sans-serif;
+}
+
+.modal-container {
+  align-items: flex-end;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 </style>
