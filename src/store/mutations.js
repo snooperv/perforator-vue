@@ -1,4 +1,4 @@
-import { types } from "../types";
+import { types } from "@/types";
 
 const mutations = {
   [types.SET_AUTH](state, payload) {
@@ -13,6 +13,10 @@ const mutations = {
 
   [types.SET_PEERS](state, peers) {
     state.user.peers = peers;
+  },
+
+  [types.SET_SELFREVIEW](state, payload) {
+    state.selfReview = payload;
   },
 };
 

@@ -3,6 +3,7 @@ import { refreshToken, getNewToken, registerUser } from "@/services/auth";
 import { getMyPeers } from "@/services/peers";
 import Cockies from "vue-cookies";
 import router from "@/router";
+import { getSelfReview } from "@/services/main";
 
 const actions = {
   async refreshAuthToken({ commit, getters, state }) {
@@ -61,6 +62,15 @@ const actions = {
     try {
       const peers = await getMyPeers();
       if (!peers.error) commit(types.SET_PEERS, peers);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async getSelfReview({ commit }) {
+    try {
+      const contentSelfReview = await getSelfReview();
+      commit(types.SET_SELFREVIEW, contentSelfReview);
     } catch (e) {
       console.log(e);
     }

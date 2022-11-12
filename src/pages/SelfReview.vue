@@ -19,124 +19,33 @@
           <div class="container">
             <form id="self-review">
               <!--сюда вставляются все контейнеры с вопросами self-review-->
-              <div id="id47" class="introduction">
-                <h4 id="theme47">Вводная часть</h4>
+              <div class="introduction" v-for="item in reviewContent">
+                <h4>{{ item.title }}</h4>
+
                 <p class="description">
-                  Напишите два-три предложения об общем впечатлении от работы за
-                  последнее время
+                  {{ item.description }}
                 </p>
 
-                <p class="question">
-                  Что вам нравится в вашей текущей работе, задачах, отношениях с
-                  коллегами, процессах в компании и т.д.?
-                </p>
-                <textarea
-                  id="imp-zones"
-                  maxlength="512"
-                  name="plans"
-                  rows="5"
-                  class="ta"
-                >
-                </textarea>
-                <div class="char-count">
-                  <span id="imp-zones-chars" class="chars">1</span>
-                  <span id="plan-max" class="max">/ 512 символов</span>
-                </div>
-                <p class="question">
-                  Что не нравится, что можно улучшить/ исправить?
-                </p>
-                <textarea
-                  id="imp-zones"
-                  maxlength="512"
-                  name="plans"
-                  rows="5"
-                  class="ta"
-                >
-                </textarea>
-                <div class="char-count">
-                  <span id="imp-zones-chars" class="chars">1</span>
-                  <span id="plan-max" class="max">/ 512 символов</span>
-                </div>
-              </div>
-              <div id="id49" class="introduction">
-                <h4 id="theme49">Успехи и неудачи</h4>
-                <p class="description">
-                  Расскажите, что было сделано за этот период. Выделите те
-                  проекты, которыми особенно гордитесь. Чтобы у руководителя
-                  была полная картина ваших достижений, укажите название проекта
-                  и продолжительность работы над ним
-                </p>
+                <div v-for="question in item.content">
+                  <p class="question">
+                    {{ question.grade_category_description }}
+                  </p>
 
-                <p class="question">Какие у вас были успехи?</p>
-                <textarea
-                  id="imp-zones"
-                  maxlength="512"
-                  name="plans"
-                  rows="5"
-                  class="ta"
-                >
-                </textarea>
-                <div class="char-count">
-                  <span id="imp-zones-chars" class="chars">1</span>
-                  <span id="plan-max" class="max">/ 512 символов</span>
-                </div>
-                <p class="question">Какие у вас были неудачи?</p>
-                <textarea
-                  id="imp-zones"
-                  maxlength="512"
-                  name="plans"
-                  rows="5"
-                  class="ta"
-                >
-                </textarea>
-                <div class="char-count">
-                  <span id="imp-zones-chars" class="chars">1</span>
-                  <span id="plan-max" class="max">/ 512 символов</span>
-                </div>
-              </div>
-              <div id="id51" class="introduction">
-                <h4 id="theme51">Зоны роста</h4>
-                <p class="description">
-                  Определите, какие навыки вам важно развивать в ближайшее время
-                  и что для этого вы планируете делать. Если вы не можете
-                  вспомнить проблемы с задачами, подумайте, какие компетенции
-                  стоит развивать, чтобы выполнять работу эффективнее. Например,
-                  ваша работа страдает из-за того, что сложно вести переговоры.
-                  Значит, это ваша зона роста.
-                </p>
+                  <!--@input="(e) => setCountSymbols(e, question.id)"-->
 
-                <textarea
-                  id="imp-zones"
-                  maxlength="512"
-                  name="plans"
-                  rows="5"
-                  class="ta"
-                >
-                </textarea>
-                <div class="char-count">
-                  <span id="imp-zones-chars" class="chars">1</span>
-                  <span id="plan-max" class="max">/ 512 символов</span>
-                </div>
-              </div>
-              <div id="id52" class="introduction">
-                <h4 id="theme52">Планы на будущее</h4>
-                <p class="description">
-                  Напишите долгосрочные планы — к чему хотите прийти в течение
-                  следующих нескольких месяцев, и свои пожелания. Подумайте, что
-                  вы хотели бы видеть в вашем следующем селф-ревью.
-                </p>
+                  <textarea
+                    maxlength="512"
+                    :name="question.id"
+                    v-model="question.comment"
+                    rows="5"
+                    class="ta"
+                  >
+                  </textarea>
 
-                <textarea
-                  id="imp-zones"
-                  maxlength="512"
-                  name="plans"
-                  rows="5"
-                  class="ta"
-                >
-                </textarea>
-                <div class="char-count">
-                  <span id="imp-zones-chars" class="chars">1</span>
-                  <span id="plan-max" class="max">/ 512 символов</span>
+                  <div class="char-count">
+                    <span class="chars">{{ question.comment.length }}</span>
+                    <span class="max">/ 512 символов</span>
+                  </div>
                 </div>
               </div>
             </form>
@@ -208,12 +117,53 @@ import { mapState } from "vuex";
 export default {
   name: "SelfReview",
 
-  computed: {
-    ...mapState(["user"]),
+  data() {
+    return {
+      reviewContent: [],
+    };
   },
 
+  computed: {
+    ...mapState(["user", "selfReview"]),
+  },
+
+  methods: {},
+
   mounted() {
+    this.$store.dispatch("getSelfReview");
     this.$store.dispatch("getMyPeers");
+  },
+
+  watch: {
+    selfReview: {
+      handler() {
+        let smallArr = [];
+        let title = "";
+
+        this.selfReview.grades.map((grade) => {
+          if (grade.grade_category_name !== title) {
+            title &&
+              this.reviewContent.push({
+                title: title,
+                description: smallArr[0].grade_category_preview_description,
+                content: smallArr,
+              });
+            smallArr = [];
+            title = grade.grade_category_name;
+          }
+
+          smallArr.push(grade);
+        });
+
+        this.reviewContent.push({
+          title: title,
+          description: smallArr[0].grade_category_preview_description,
+          content: smallArr,
+        });
+
+        console.log(this.reviewContent);
+      },
+    },
   },
 };
 </script>

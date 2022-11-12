@@ -7,6 +7,7 @@ const state = {
     authError: false,
     peers: [],
   },
+  selfReview: {},
 };
 
 export default state;
