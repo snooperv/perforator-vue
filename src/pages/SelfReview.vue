@@ -88,17 +88,19 @@
         </div>
 
         <div class="wrapper-submit" v-if="selfReview.is_draft">
-          <button class="send" @click="saveReview(false)">Отправить</button>
-          <button class="save" @click="saveReview(true)">
+          <button class="send" @click="(e) => saveReview(e, false)">
+            Отправить
+          </button>
+          <button class="save" @click="(e) => saveReview(e, true)">
             Сохранить черновик
           </button>
-          <p id="draft" class="initial_draft">
+          <p class="initial_draft">
             *Черновик сохранен<br />после дедлайна, сохраненный черновик
             автоматически отправляется
           </p>
         </div>
 
-        <div class="wrapper-submit">
+        <div class="wrapper-submit" v-if="!selfReview.is_draft">
           <p class="check_img">
             <img src="@/assets/img/check.svg" alt="Форма успешно отправлена" />
           </p>
@@ -109,16 +111,6 @@
           <h3>Итоговая обратная связь</h3>
           <p>Здесь будут результаты вашего ревью!</p>
         </div>
-      </div>
-
-      <div class="selection" id="peers" style="visibility: hidden; opacity: 0">
-        <a class="close" id="btn_close1" onclick="close_peers1()">
-          <i class="fas fa-times" aria-hidden="true"></i>
-        </a>
-        <h3>Выберите оценивающего</h3>
-        <input type="text" class="peers-text" />
-        <div id="list_peers"></div>
-        <!--Сюда добавляются все пиры, которых можно выбрать-->
       </div>
     </div>
   </div>
@@ -145,9 +137,24 @@ export default {
       console.log(this.selfReview);
     },
 
-    saveReview(isDraft) {
+    saveReview(e, isDraft) {
       this.selfReview.is_draft = isDraft;
       this.$store.dispatch("saveSelfReview", this.selfReview);
+
+      if (isDraft) {
+        const warningText =
+          e.target.parentNode.querySelector(".initial_draft").classList;
+        if (warningText.contains("active_draft")) {
+          warningText.remove("active_draft");
+          warningText.add("hidden_draft");
+          setTimeout(() => {
+            warningText.remove("hidden_draft");
+            warningText.add("active_draft");
+          }, 300);
+        } else {
+          warningText.add("active_draft");
+        }
+      }
     },
   },
 
