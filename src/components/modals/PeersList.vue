@@ -1,6 +1,6 @@
 <template>
   <div class="selection">
-    <a class="close" onclick="close_peers1()">
+    <a class="close" @click="closeModalPeers">
       <i class="fas fa-times" aria-hidden="true"></i>
     </a>
     <h3>Выберите оценивающего</h3>
@@ -29,6 +29,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { closeModal } from "jenesius-vue-modal";
 
 export default {
   name: "PeersList",
@@ -50,6 +51,10 @@ export default {
         );
       }
       return this.peersAll;
+    },
+
+    closeModalPeers() {
+      closeModal();
     },
   },
 
@@ -124,19 +129,6 @@ export default {
   margin-right: 10px;
   color: #f00;
   cursor: pointer;
-}
-
-.close-peers {
-  background-color: rgba(0, 0, 0, 0.7);
-  cursor: default;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  opacity: 0;
-  visibility: hidden;
-  z-index: 9;
 }
 
 .peers-text {

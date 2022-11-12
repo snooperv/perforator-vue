@@ -8,8 +8,7 @@ import {
 } from "@/services/peers";
 import Cockies from "vue-cookies";
 import router from "@/router";
-import { getSelfReview, saveSelfReview } from "@/services/main";
-import { toRaw } from "vue";
+import { getSelfReview, saveSelfReview } from "@/services/basic";
 
 const actions = {
   async refreshAuthToken({ commit, getters, state }) {
