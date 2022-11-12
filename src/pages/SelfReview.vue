@@ -37,8 +37,10 @@
                     maxlength="512"
                     :name="question.id"
                     v-model="question.comment"
+                    @input="test"
                     rows="5"
                     class="ta"
+                    :disabled="!selfReview.is_draft"
                   >
                   </textarea>
 
@@ -73,23 +75,34 @@
           </div>
           <!--Сюда добавляются выбранные пиры-->
           <!--<a href="#peers">-->
-          <button type="button" class="add-peer" onclick="add_peers()">
+          <button
+            type="button"
+            class="add-peer"
+            onclick="add_peers()"
+            v-if="selfReview.is_draft"
+          >
             <i class="icon-plus fas fa-plus" aria-hidden="true"></i>
             Добавить пира
           </button>
           <!--</a>-->
         </div>
-        <div class="wrapper-submit">
-          <button class="send" onclick="save_self_review(false)">
-            Отправить
-          </button>
-          <button class="save" onclick="save_self_review(true)">
+
+        <div class="wrapper-submit" v-if="selfReview.is_draft">
+          <button class="send" @click="saveReview(false)">Отправить</button>
+          <button class="save" @click="saveReview(true)">
             Сохранить черновик
           </button>
           <p id="draft" class="initial_draft">
             *Черновик сохранен<br />после дедлайна, сохраненный черновик
             автоматически отправляется
           </p>
+        </div>
+
+        <div class="wrapper-submit">
+          <p class="check_img">
+            <img src="@/assets/img/check.svg" alt="Форма успешно отправлена" />
+          </p>
+          <h4>Форма отправлена!</h4>
         </div>
 
         <div class="feedback">
@@ -127,7 +140,16 @@ export default {
     ...mapState(["user", "selfReview"]),
   },
 
-  methods: {},
+  methods: {
+    test() {
+      console.log(this.selfReview);
+    },
+
+    saveReview(isDraft) {
+      this.selfReview.is_draft = isDraft;
+      this.$store.dispatch("saveSelfReview", this.selfReview);
+    },
+  },
 
   mounted() {
     this.$store.dispatch("getSelfReview");
@@ -137,6 +159,7 @@ export default {
   watch: {
     selfReview: {
       handler() {
+        console.log(this.selfReview);
         let smallArr = [];
         let title = "";
 
