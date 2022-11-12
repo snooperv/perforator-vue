@@ -1,9 +1,14 @@
-import axios from "axios";
 import { types } from "@/types";
 import { refreshToken, getNewToken, registerUser } from "@/services/auth";
-import { getMyPeers } from "@/services/peers";
+import {
+  getAllPeers,
+  getMyPeers,
+  removeMyPeer,
+  saveMyPeer,
+} from "@/services/peers";
 import Cockies from "vue-cookies";
 import router from "@/router";
+import { getSelfReview, saveSelfReview } from "@/services/basic";
 
 const actions = {
   async refreshAuthToken({ commit, getters, state }) {
@@ -58,25 +63,96 @@ const actions = {
     }
   },
 
-  userLogout({ commit }) {
-    try {
-      router.push("/login").then((r) => {
-        Cockies.remove("refresh_token");
-        localStorage.removeItem("token");
-      });
-    } catch (e) {
-      console.log(e.message);
-    }
-  },
-
   async getMyPeers({ commit }) {
     try {
       const peers = await getMyPeers();
-      commit(types.SET_PEERS, peers);
+      if (!peers.error) commit(types.SET_PEERS, peers);
     } catch (e) {
       console.log(e);
     }
   },
+
+  async getAllPeers({ commit, state }) {
+    try {
+      if (state.peersAll.length === 0) {
+        let peers = await getAllPeers();
+        if (state.user.peers) peers = filterPeers(peers, state.user.peers);
+        if (!peers.error) commit(types.SET_PEERS_ALL, peers);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async addMyPeer({ commit, state }, id) {
+    try {
+      const peer = state.peersAll.find((peer) => peer.profile_id === id);
+      const availablePeers = state.peersAll.filter(
+        (peer) => peer.profile_id !== id
+      );
+
+      commit(types.SET_PEERS_ALL, availablePeers);
+      commit(types.ADD_MY_PEER, peer);
+
+      await saveMyPeer(id);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async removeMyPeer({ commit, state }, id) {
+    try {
+      const peer = state.user.peers.find((peer) => peer.profile_id === id);
+      const availablePeers = state.user.peers.filter(
+        (peer) => peer.profile_id !== id
+      );
+
+      commit(types.SET_PEERS, availablePeers);
+      commit(types.ADD_PEER_All, peer);
+
+      await removeMyPeer(id);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async getSelfReview({ commit }) {
+    try {
+      const localContent = localStorage.getItem("selfReviewForm");
+      let contentSelfReview;
+
+      if (!localContent) {
+        contentSelfReview = await getSelfReview();
+        localStorage.setItem(
+          "selfReviewForm",
+          JSON.stringify(contentSelfReview)
+        );
+      } else {
+        contentSelfReview = JSON.parse(localStorage.getItem("selfReviewForm"));
+      }
+
+      commit(types.SET_SELFREVIEW, contentSelfReview);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async saveSelfReview({ commit }, payload) {
+    try {
+      localStorage.setItem("selfReviewForm", JSON.stringify(payload));
+      await saveSelfReview(payload);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+};
+
+const filterPeers = (peersAll, myPeers) => {
+  return peersAll.filter(
+    (peer) =>
+      myPeers.filter((myPeer) => myPeer.profile_id === peer.profile_id)
+        .length === 0
+  );
 };
 
 export default actions;

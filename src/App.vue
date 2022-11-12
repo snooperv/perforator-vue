@@ -1,9 +1,13 @@
 <template>
-  <router-view/>
+  <router-view />
+  <widget-container-modal />
 </template>
 
 <script>
+import { container } from "jenesius-vue-modal";
+
 export default {
+  components: { WidgetContainerModal: container },
   name: "App",
 
   mounted() {
@@ -17,8 +21,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import url("http://fonts.cdnfonts.com/css/gotham-pro");
-@import url(//db.onlinewebfonts.com/c/323b7229abd327d428021a6d49a7413d?family=Gotham+Pro+Light);
+@import url("@/assets/font/gothamPro/gothamPro.css");
+@import url("@/assets/font/gothamProLight/gothamProLight.css");
 
 #app {
   font-family: "Roboto", sans-serif;
@@ -40,6 +44,10 @@ body {
 
 * {
   font-family: "Gotham Pro", sans-serif;
-  /* font-family: 'Gotham Pro light', sans-serif; */
+}
+
+.modal-container {
+  align-items: flex-end;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 </style>

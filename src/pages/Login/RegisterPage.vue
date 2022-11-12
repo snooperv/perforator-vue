@@ -5,7 +5,7 @@
         <div id="formContent">
           <div class="fadeIn first"></div>
           <div class="logo-title">
-            <img src="@/assets/logo.svg" alt="Picture" class="logo" />
+            <img src="@/assets/img/logo.svg" alt="Picture" class="logo" />
             <h1>Perforator</h1>
           </div>
           <form>
@@ -136,7 +136,7 @@ export default {
     const cookieToken = this.$store.getters.cookieToken;
 
     if (cookieToken) {
-      this.$router.push("/");
+      this.$router.push("/self-review");
     }
   },
 
@@ -159,7 +159,7 @@ export default {
   computed: {
     ...mapState(["user"]),
     avatar() {
-      return this.image || require(`../../assets/avatar.png`);
+      return this.image || require(`@/assets/img/avatar.png`);
     },
   },
 
@@ -243,7 +243,7 @@ export default {
 
       const countWords = this.login.split(" ").length;
 
-      if (countWords != 2) {
+      if (countWords !== 2) {
         console.log("Error");
         this.loginError = "Введите значение в формате: Имя Фамилия";
         return false;
@@ -281,7 +281,7 @@ export default {
 
       if (
         !this.reference.match(
-          /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+          /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)/g
         )
       ) {
         this.referenceError = "Укажите ссылку";
