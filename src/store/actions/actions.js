@@ -119,7 +119,19 @@ const actions = {
 
   async getSelfReview({ commit }) {
     try {
-      const contentSelfReview = await getSelfReview();
+      const localContent = localStorage.getItem("selfReviewForm");
+      let contentSelfReview;
+
+      if (!localContent) {
+        contentSelfReview = await getSelfReview();
+        localStorage.setItem(
+          "selfReviewForm",
+          JSON.stringify(contentSelfReview)
+        );
+      } else {
+        contentSelfReview = JSON.parse(localStorage.getItem("selfReviewForm"));
+      }
+
       commit(types.SET_SELFREVIEW, contentSelfReview);
     } catch (e) {
       console.log(e);
@@ -128,6 +140,7 @@ const actions = {
 
   async saveSelfReview({ commit }, payload) {
     try {
+      localStorage.setItem("selfReviewForm", JSON.stringify(payload));
       await saveSelfReview(payload);
     } catch (e) {
       console.log(e);

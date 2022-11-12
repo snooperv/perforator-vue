@@ -71,7 +71,12 @@
               <div class="peer-info">
                 {{ peer.username }}
               </div>
-              <a class="close" id="close" @click="removePeer(peer.profile_id)">
+              <a
+                class="close"
+                id="close"
+                @click="removePeer(peer.profile_id)"
+                v-if="selfReview.is_draft"
+              >
                 <i class="close-icon fas fa-times"></i>
               </a>
             </div>
@@ -91,7 +96,12 @@
         </div>
 
         <div class="wrapper-submit" v-if="selfReview.is_draft">
-          <button class="send" @click="(e) => saveReview(e, false)">
+          <button
+            class="send"
+            @click="(e) => saveReview(e, false)"
+            :disabled="isSendDisabled"
+            :style="isSendDisabled ? 'background-color: #8e8e8e' : ''"
+          >
             Отправить
           </button>
           <button class="save" @click="(e) => saveReview(e, true)">
@@ -138,6 +148,16 @@ export default {
 
     openModalPeers() {
       openModal(PeersList);
+    },
+
+    isSendDisabled() {
+      const isFillText = this.selfReview.grades.filter(
+        (grade) => grade.comment !== ""
+      );
+      return !(
+        isFillText.length === this.selfReview.grades.length &&
+        this.user.peers.length > 0
+      );
     },
   },
 
