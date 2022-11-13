@@ -2,9 +2,9 @@ import { createRouter, createWebHistory } from "vue-router";
 import LoginPage from "../pages/Login/LoginPage.vue";
 import RegisterPage from "../pages/Login/RegisterPage.vue";
 import Index from "@/pages/Index";
-import SelfReview from "@/pages/SelfReview";
-import { h } from "vue";
-import NotFound from "@/components/NotFound";
+import SelfReview from "@/pages/SelfReview/SelfReview";
+import NotFound from "@/components/layouts/NotFound";
+import IRate from "@/pages/IRate/IRate";
 
 const routes = [
   {
@@ -39,6 +39,11 @@ const routes = [
         meta: { title: "Self Review" },
       },
       {
+        path: "/i-rate",
+        component: IRate,
+        meta: { title: "Я оцениваю" },
+      },
+      {
         path: "/page-not-found",
         component: NotFound,
         meta: { title: "Страница не найдена" },
@@ -55,6 +60,13 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { top: 0 };
+    }
+  },
 });
 
 router.beforeEach((to, from, next) => {

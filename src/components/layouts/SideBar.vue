@@ -25,13 +25,13 @@
       </div>
     </div>
     <div class="menu-items" id="menuItems">
-      <nav class="side-btn small active">
-        <router-link to="/self-review">
+      <nav class="side-btn small">
+        <router-link to="/self-review" class="link">
           <div class="link-container">self review</div>
         </router-link>
       </nav>
       <nav class="side-btn small">
-        <router-link to="/i-rate">
+        <router-link to="/i-rate" class="link">
           <div class="link-container">
             я оцениваю
             <!--<div class="amount-bg"></div>
@@ -40,7 +40,7 @@
         </router-link>
       </nav>
       <nav class="side-btn small" id="i_manager_button" style="display: block">
-        <router-link to="/i-manager">
+        <router-link to="/i-manager" class="link">
           <div class="link-container">
             я менеджер
             <!-- Нужно будет поправить, сделал набросок -->
@@ -51,7 +51,7 @@
         </router-link>
       </nav>
       <nav class="side-btn small">
-        <router-link to="/1to1">
+        <router-link to="/1to1" class="link">
           <div class="link-container">1-on-1</div>
         </router-link>
       </nav>
@@ -59,7 +59,7 @@
         to="/last-periods"
         active-class="active"
         tag="button"
-        class="side-btn"
+        class="side-btn link"
       >
         <div class="link-container">
           <img
@@ -150,7 +150,6 @@ a {
 
 .side-btn {
   border: none;
-  padding: 10px 0;
   cursor: pointer;
   font-size: 18px;
   font-weight: 700;
@@ -181,7 +180,13 @@ a {
   transition: 0.2s;
 }
 
-.side-btn.active {
+.link {
+  display: inline-block;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.router-link-active {
   position: relative;
   background-color: rgba(165, 164, 245, 0.56);
   border-radius: 3em;
