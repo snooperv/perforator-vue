@@ -11,6 +11,10 @@ import SideBar from "@/components/SideBar";
 export default {
   name: "Index",
   components: { SideBar, Header },
+
+  mounted() {
+    this.$route.path === "/" && this.$router.push("/self-review");
+  },
 };
 </script>
 

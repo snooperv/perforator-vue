@@ -3,6 +3,8 @@ import LoginPage from "../pages/Login/LoginPage.vue";
 import RegisterPage from "../pages/Login/RegisterPage.vue";
 import Index from "@/pages/Index";
 import SelfReview from "@/pages/SelfReview";
+import { h } from "vue";
+import NotFound from "@/components/NotFound";
 
 const routes = [
   {
@@ -36,7 +38,17 @@ const routes = [
         component: SelfReview,
         meta: { title: "Self Review" },
       },
+      {
+        path: "/page-not-found",
+        component: NotFound,
+        meta: { title: "Страница не найдена" },
+      },
     ],
+  },
+
+  {
+    path: "/:catchAll(.*)", // Unrecognized path automatically matches 404
+    redirect: "/page-not-found",
   },
 ];
 

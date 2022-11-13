@@ -2,7 +2,11 @@
   <div class="sidebar">
     <div class="profile-div">
       <div class="profile-pic">
-        <img class="photo-sidebar" src="@/assets/img/pic.png" />
+        <img
+          class="photo-sidebar"
+          src="@/assets/img/pic.png"
+          alt="Фото профиля"
+        />
       </div>
       <div class="profile-name">
         <h2>Менеджер Сергей1</h2>
@@ -58,7 +62,12 @@
         class="side-btn"
       >
         <div class="link-container">
-          <img src="@/assets/img/history.svg" width="20" height="20" />
+          <img
+            src="@/assets/img/history.svg"
+            width="20"
+            height="20"
+            alt="История"
+          />
           Прошлые периоды оценки
         </div>
       </router-link>
@@ -146,9 +155,8 @@ a {
   font-size: 18px;
   font-weight: 700;
   color: #000;
-  margin: 0 15px 0 5px;
   background-color: transparent;
-  margin-top: 0.2em;
+  margin: 0.2em 15px 0 5px;
 }
 
 .perfomance {
