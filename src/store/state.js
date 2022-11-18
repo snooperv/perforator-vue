@@ -9,6 +9,7 @@ const state = {
     token: localStorage.getItem("token") || null,
     authError: false,
     peers: [],
+    team: [],
   },
   peersAll: [],
   selfReview: {},

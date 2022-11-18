@@ -39,7 +39,7 @@
           </div>
         </router-link>
       </nav>
-      <nav class="side-btn small" id="i_manager_button" style="display: block">
+      <nav class="side-btn small" v-if="user.team.length > 0">
         <router-link to="/i-manager" class="link">
           <div class="link-container">
             я менеджер
@@ -76,8 +76,18 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "SideBar",
+
+  computed: {
+    ...mapState(["user"]),
+  },
+
+  mounted() {
+    this.$store.dispatch("getMyTeam");
+  },
 };
 </script>
 

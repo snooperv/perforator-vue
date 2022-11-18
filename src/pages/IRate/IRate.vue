@@ -35,20 +35,22 @@
     <div class="wait">
       <h2>Ожидают моей оценки</h2>
       <div class="peers">
-        <button onclick="toggleForm(3)" class="peer dropbtn">
-          <span class="peers-pic">
-            <img
-              src="@/assets/img/pic.png"
-              alt="Фото сотрудника"
-              class="avatar"
-            />
-          </span>
-          <span class="name"> Сотрудник Дима2 </span>
-          <a href="#" class="chevron">
-            <i class="fas fa-chevron-right" aria-hidden="true"></i>
-          </a>
-        </button>
-        <DropdownContent />
+        <div class="one-peer">
+          <button @click="toggleForm" class="peer dropbtn">
+            <span class="peers-pic">
+              <img
+                src="@/assets/img/pic.png"
+                alt="Фото сотрудника"
+                class="avatar"
+              />
+            </span>
+            <span class="name"> Сотрудник Дима2 </span>
+            <a href="#" class="chevron">
+              <i class="fas fa-chevron-right" aria-hidden="true"></i>
+            </a>
+          </button>
+          <DropdownContent v-if="isOpen" />
+        </div>
       </div>
     </div>
   </div>
@@ -56,10 +58,27 @@
 
 <script>
 import DropdownContent from "@/components/irate/DropdownContent";
+import { mapState } from "vuex";
 
 export default {
   name: "IRate",
-  components: { DropdownContent },
+
+  components: {
+    ...mapState(["user"]),
+    DropdownContent,
+  },
+
+  data() {
+    return {
+      isOpen: false,
+    };
+  },
+
+  methods: {
+    toggleForm() {
+      this.isOpen = !this.isOpen;
+    },
+  },
 };
 </script>
 

@@ -15,6 +15,10 @@ const mutations = {
     state.user.peers = peers;
   },
 
+  [types.SET_TEAM](state, team) {
+    state.user.team = team;
+  },
+
   [types.SET_PEERS_ALL](state, peers) {
     state.peersAll = peers;
   },

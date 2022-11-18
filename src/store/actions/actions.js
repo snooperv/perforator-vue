@@ -3,6 +3,7 @@ import { refreshToken, getNewToken, registerUser } from "@/services/auth";
 import {
   getAllPeers,
   getMyPeers,
+  getMyTeam,
   removeMyPeer,
   saveMyPeer,
 } from "@/services/peers";
@@ -67,6 +68,15 @@ const actions = {
     try {
       const peers = await getMyPeers();
       if (!peers.error) commit(types.SET_PEERS, peers);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async getMyTeam({ commit }) {
+    try {
+      const team = await getMyTeam();
+      if (!team.error) commit(types.SET_TEAM, team);
     } catch (e) {
       console.log(e);
     }
