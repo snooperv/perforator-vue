@@ -165,6 +165,7 @@ export default {
       if (isDraft) {
         const warningText =
           e.target.parentNode.querySelector(".initial_draft").classList;
+        console.log(warningText);
         if (warningText.contains("active_draft")) {
           warningText.remove("active_draft");
           warningText.add("hidden_draft");
@@ -503,5 +504,25 @@ input[type="submit"]:active,
   font-family: "Gotham Pro light", sans-serif;
   font-weight: 400;
   color: #979797;
+}
+
+.active_draft {
+  color: red;
+  font-size: 14px;
+  margin-left: 32%;
+  margin-top: -20px;
+  /*display: none;*/
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+.hidden_draft {
+  color: red;
+  font-size: 14px;
+  margin-left: 32%;
+  margin-top: -20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.35s ease-in-out;
 }
 </style>

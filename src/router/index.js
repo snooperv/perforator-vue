@@ -5,6 +5,8 @@ import Index from "@/pages/Index";
 import SelfReview from "@/pages/SelfReview/SelfReview";
 import NotFound from "@/components/layouts/NotFound";
 import IRate from "@/pages/IRate/IRate";
+import IManager from "@/pages/IManager/IManager";
+import PeerApproval from "@/pages/IManager/PeerApproval/PeerApproval";
 
 const routes = [
   {
@@ -33,6 +35,22 @@ const routes = [
         path: "/i-rate",
         component: IRate,
         meta: { title: "Я оцениваю" },
+      },
+      {
+        path: "/i-manager",
+        component: IManager,
+        children: [
+          {
+            path: "approval",
+            component: PeerApproval,
+            meta: { title: "Я менеджер - утверждение пиров" },
+          },
+          {
+            path: "my-team",
+            component: PeerApproval,
+            meta: { title: "Я менеджер - моя команда" },
+          },
+        ],
       },
       {
         path: "/page-not-found",
