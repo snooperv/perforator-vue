@@ -8,6 +8,8 @@ import IRate from "@/pages/IRate/IRate";
 import IManager from "@/pages/IManager/IManager";
 import PeerApproval from "@/pages/IManager/PeerApproval/PeerApproval";
 import MyTeam from "@/pages/IManager/MyTeam/MyTeam";
+import OneToOne from "@/pages/OneToOne/OneToOne";
+import Current from "@/pages/OneToOne/Current/Current";
 
 const routes = [
   {
@@ -50,6 +52,23 @@ const routes = [
             path: "my-team",
             component: MyTeam,
             meta: { title: "Я менеджер - моя команда" },
+          },
+        ],
+      },
+      {
+        path: "/1to1",
+        component: OneToOne,
+        meta: { title: "One to one" },
+        children: [
+          {
+            path: "current",
+            component: Current,
+            meta: { title: "One to one" },
+          },
+          {
+            path: "previous",
+            component: Current,
+            meta: { title: "One to one" },
           },
         ],
       },
