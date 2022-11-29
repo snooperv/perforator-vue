@@ -49,5 +49,6 @@ body {
 .modal-container {
   align-items: flex-end;
   background-color: rgba(0, 0, 0, 0.7);
+  z-index: 100;
 }
 </style>

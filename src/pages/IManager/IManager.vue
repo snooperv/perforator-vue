@@ -11,6 +11,11 @@
 <script>
 export default {
   name: "IManager",
+
+  mounted() {
+    this.$route.path === "/i-manager" &&
+      this.$router.push("/i-manager/approval");
+  },
 };
 </script>
 
@@ -36,6 +41,7 @@ export default {
   letter-spacing: 1px;
   font-weight: 1000;
   font-family: "Gotham Pro light", sans-serif;
+  text-decoration: none;
 }
 
 .dactive {
@@ -45,6 +51,7 @@ export default {
 
 .second-link {
   margin-left: -15px;
+  color: black;
 }
 
 .peers span {
