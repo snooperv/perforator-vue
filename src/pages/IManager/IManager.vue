@@ -13,12 +13,19 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "IManager",
 
+  computed: {
+    ...mapState(["user"]),
+  },
+
   mounted() {
-    this.$route.path === "/i-manager" &&
+    if (this.$route.path === "/i-manager" && this.user.team.length > 0)
       this.$router.push("/i-manager/approval");
+    else this.$router.push("/self-review");
   },
 };
 </script>

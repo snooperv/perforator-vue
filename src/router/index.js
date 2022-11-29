@@ -10,6 +10,7 @@ import PeerApproval from "@/pages/IManager/PeerApproval/PeerApproval";
 import MyTeam from "@/pages/IManager/MyTeam/MyTeam";
 import OneToOne from "@/pages/OneToOne/OneToOne";
 import Current from "@/pages/OneToOne/Current/Current";
+import Previous from "@/pages/OneToOne/Previous/Previous";
 
 const routes = [
   {
@@ -67,7 +68,7 @@ const routes = [
           },
           {
             path: "previous",
-            component: Current,
+            component: Previous,
             meta: { title: "One to one" },
           },
         ],

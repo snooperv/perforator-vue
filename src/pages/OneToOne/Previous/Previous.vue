@@ -1,17 +1,16 @@
 <template>
   <div class="peers">
     <div class="date">
-      <h2>Q2</h2>
-      <span class="period"> 01.01.2021 - 14.01.2021</span>
+      <h2>Q1</h2>
+      <span class="period"> 01.01.2020 - 14.01.2020</span>
     </div>
-
     <button @click="toggleForm" class="peer dropbtn">
       <span class="peers-pic">
         <img src="@/assets/img/pic.png" class="avatar" alt="Аватар" />
       </span>
-      <span class="name"> Сотрудник Дима2 </span>
-
-      <a href="#" id="chev-1" class="chevron rotate" style="margin-right: 15px">
+      <span class="name">Коновалов Илья</span>
+      <span class="position"> Мой руководитель</span>
+      <a href="#" id="chev2" class="chevron rotate">
         <i class="fas fa-chevron-right" aria-hidden="true"></i>
       </a>
     </button>
@@ -23,9 +22,8 @@
 import DropdownForm from "@/components/OneToOne/DropdownForm";
 
 export default {
-  name: "Current",
+  name: "Previous",
   components: { DropdownForm },
-
   data() {
     return {
       isOpen: false,
@@ -94,6 +92,14 @@ h2 {
   font-family: "Gotham Pro", sans-serif;
   font-size: 22px;
   font-weight: 1000;
+}
+
+.peer .position {
+  color: #edbd31;
+  font-weight: 400;
+  position: relative;
+  float: right;
+  right: 50px;
 }
 
 .chevron {
