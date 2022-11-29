@@ -15,3 +15,5 @@ export const removeMyPeerAPI = () => PEERS + "delete/";
 
 export const getSelfReviewAPI = () => SELF_REVIEW;
 export const saveSelfReviewAPI = () => SELF_REVIEW + "save/";
+
+export const getInfoTeamAPI = () => MAIN_API + "team";

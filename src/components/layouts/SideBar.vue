@@ -2,7 +2,11 @@
   <div class="sidebar">
     <div class="profile-div">
       <div class="profile-pic">
-        <img class="photo-sidebar" src="@/assets/img/pic.png" />
+        <img
+          class="photo-sidebar"
+          src="@/assets/img/pic.png"
+          alt="Фото профиля"
+        />
       </div>
       <div class="profile-name">
         <h2>Менеджер Сергей1</h2>
@@ -21,13 +25,13 @@
       </div>
     </div>
     <div class="menu-items" id="menuItems">
-      <nav class="side-btn small active">
-        <router-link to="/self-review">
+      <nav class="side-btn small">
+        <router-link to="/self-review" class="link">
           <div class="link-container">self review</div>
         </router-link>
       </nav>
       <nav class="side-btn small">
-        <router-link to="/i-rate">
+        <router-link to="/i-rate" class="link">
           <div class="link-container">
             я оцениваю
             <!--<div class="amount-bg"></div>
@@ -35,8 +39,8 @@
           </div>
         </router-link>
       </nav>
-      <nav class="side-btn small" id="i_manager_button" style="display: block">
-        <router-link to="/i-manager">
+      <nav class="side-btn small" v-if="user.team.length > 0">
+        <router-link to="/i-manager" class="link">
           <div class="link-container">
             я менеджер
             <!-- Нужно будет поправить, сделал набросок -->
@@ -47,7 +51,7 @@
         </router-link>
       </nav>
       <nav class="side-btn small">
-        <router-link to="/1to1">
+        <router-link to="/1to1" class="link">
           <div class="link-container">1-on-1</div>
         </router-link>
       </nav>
@@ -55,10 +59,15 @@
         to="/last-periods"
         active-class="active"
         tag="button"
-        class="side-btn"
+        class="side-btn link"
       >
         <div class="link-container">
-          <img src="@/assets/img/history.svg" width="20" height="20" />
+          <img
+            src="@/assets/img/history.svg"
+            width="20"
+            height="20"
+            alt="История"
+          />
           Прошлые периоды оценки
         </div>
       </router-link>
@@ -67,8 +76,18 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "SideBar",
+
+  computed: {
+    ...mapState(["user"]),
+  },
+
+  mounted() {
+    this.$store.dispatch("getMyTeam");
+  },
 };
 </script>
 
@@ -141,14 +160,12 @@ a {
 
 .side-btn {
   border: none;
-  padding: 10px 0;
   cursor: pointer;
   font-size: 18px;
   font-weight: 700;
   color: #000;
-  margin: 0 15px 0 5px;
   background-color: transparent;
-  margin-top: 0.2em;
+  margin: 0.2em 15px 0 5px;
 }
 
 .perfomance {
@@ -173,7 +190,13 @@ a {
   transition: 0.2s;
 }
 
-.side-btn.active {
+.link {
+  display: inline-block;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.router-link-active {
   position: relative;
   background-color: rgba(165, 164, 245, 0.56);
   border-radius: 3em;

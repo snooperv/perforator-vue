@@ -2,18 +2,17 @@ import { createRouter, createWebHistory } from "vue-router";
 import LoginPage from "../pages/Login/LoginPage.vue";
 import RegisterPage from "../pages/Login/RegisterPage.vue";
 import Index from "@/pages/Index";
-import SelfReview from "@/pages/SelfReview";
+import SelfReview from "@/pages/SelfReview/SelfReview";
+import NotFound from "@/components/layouts/NotFound";
+import IRate from "@/pages/IRate/IRate";
+import IManager from "@/pages/IManager/IManager";
+import PeerApproval from "@/pages/IManager/PeerApproval/PeerApproval";
+import MyTeam from "@/pages/IManager/MyTeam/MyTeam";
+import OneToOne from "@/pages/OneToOne/OneToOne";
+import Current from "@/pages/OneToOne/Current/Current";
+import Previous from "@/pages/OneToOne/Previous/Previous";
 
 const routes = [
-  {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../pages/AboutView.vue"),
-  },
   {
     path: "/login",
     name: "login",
@@ -36,18 +35,72 @@ const routes = [
         component: SelfReview,
         meta: { title: "Self Review" },
       },
+      {
+        path: "/i-rate",
+        component: IRate,
+        meta: { title: "Я оцениваю" },
+      },
+      {
+        path: "/i-manager",
+        component: IManager,
+        children: [
+          {
+            path: "approval",
+            component: PeerApproval,
+            meta: { title: "Я менеджер - утверждение пиров" },
+          },
+          {
+            path: "my-team",
+            component: MyTeam,
+            meta: { title: "Я менеджер - моя команда" },
+          },
+        ],
+      },
+      {
+        path: "/1to1",
+        component: OneToOne,
+        meta: { title: "One to one" },
+        children: [
+          {
+            path: "current",
+            component: Current,
+            meta: { title: "One to one" },
+          },
+          {
+            path: "previous",
+            component: Previous,
+            meta: { title: "One to one" },
+          },
+        ],
+      },
+      {
+        path: "/page-not-found",
+        component: NotFound,
+        meta: { title: "Страница не найдена" },
+      },
     ],
+  },
+
+  {
+    path: "/:catchAll(.*)", // Unrecognized path automatically matches 404
+    redirect: "/page-not-found",
   },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { top: 0 };
+    }
+  },
 });
 
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title + " - Perforator";
-
   next();
 });
 

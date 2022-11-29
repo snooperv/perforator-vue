@@ -25,11 +25,9 @@ export default {
 @import url("@/assets/font/gothamProLight/gothamProLight.css");
 
 #app {
-  font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   //text-align: center;
-  color: #2c3e50;
 }
 
 html {
@@ -49,5 +47,6 @@ body {
 .modal-container {
   align-items: flex-end;
   background-color: rgba(0, 0, 0, 0.7);
+  z-index: 100;
 }
 </style>

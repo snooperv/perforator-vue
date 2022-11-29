@@ -1,16 +1,24 @@
 <template>
   <Header />
   <SideBar />
-  <router-view />
+  <div class="main">
+    <div class="content">
+      <router-view />
+    </div>
+  </div>
 </template>
 
 <script>
-import Header from "@/components/Header";
-import SideBar from "@/components/SideBar";
+import Header from "@/components/layouts/Header";
+import SideBar from "@/components/layouts/SideBar";
 
 export default {
   name: "Index",
   components: { SideBar, Header },
+
+  mounted() {
+    this.$route.path === "/" && this.$router.push("/self-review");
+  },
 };
 </script>
 
@@ -27,9 +35,6 @@ body {
   background-color: #f8f8fa;
 }
 
-.header {
-}
-
 .content {
   background-color: #f8f8fa;
   grid-column-start: 2;
@@ -38,7 +43,12 @@ body {
 
 @media (max-width: 800px) {
   .main {
-    grid: unset;
+    /*grid: unset;*/
+    display: block;
+  }
+
+  .content {
+    margin-top: 75px;
   }
 
   .menu {

@@ -66,6 +66,7 @@ export default {
     userLogout() {
       Cockies.remove("refresh_token");
       localStorage.removeItem("token");
+      localStorage.removeItem("selfReviewForm");
       window.location = "/login";
     },
   },
