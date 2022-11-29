@@ -63,7 +63,6 @@ export default {
   methods: {
     toggleForm() {
       this.isOpen = !this.isOpen;
-      console.log(this.isOpen);
     },
   },
 };

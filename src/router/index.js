@@ -7,6 +7,7 @@ import NotFound from "@/components/layouts/NotFound";
 import IRate from "@/pages/IRate/IRate";
 import IManager from "@/pages/IManager/IManager";
 import PeerApproval from "@/pages/IManager/PeerApproval/PeerApproval";
+import MyTeam from "@/pages/IManager/MyTeam/MyTeam";
 
 const routes = [
   {
@@ -47,7 +48,7 @@ const routes = [
           },
           {
             path: "my-team",
-            component: PeerApproval,
+            component: MyTeam,
             meta: { title: "Я менеджер - моя команда" },
           },
         ],

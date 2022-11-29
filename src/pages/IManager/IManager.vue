@@ -1,8 +1,12 @@
 <template>
   <div class="manager">
     <div class="double-links" id="dl">
-      <a href="#" class="d-link dactive"> утверждение пиров </a>
-      <a href="#" class="d-link second-link"> моя команда </a>
+      <router-link class="d-link" to="/i-manager/approval">
+        утверждение пиров
+      </router-link>
+      <router-link class="d-link second-link" to="/i-manager/my-team">
+        моя команда
+      </router-link>
     </div>
     <router-view />
   </div>
@@ -42,16 +46,16 @@ export default {
   font-weight: 1000;
   font-family: "Gotham Pro light", sans-serif;
   text-decoration: none;
+  color: black;
 }
 
-.dactive {
+.router-link-active {
   background: #a5a4f5;
   color: #fff;
 }
 
 .second-link {
   margin-left: -15px;
-  color: black;
 }
 
 .peers span {
