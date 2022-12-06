@@ -17,6 +17,7 @@ const mutations = {
 
   [types.SET_TEAM](state, team) {
     state.user.team = team;
+    team.length > 0 && localStorage.setItem("isManager", "true");
   },
 
   [types.SET_TEAM_WITHOUT_REVIEW](state, user) {

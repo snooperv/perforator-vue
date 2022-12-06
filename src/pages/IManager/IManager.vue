@@ -23,9 +23,10 @@ export default {
   },
 
   mounted() {
-    if (this.$route.path === "/i-manager" && this.user.team.length > 0)
+    if (localStorage.getItem("isManager") !== "true")
+      this.$router.push("/self-review");
+    if (this.$route.path === "/i-manager")
       this.$router.push("/i-manager/approval");
-    // else this.$router.push("/self-review");
   },
 };
 </script>
