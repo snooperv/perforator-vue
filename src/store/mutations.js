@@ -34,6 +34,11 @@ const mutations = {
     !state.user.teamApprove.includes(user) && state.user.teamApprove.push(user);
   },
 
+  [types.SET_WORKER_PEERS](state, payload) {
+    state.worker[payload.id] = payload.peers;
+    console.log(payload.id, state.worker[payload.id], payload.peers);
+  },
+
   [types.SET_PEERS_ALL](state, peers) {
     state.peersAll = peers;
   },

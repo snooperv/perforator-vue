@@ -25,7 +25,7 @@ export default {
   mounted() {
     if (this.$route.path === "/i-manager" && this.user.team.length > 0)
       this.$router.push("/i-manager/approval");
-    else this.$router.push("/self-review");
+    // else this.$router.push("/self-review");
   },
 };
 </script>

@@ -3,38 +3,18 @@
     <div class="dropdown-container" id="my_peers">
       <div class="dropdown-description">пиры, которых выбрал сотрудник</div>
 
-      <div class="selected-peer" id="my-peer34" style="display: block">
+      <div
+        class="selected-peer"
+        style="display: block"
+        v-for="peer in worker[id]"
+      >
         <img
           class="selected-peer-avatar"
           src="@/assets/img/pic.png"
           alt="Аватар"
         />
-        <div class="selected-peer-name">Сотрудник Вадим3</div>
+        <div class="selected-peer-name">{{ peer.username }}</div>
         <a class="close delete-peer" onclick="remove_peer_remote(3, 4)">
-          <i class="fas fa-times" aria-hidden="true"></i>
-        </a>
-      </div>
-
-      <div class="selected-peer" id="my-peer35" style="display: block">
-        <img
-          class="selected-peer-avatar"
-          src="@/assets/img/pic.png"
-          alt="Аватар"
-        />
-        <div class="selected-peer-name">Сотрудник Никита4</div>
-        <a class="close delete-peer" onclick="remove_peer_remote(3, 5)">
-          <i class="fas fa-times" aria-hidden="true"></i>
-        </a>
-      </div>
-
-      <div class="selected-peer" id="my-peer36" style="display: block">
-        <img
-          class="selected-peer-avatar"
-          src="@/assets/img/pic.png"
-          alt="Аватар"
-        />
-        <div class="selected-peer-name">Сотрудник Вова5</div>
-        <a class="close delete-peer" onclick="remove_peer_remote(3, 6)">
           <i class="fas fa-times" aria-hidden="true"></i>
         </a>
       </div>
@@ -59,13 +39,22 @@
 <script>
 import { openModal } from "jenesius-vue-modal";
 import PeersList from "@/components/modals/PeersList";
+import { mapState } from "vuex";
 
 export default {
   name: "DropdownPeers",
 
+  props: ["id"],
+
+  mounted() {
+    console.log(this.id);
+  },
+
   computed: {
+    ...mapState(["worker"]),
+
     openModalPeers() {
-      openModal(PeersList);
+      openModal(PeersList, { isManager: true });
     },
   },
 };

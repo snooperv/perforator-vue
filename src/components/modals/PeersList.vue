@@ -34,6 +34,8 @@ import { closeModal } from "jenesius-vue-modal";
 export default {
   name: "PeersList",
 
+  props: ["isManager"],
+
   data() {
     return {
       search: "",
@@ -59,7 +61,7 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch("getAllPeers");
+    this.$store.dispatch("getAllPeers", this.isManager);
   },
 
   methods: {

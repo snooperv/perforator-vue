@@ -143,7 +143,7 @@ export default {
     ...mapState(["user", "selfReview"]),
 
     openModalPeers() {
-      openModal(PeersList);
+      openModal(PeersList, { isManager: false });
     },
 
     isSendDisabled() {

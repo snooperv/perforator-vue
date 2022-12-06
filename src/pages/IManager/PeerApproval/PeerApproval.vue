@@ -21,7 +21,7 @@
             <i class="fas fa-chevron-right" aria-hidden="true"></i>
           </a>
         </button>
-        <DropdownPeers v-if="worker.isDropdown" />
+        <DropdownPeers v-if="worker.isDropdown" :id="worker.profile_id" />
       </div>
     </div>
   </div>

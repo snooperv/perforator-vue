@@ -88,8 +88,9 @@ const actions = {
     }
   },
 
-  async getAllPeers({ commit, state }) {
+  async getAllPeers({ commit, state }, isManager) {
     try {
+      console.log(isManager);
       if (state.peersAll.length === 0) {
         let peers = await getAllPeers();
         if (state.user.peers) peers = filterPeers(peers, state.user.peers);
@@ -162,26 +163,29 @@ const actions = {
     }
   },
 
-  async getIsApproval({ commit, state }) {
+  async getIsApproval({ commit, state, dispatch }) {
     try {
-      // const userPeers = await getUserPeers(id);
       // const userRates = await getRates(id);
-      // const isDraft = await getUserReviewIsDraft(id);
-      // console.log("Пиры определенного пользователя:", userPeers);
       // console.log("Оценки определенного пользователя:", userRates);
-      // console.log("Определенный пользователь отправил ревью?", isDraft);
-      // console.log("Команда менеджера:", state.user.team);
+      if (state.user.team.length === 0) {
+        await dispatch("getMyTeam");
+      }
+
       state.user.team.map(async (worker) => {
         let isDraft = await getUserReviewIsDraft(worker.profile_id);
-
-        // console.log("ID пользователя:", worker.profile_id);
-        // console.log("Определенный пользователь не отправил ревью?", isDraft);
 
         if (isDraft.is_draft && !worker.approve)
           commit(types.SET_TEAM_WITHOUT_REVIEW, worker);
         else if (!isDraft.is_draft && worker.approve)
           commit(types.SET_TEAM_APPROVE, worker);
-        else commit(types.SET_TEAM_WITH_REVIEW, worker);
+        else {
+          const userPeers = await getUserPeers(worker.profile_id);
+          commit(types.SET_WORKER_PEERS, {
+            id: worker.profile_id,
+            peers: userPeers,
+          });
+          commit(types.SET_TEAM_WITH_REVIEW, worker);
+        }
       });
     } catch (e) {
       console.log(e);
