@@ -95,14 +95,15 @@ const actions = {
     try {
       const { isManager, workerId } = payload;
       let peers = await getAllPeers();
-      if (!isManager) {
-        if (state.user.peers) peers = filterPeers(peers, state.user.peers);
-      } else {
-        if (state.workerPeers[workerId]) {
-          peers = filterPeers(peers, state.workerPeers[workerId]);
-          peers = peers.filter((peer) => peer.profile_id !== workerId);
-        }
+
+      if (!isManager && state.user.peers) {
+        peers = filterPeers(peers, state.user.peers);
+      } else if (state.workerPeers[workerId]) {
+        peers = filterPeers(peers, state.workerPeers[workerId]).filter(
+          (peer) => peer.profile_id !== workerId
+        );
       }
+
       if (!peers.error) commit(types.SET_PEERS_ALL, peers);
     } catch (e) {
       console.log(e);
