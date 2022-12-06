@@ -94,9 +94,6 @@ const actions = {
   async getAllPeers({ commit, state }, payload) {
     try {
       const { isManager, workerId } = payload;
-
-      console.log(isManager, workerId);
-      // if (state.peersAll.length === 0) {
       let peers = await getAllPeers();
       if (!isManager) {
         if (state.user.peers) peers = filterPeers(peers, state.user.peers);
@@ -135,14 +132,10 @@ const actions = {
 
   async removeMyPeer({ commit, state }, id) {
     try {
-      // const peer = state.user.peers.find((peer) => peer.profile_id === id);
       const availablePeers = state.user.peers.filter(
         (peer) => peer.profile_id !== id
       );
-
       commit(types.SET_PEERS, availablePeers);
-      // commit(types.ADD_PEER_All, peer);
-
       await removeMyPeer(id);
     } catch (e) {
       console.log(e);
@@ -155,7 +148,6 @@ const actions = {
       const availablePeers = state.workerPeers[workerId].filter(
         (peer) => peer.profile_id !== peerId
       );
-      console.log(availablePeers);
       commit(types.SET_WORKER_PEERS, {
         id: workerId,
         peers: availablePeers,
