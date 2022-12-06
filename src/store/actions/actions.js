@@ -1,6 +1,7 @@
 import { types } from "@/types";
 import { refreshToken, getNewToken, registerUser } from "@/services/auth";
 import {
+  approveWorker,
   getAllPeers,
   getMyPeers,
   getMyTeam,
@@ -187,6 +188,23 @@ const actions = {
           commit(types.SET_TEAM_WITH_REVIEW, worker);
         }
       });
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async approveWorker({ state, commit }, id) {
+    try {
+      await approveWorker(id);
+      const addUser = state.user.teamWithReview.find(
+        (user) => user.profile_id === id
+      );
+
+      state.user.teamWithReview = state.user.teamWithReview.filter(
+        (user) => user.profile_id !== id
+      );
+
+      commit(types.SET_TEAM_APPROVE, addUser);
     } catch (e) {
       console.log(e);
     }

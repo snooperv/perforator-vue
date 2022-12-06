@@ -13,8 +13,10 @@
           src="@/assets/img/pic.png"
           alt="Аватар"
         />
-        <div class="selected-peer-name">{{ peer.username }}</div>
-        <a class="close delete-peer" onclick="remove_peer_remote(3, 4)">
+        <div class="selected-peer-name">
+          {{ peer.username }}
+        </div>
+        <a class="close delete-peer" @click="removePeer(peer.profile_id)">
           <i class="fas fa-times" aria-hidden="true"></i>
         </a>
       </div>
@@ -29,7 +31,7 @@
           class="accept"
           type="submit"
           value="утвердить"
-          onclick="approve_user(3)"
+          @click="approveUser(id)"
         />
       </div>
     </div>
@@ -46,15 +48,21 @@ export default {
 
   props: ["id"],
 
-  mounted() {
-    console.log(this.id);
-  },
-
   computed: {
     ...mapState(["worker"]),
 
     openModalPeers() {
       openModal(PeersList, { isManager: true });
+    },
+  },
+
+  methods: {
+    removePeer(peerId) {
+      console.log(peerId);
+    },
+
+    approveUser(id) {
+      this.$store.dispatch("approveWorker", id);
     },
   },
 };

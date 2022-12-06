@@ -37,7 +37,6 @@ const mutations = {
 
   [types.SET_WORKER_PEERS](state, payload) {
     state.worker[payload.id] = payload.peers;
-    console.log(payload.id, state.worker[payload.id], payload.peers);
   },
 
   [types.SET_PEERS_ALL](state, peers) {
@@ -46,12 +45,12 @@ const mutations = {
 
   [types.ADD_MY_PEER](state, peer) {
     state.user.peers.push(peer);
-    // state.user.peers.sort(peersSort);
+    state.user.peers.sort(peersSort);
   },
 
   [types.ADD_PEER_All](state, peer) {
     state.peersAll.push(peer);
-    // state.peersAll.sort(peersSort);
+    state.peersAll.sort(peersSort);
   },
 
   [types.SET_SELFREVIEW](state, payload) {

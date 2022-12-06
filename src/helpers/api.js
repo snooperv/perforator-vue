@@ -15,6 +15,9 @@ export const getAllPeersAPI = () => PEERS + "all/";
 export const saveMyPeerAPI = () => PEERS + "save/";
 export const removeMyPeerAPI = () => PEERS + "delete/";
 export const getUserPeersAPI = (id) => PEERS + "uid" + urlQueryParts(id);
+export const removeWorkerPeerAPI = (id) =>
+  PEERS + "delete/user" + urlQueryParts(id);
+export const approveWorkerAPI = (id) => PEERS + "approve" + urlQueryParts(id);
 
 export const getSelfReviewAPI = () => SELF_REVIEW;
 export const saveSelfReviewAPI = () => SELF_REVIEW + "save/";
