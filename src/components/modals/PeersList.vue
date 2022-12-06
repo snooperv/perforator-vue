@@ -69,7 +69,11 @@ export default {
 
   methods: {
     selectPeerRemote(id) {
-      if (!this.isManager) this.$store.dispatch("addMyPeer", id);
+      this.$store.dispatch("addMyPeer", {
+        peerId: id,
+        isManager: this.isManager,
+        workerId: this.workerId,
+      });
     },
   },
 };

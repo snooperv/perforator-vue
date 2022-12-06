@@ -1,5 +1,6 @@
 import request from "../helpers/request";
 import {
+  addWorkerPeerAPI,
   approveWorkerAPI,
   getAllPeersAPI,
   getInfoTeamAPI,
@@ -34,8 +35,12 @@ export const getUserPeers = async (id) => {
   return await request(getUserPeersAPI({ id }));
 };
 
-export const removeWorkerPeer = async (id) => {
-  return await request(removeWorkerPeerAPI({ id }));
+export const addWorkerPeer = async (userId, peerId) => {
+  return await request(addWorkerPeerAPI({ id: userId }), "POST", peerId);
+};
+
+export const removeWorkerPeer = async (userId, peerId) => {
+  return await request(removeWorkerPeerAPI({ id: userId }), "POST", peerId);
 };
 
 export const approveWorker = async (id) => {

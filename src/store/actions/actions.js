@@ -1,6 +1,7 @@
 import { types } from "@/types";
 import { refreshToken, getNewToken, registerUser } from "@/services/auth";
 import {
+  addWorkerPeer,
   approveWorker,
   getAllPeers,
   getMyPeers,
@@ -110,17 +111,22 @@ const actions = {
     }
   },
 
-  async addMyPeer({ commit, state }, id) {
+  async addMyPeer({ commit, state }, payload) {
     try {
-      const peer = state.peersAll.find((peer) => peer.profile_id === id);
+      const { peerId, isManager, workerId } = payload;
+      const peer = state.peersAll.find((peer) => peer.profile_id === peerId);
       const availablePeers = state.peersAll.filter(
-        (peer) => peer.profile_id !== id
+        (peer) => peer.profile_id !== peerId
       );
 
       commit(types.SET_PEERS_ALL, availablePeers);
-      commit(types.ADD_MY_PEER, peer);
-
-      await saveMyPeer(id);
+      if (!isManager) {
+        commit(types.ADD_MY_PEER, peer);
+        await saveMyPeer(peerId);
+      } else {
+        commit(types.ADD_WORKER_PEER, { peer, workerId });
+        await addWorkerPeer(workerId, peerId);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -128,13 +134,13 @@ const actions = {
 
   async removeMyPeer({ commit, state }, id) {
     try {
-      const peer = state.user.peers.find((peer) => peer.profile_id === id);
+      // const peer = state.user.peers.find((peer) => peer.profile_id === id);
       const availablePeers = state.user.peers.filter(
         (peer) => peer.profile_id !== id
       );
 
       commit(types.SET_PEERS, availablePeers);
-      commit(types.ADD_PEER_All, peer);
+      // commit(types.ADD_PEER_All, peer);
 
       await removeMyPeer(id);
     } catch (e) {

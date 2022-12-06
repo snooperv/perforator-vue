@@ -48,6 +48,11 @@ const mutations = {
     state.user.peers.sort(peersSort);
   },
 
+  [types.ADD_WORKER_PEER](state, payload) {
+    state.workerPeers[payload.workerId].push(payload.peer);
+    state.workerPeers[payload.workerId].sort(peersSort);
+  },
+
   [types.ADD_PEER_All](state, peer) {
     state.peersAll.push(peer);
     state.peersAll.sort(peersSort);
