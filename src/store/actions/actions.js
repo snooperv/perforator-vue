@@ -8,6 +8,7 @@ import {
   getMyTeam,
   getUserPeers,
   removeMyPeer,
+  removeWorkerPeer,
   saveMyPeer,
 } from "@/services/peers";
 import Cockies from "vue-cookies";
@@ -143,6 +144,23 @@ const actions = {
       // commit(types.ADD_PEER_All, peer);
 
       await removeMyPeer(id);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async removeWorkerPeer({ commit, state }, payload) {
+    try {
+      const { workerId, peerId } = payload;
+      const availablePeers = state.workerPeers[workerId].filter(
+        (peer) => peer.profile_id !== peerId
+      );
+      console.log(availablePeers);
+      commit(types.SET_WORKER_PEERS, {
+        id: workerId,
+        peers: availablePeers,
+      });
+      await removeWorkerPeer(workerId, peerId);
     } catch (e) {
       console.log(e);
     }

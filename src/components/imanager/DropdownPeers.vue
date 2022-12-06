@@ -16,7 +16,7 @@
         <div class="selected-peer-name">
           {{ peer.username }}
         </div>
-        <a class="close delete-peer" @click="removePeer(peer.profile_id)">
+        <a class="close delete-peer" @click="removePeer(id, peer.profile_id)">
           <i class="fas fa-times" aria-hidden="true"></i>
         </a>
       </div>
@@ -57,8 +57,9 @@ export default {
   },
 
   methods: {
-    removePeer(peerId) {
-      console.log(peerId);
+    removePeer(workerId, peerId) {
+      console.log(workerId, peerId);
+      this.$store.dispatch("removeWorkerPeer", { workerId, peerId });
     },
 
     approveUser(id) {
