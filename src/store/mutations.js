@@ -19,6 +19,21 @@ const mutations = {
     state.user.team = team;
   },
 
+  [types.SET_TEAM_WITHOUT_REVIEW](state, user) {
+    user.isDropdown = false;
+    !state.user.teamWithoutReview.includes(user) &&
+      state.user.teamWithoutReview.push(user);
+  },
+
+  [types.SET_TEAM_WITH_REVIEW](state, user) {
+    !state.user.teamWithReview.includes(user) &&
+      state.user.teamWithReview.push(user);
+  },
+
+  [types.SET_TEAM_APPROVE](state, user) {
+    !state.user.teamApprove.includes(user) && state.user.teamApprove.push(user);
+  },
+
   [types.SET_PEERS_ALL](state, peers) {
     state.peersAll = peers;
   },

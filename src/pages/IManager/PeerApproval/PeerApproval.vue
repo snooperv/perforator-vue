@@ -2,21 +2,26 @@
   <div class="block-container">
     <h2 class="block-title">
       Неутвержденные пользователи
-      <span class="peers-amount" id="not_approve_users_count">1</span>
+      <span class="peers-amount" id="not_approve_users_count">{{
+        user.teamWithReview.length
+      }}</span>
     </h2>
 
     <div id="team_not_approve">
-      <div id="peer-3" class="peers">
-        <button @click="toggleForm" id="remove_btn3" class="peer dropbtn">
+      <div class="peers" v-for="worker in user.teamWithReview">
+        <button
+          @click="() => (worker.isDropdown = !worker.isDropdown)"
+          class="peer dropbtn"
+        >
           <span class="peers-pic-manager">
             <img class="avatar" src="@/assets/img/pic.png" alt="Аватар" />
           </span>
-          <span class="name" style="margin-left: 0">Сотрудник Дима2</span>
+          <span class="name" style="margin-left: 0">{{ worker.username }}</span>
           <a href="#" class="chevron" id="remove_ref3">
             <i class="fas fa-chevron-right" aria-hidden="true"></i>
           </a>
         </button>
-        <DropdownPeers v-if="isOpen" />
+        <DropdownPeers v-if="worker.isDropdown" />
       </div>
     </div>
   </div>
@@ -24,15 +29,17 @@
   <div class="block-container">
     <h2 class="block-title">
       Пользователь не отправил Self Review
-      <span class="peers-amount" id="without_sr_users_count">1</span>
+      <span class="peers-amount" id="without_sr_users_count">{{
+        user.teamWithoutReview.length
+      }}</span>
     </h2>
     <div id="team_without_self_review">
-      <div id="peer-4" class="peers">
+      <div class="peers" v-for="worker in user.teamWithoutReview">
         <button id="remove_btn4" class="peer dropbtn" style="cursor: default">
           <span class="peers-pic-manager">
             <img class="avatar" src="@/assets/img/pic.png" alt="Аватар" />
           </span>
-          <span class="name" style="margin-left: 0">Сотрудник Вадим3</span>
+          <span class="name" style="margin-left: 0">{{ worker.username }}</span>
         </button>
       </div>
     </div>
@@ -41,30 +48,40 @@
   <div class="block-container">
     <h2 class="block-title">
       Утверждённые пользователи
-      <span class="peers-amount last" id="approve_users_count">0</span>
+      <span class="peers-amount last" id="approve_users_count">{{
+        user.teamApprove.length
+      }}</span>
     </h2>
-    <div id="team_approve"></div>
+    <div id="team_approve">
+      <div class="peers" v-for="worker in user.teamApprove">
+        <button id="remove_btn4" class="peer dropbtn" style="cursor: default">
+          <span class="peers-pic-manager">
+            <img class="avatar" src="@/assets/img/pic.png" alt="Аватар" />
+          </span>
+          <span class="name" style="margin-left: 0">{{ worker.username }}</span>
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import DropdownPeers from "@/components/imanager/DropdownPeers";
+import { mapState } from "vuex";
 
 export default {
   name: "PeerApproval",
   components: { DropdownPeers },
 
-  data() {
-    return {
-      isOpen: false,
-    };
+  mounted() {
+    this.$store.dispatch("getIsApproval");
   },
 
-  methods: {
-    toggleForm() {
-      this.isOpen = !this.isOpen;
-    },
+  computed: {
+    ...mapState(["user"]),
   },
+
+  methods: {},
 };
 </script>
 

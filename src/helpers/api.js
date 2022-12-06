@@ -1,3 +1,5 @@
+import urlQueryParts from "@/helpers/urlQueryParts";
+
 const API_URL = "http://localhost:8000";
 const AUTH = API_URL + "/api/token/";
 const MAIN_API = API_URL + "/perforator/";
@@ -12,8 +14,13 @@ export const getMyPeersAPI = () => PEERS + "my/";
 export const getAllPeersAPI = () => PEERS + "all/";
 export const saveMyPeerAPI = () => PEERS + "save/";
 export const removeMyPeerAPI = () => PEERS + "delete/";
+export const getUserPeersAPI = (id) => PEERS + "uid" + urlQueryParts(id);
 
 export const getSelfReviewAPI = () => SELF_REVIEW;
 export const saveSelfReviewAPI = () => SELF_REVIEW + "save/";
+export const getUserReviewIsDraftAPI = (id) =>
+  SELF_REVIEW + "is-draft/" + urlQueryParts(id);
 
 export const getInfoTeamAPI = () => MAIN_API + "team";
+export const getRatesAPI = (id) =>
+  MAIN_API + "imanager/employee/rating" + urlQueryParts(id);

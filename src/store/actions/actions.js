@@ -4,12 +4,18 @@ import {
   getAllPeers,
   getMyPeers,
   getMyTeam,
+  getUserPeers,
   removeMyPeer,
   saveMyPeer,
 } from "@/services/peers";
 import Cockies from "vue-cookies";
 import router from "@/router";
-import { getSelfReview, saveSelfReview } from "@/services/basic";
+import {
+  getRates,
+  getSelfReview,
+  getUserReviewIsDraft,
+  saveSelfReview,
+} from "@/services/basic";
 
 const actions = {
   async refreshAuthToken({ commit, getters, state }) {
@@ -151,6 +157,32 @@ const actions = {
     try {
       localStorage.setItem("selfReviewForm", JSON.stringify(payload));
       await saveSelfReview(payload);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async getIsApproval({ commit, state }) {
+    try {
+      // const userPeers = await getUserPeers(id);
+      // const userRates = await getRates(id);
+      // const isDraft = await getUserReviewIsDraft(id);
+      // console.log("Пиры определенного пользователя:", userPeers);
+      // console.log("Оценки определенного пользователя:", userRates);
+      // console.log("Определенный пользователь отправил ревью?", isDraft);
+      // console.log("Команда менеджера:", state.user.team);
+      state.user.team.map(async (worker) => {
+        let isDraft = await getUserReviewIsDraft(worker.profile_id);
+
+        // console.log("ID пользователя:", worker.profile_id);
+        // console.log("Определенный пользователь не отправил ревью?", isDraft);
+
+        if (isDraft.is_draft && !worker.approve)
+          commit(types.SET_TEAM_WITHOUT_REVIEW, worker);
+        else if (!isDraft.is_draft && worker.approve)
+          commit(types.SET_TEAM_APPROVE, worker);
+        else commit(types.SET_TEAM_WITH_REVIEW, worker);
+      });
     } catch (e) {
       console.log(e);
     }

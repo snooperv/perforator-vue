@@ -3,6 +3,7 @@ import {
   getAllPeersAPI,
   getInfoTeamAPI,
   getMyPeersAPI,
+  getUserPeersAPI,
   removeMyPeerAPI,
   saveMyPeerAPI,
 } from "@/helpers/api";
@@ -25,4 +26,8 @@ export const removeMyPeer = async (id) => {
 
 export const getMyTeam = async () => {
   return await request(getInfoTeamAPI());
+};
+
+export const getUserPeers = async (id) => {
+  return await request(getUserPeersAPI({ id }));
 };
