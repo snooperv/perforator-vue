@@ -34,7 +34,7 @@ import { closeModal } from "jenesius-vue-modal";
 export default {
   name: "PeersList",
 
-  props: ["isManager"],
+  props: ["isManager", "workerId"],
 
   data() {
     return {
@@ -61,12 +61,15 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch("getAllPeers", this.isManager);
+    this.$store.dispatch("getAllPeers", {
+      isManager: this.isManager,
+      workerId: this.workerId,
+    });
   },
 
   methods: {
     selectPeerRemote(id) {
-      this.$store.dispatch("addMyPeer", id);
+      if (!this.isManager) this.$store.dispatch("addMyPeer", id);
     },
   },
 };

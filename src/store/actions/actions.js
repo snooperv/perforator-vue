@@ -89,14 +89,22 @@ const actions = {
     }
   },
 
-  async getAllPeers({ commit, state }, isManager) {
+  async getAllPeers({ commit, state }, payload) {
     try {
-      console.log(isManager);
-      if (state.peersAll.length === 0) {
-        let peers = await getAllPeers();
+      const { isManager, workerId } = payload;
+
+      console.log(isManager, workerId);
+      // if (state.peersAll.length === 0) {
+      let peers = await getAllPeers();
+      if (!isManager) {
         if (state.user.peers) peers = filterPeers(peers, state.user.peers);
-        if (!peers.error) commit(types.SET_PEERS_ALL, peers);
+      } else {
+        if (state.workerPeers[workerId]) {
+          peers = filterPeers(peers, state.workerPeers[workerId]);
+          peers = peers.filter((peer) => peer.profile_id !== workerId);
+        }
       }
+      if (!peers.error) commit(types.SET_PEERS_ALL, peers);
     } catch (e) {
       console.log(e);
     }

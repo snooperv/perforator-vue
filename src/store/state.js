@@ -14,7 +14,7 @@ const state = {
     teamWithReview: [],
     teamApprove: [],
   },
-  worker: {},
+  workerPeers: {},
   peersAll: [],
   selfReview: {},
 };

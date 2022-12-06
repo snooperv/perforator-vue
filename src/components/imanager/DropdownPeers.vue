@@ -6,7 +6,7 @@
       <div
         class="selected-peer"
         style="display: block"
-        v-for="peer in worker[id]"
+        v-for="peer in workerPeers[id]"
       >
         <img
           class="selected-peer-avatar"
@@ -49,10 +49,10 @@ export default {
   props: ["id"],
 
   computed: {
-    ...mapState(["worker"]),
+    ...mapState(["workerPeers"]),
 
     openModalPeers() {
-      openModal(PeersList, { isManager: true });
+      openModal(PeersList, { isManager: true, workerId: this.id });
     },
   },
 

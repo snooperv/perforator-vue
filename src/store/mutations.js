@@ -36,7 +36,7 @@ const mutations = {
   },
 
   [types.SET_WORKER_PEERS](state, payload) {
-    state.worker[payload.id] = payload.peers;
+    state.workerPeers[payload.id] = payload.peers;
   },
 
   [types.SET_PEERS_ALL](state, peers) {
