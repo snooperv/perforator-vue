@@ -248,14 +248,6 @@ const actions = {
 
   async postProcessOneToOne({}, payload) {
     const { common, personal, isManager, workerId } = payload;
-    console.log(
-      "common =",
-      common,
-      ", personal =",
-      personal,
-      isManager,
-      workerId
-    );
     await postProcessOneToOne({
       common,
       personal,
