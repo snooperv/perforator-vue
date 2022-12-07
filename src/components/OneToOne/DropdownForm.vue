@@ -44,6 +44,7 @@ export default {
       common: "",
       personal: "",
       isManager: localStorage.getItem("isManager") !== "true",
+      timerId: null,
     };
   },
 
@@ -53,14 +54,17 @@ export default {
 
   methods: {
     postForm(e) {
+      clearTimeout(this.timerId);
       if (e.target.name === "common") this.common = e.target.value;
       if (e.target.name === "personal") this.personal = e.target.value;
-      this.$store.dispatch("postProcessOneToOne", {
-        common: this.common,
-        personal: this.personal,
-        workerId: this.workerId,
-        isManager: this.isManager,
-      });
+      this.timerId = setTimeout(() => {
+        this.$store.dispatch("postProcessOneToOne", {
+          common: this.common,
+          personal: this.personal,
+          workerId: this.workerId,
+          isManager: this.isManager,
+        });
+      }, 1000);
     },
   },
 };
