@@ -15,12 +15,8 @@
         </span>
         <span class="name">{{ worker.username }}</span>
 
-        <a
-          href="#"
-          id="chev-1"
-          class="chevron rotate"
-          style="margin-right: 15px"
-        >
+        <span class="position" v-if="isManager"> Мой руководитель</span>
+        <a href="#" id="chev-1" class="chevron rotate">
           <i class="fas fa-chevron-right" aria-hidden="true"></i>
         </a>
       </button>
@@ -40,6 +36,7 @@ export default {
   data() {
     return {
       myTeam: [],
+      isManager: localStorage.getItem("isManager") !== "true",
     };
   },
 
@@ -124,6 +121,14 @@ h2 {
   cursor: pointer;
 }
 
+.peer .position {
+  color: #edbd31;
+  font-weight: 400;
+  position: relative;
+  float: right;
+  right: 50px;
+}
+
 .peer .name {
   float: left;
   /*margin-left: 30px;*/
@@ -135,10 +140,9 @@ h2 {
 }
 
 .chevron {
-  position: relative;
-  float: right;
-  margin-right: -200px;
+  position: absolute;
   font-size: 1.5em;
+  right: 20px;
   color: #331969;
 }
 

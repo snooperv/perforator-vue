@@ -251,8 +251,9 @@ const actions = {
     await postProcessOneToOne({
       common,
       personal,
-      interviewed: workerId,
-      is_manager: isManager,
+      interviewed: String(workerId),
+      is_manager:
+        String(isManager).charAt(0).toUpperCase() + String(isManager).slice(1),
     });
     try {
     } catch (e) {

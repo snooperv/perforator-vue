@@ -103,10 +103,9 @@ h2 {
 }
 
 .chevron {
-  position: relative;
-  float: right;
-  margin-right: -200px;
+  position: absolute;
   font-size: 1.5em;
+  right: 20px;
   color: #331969;
 }
 
