@@ -1,10 +1,6 @@
 <template>
-  <div id="myDropdown-1" class="dropdown-content">
-    <form
-      action="/perforator/process_one_to_one/"
-      id="one-to-one-1"
-      method="post"
-    >
+  <div :id="'myDropdown-' + workerId" class="dropdown-content">
+    <form :id="'one-to-one-' + workerId" @keyup="postForm">
       <h3 class="dropdownTitle">Общие заметки</h3>
 
       <textarea
@@ -15,6 +11,7 @@
         style="margin-left: 35px"
         class="ta big"
         id="generalNotes"
+        v-model="common"
       ></textarea>
 
       <h3 class="dropdownTitle">
@@ -30,6 +27,7 @@
         style="margin-left: 35px"
         class="ta big"
         id="personalNotes"
+        v-model="personal"
       ></textarea>
     </form>
   </div>
@@ -41,8 +39,29 @@ export default {
 
   props: ["workerId"],
 
+  data() {
+    return {
+      common: "",
+      personal: "",
+      isManager: localStorage.getItem("isManager") !== "true",
+    };
+  },
+
   mounted() {
     console.log(this.workerId);
+  },
+
+  methods: {
+    postForm(e) {
+      if (e.target.name === "common") this.common = e.target.value;
+      if (e.target.name === "personal") this.personal = e.target.value;
+      this.$store.dispatch("postProcessOneToOne", {
+        common: this.common,
+        personal: this.personal,
+        workerId: this.workerId,
+        isManager: this.isManager,
+      });
+    },
   },
 };
 </script>

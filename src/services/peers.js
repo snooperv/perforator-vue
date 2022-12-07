@@ -7,6 +7,7 @@ import {
   getMyManagerAPI,
   getMyPeersAPI,
   getUserPeersAPI,
+  postProcessOneToOneAPI,
   removeMyPeerAPI,
   removeWorkerPeerAPI,
   saveMyPeerAPI,
@@ -50,4 +51,8 @@ export const removeWorkerPeer = async (userId, peerId) => {
 
 export const approveWorker = async (id) => {
   return await request(approveWorkerAPI({ id }), "POST");
+};
+
+export const postProcessOneToOne = async (data) => {
+  return await request(postProcessOneToOneAPI(), "POST", data);
 };

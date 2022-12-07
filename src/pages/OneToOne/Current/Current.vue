@@ -2,7 +2,7 @@
   <div class="peers">
     <div class="date">
       <h2>Q2</h2>
-      <span class="period"> 01.01.2021 - 14.01.2021</span>
+      <span class="period"> 01.01.2023 - 14.01.2023</span>
     </div>
 
     <div v-for="worker in myTeam">
@@ -38,7 +38,9 @@ export default {
   components: { DropdownForm },
 
   data() {
-    return { myTeam: [] };
+    return {
+      myTeam: [],
+    };
   },
 
   mounted() {

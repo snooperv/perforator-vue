@@ -8,6 +8,7 @@ import {
   getMyPeers,
   getMyTeam,
   getUserPeers,
+  postProcessOneToOne,
   removeMyPeer,
   removeWorkerPeer,
   saveMyPeer,
@@ -240,6 +241,28 @@ const actions = {
     try {
       const manager = await getMyManager();
       commit(types.SET_MY_MANAGER, manager);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async postProcessOneToOne({}, payload) {
+    const { common, personal, isManager, workerId } = payload;
+    console.log(
+      "common =",
+      common,
+      ", personal =",
+      personal,
+      isManager,
+      workerId
+    );
+    await postProcessOneToOne({
+      common,
+      personal,
+      interviewed: workerId,
+      is_manager: isManager,
+    });
+    try {
     } catch (e) {
       console.log(e);
     }
