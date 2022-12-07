@@ -5,36 +5,72 @@
       <span class="period"> 01.01.2021 - 14.01.2021</span>
     </div>
 
-    <button @click="toggleForm" class="peer dropbtn">
-      <span class="peers-pic">
-        <img src="@/assets/img/pic.png" class="avatar" alt="Аватар" />
-      </span>
-      <span class="name"> Сотрудник Дима2 </span>
+    <div v-for="worker in myTeam">
+      <button
+        @click="() => (worker.isDropdown = !worker.isDropdown)"
+        class="peer dropbtn"
+      >
+        <span class="peers-pic">
+          <img src="@/assets/img/pic.png" class="avatar" alt="Аватар" />
+        </span>
+        <span class="name">{{ worker.username }}</span>
 
-      <a href="#" id="chev-1" class="chevron rotate" style="margin-right: 15px">
-        <i class="fas fa-chevron-right" aria-hidden="true"></i>
-      </a>
-    </button>
-    <DropdownForm v-if="isOpen" />
+        <a
+          href="#"
+          id="chev-1"
+          class="chevron rotate"
+          style="margin-right: 15px"
+        >
+          <i class="fas fa-chevron-right" aria-hidden="true"></i>
+        </a>
+      </button>
+      <DropdownForm v-if="worker.isDropdown" :workerId="worker.profile_id" />
+    </div>
   </div>
 </template>
 
 <script>
 import DropdownForm from "@/components/OneToOne/DropdownForm";
+import { mapState } from "vuex";
 
 export default {
   name: "Current",
   components: { DropdownForm },
 
   data() {
-    return {
-      isOpen: false,
-    };
+    return { myTeam: [] };
+  },
+
+  mounted() {
+    if (localStorage.getItem("isManager") === "true") {
+      this.myTeam = this.user.team;
+    } else {
+      !this.user.manager && this.$store.dispatch("getMyManager");
+      this.myTeam = this.user.manager;
+    }
+  },
+
+  computed: {
+    ...mapState(["user"]),
   },
 
   methods: {
     toggleForm() {
       this.isOpen = !this.isOpen;
+    },
+  },
+
+  watch: {
+    "user.team": {
+      handler() {
+        this.myTeam = this.user.team;
+      },
+    },
+
+    "user.manager": {
+      handler() {
+        this.myTeam = this.user.manager;
+      },
     },
   },
 };

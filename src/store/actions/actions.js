@@ -4,6 +4,7 @@ import {
   addWorkerPeer,
   approveWorker,
   getAllPeers,
+  getMyManager,
   getMyPeers,
   getMyTeam,
   getUserPeers,
@@ -230,6 +231,15 @@ const actions = {
       );
 
       commit(types.SET_TEAM_APPROVE, addUser);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async getMyManager({ commit }, id) {
+    try {
+      const manager = await getMyManager();
+      commit(types.SET_MY_MANAGER, manager);
     } catch (e) {
       console.log(e);
     }

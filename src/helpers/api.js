@@ -28,3 +28,4 @@ export const getUserReviewIsDraftAPI = (id) =>
 export const getInfoTeamAPI = () => MAIN_API + "team";
 export const getRatesAPI = (id) =>
   MAIN_API + "imanager/employee/rating" + urlQueryParts(id);
+export const getMyManagerAPI = () => MAIN_API + "manager";

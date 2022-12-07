@@ -17,7 +17,12 @@ const mutations = {
 
   [types.SET_TEAM](state, team) {
     state.user.team = team;
+    state.user.team.map((worker) => (worker.isDropdown = false));
     team.length > 0 && localStorage.setItem("isManager", "true");
+  },
+
+  [types.SET_MY_MANAGER](state, manager) {
+    state.user.manager = [manager];
   },
 
   [types.SET_TEAM_WITHOUT_REVIEW](state, user) {

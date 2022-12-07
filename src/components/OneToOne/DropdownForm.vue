@@ -38,6 +38,12 @@
 <script>
 export default {
   name: "DropdownForm",
+
+  props: ["workerId"],
+
+  mounted() {
+    console.log(this.workerId);
+  },
 };
 </script>
 

@@ -4,6 +4,7 @@ import {
   approveWorkerAPI,
   getAllPeersAPI,
   getInfoTeamAPI,
+  getMyManagerAPI,
   getMyPeersAPI,
   getUserPeersAPI,
   removeMyPeerAPI,
@@ -29,6 +30,10 @@ export const removeMyPeer = async (id) => {
 
 export const getMyTeam = async () => {
   return await request(getInfoTeamAPI());
+};
+
+export const getMyManager = async () => {
+  return await request(getMyManagerAPI());
 };
 
 export const getUserPeers = async (id) => {
