@@ -26,11 +26,10 @@ const actions = {
   async refreshAuthToken({ commit, getters, state }) {
     try {
       const cookieToken = getters.cookieToken;
-      const authToken = localStorage.token;
-      if (authToken) {
-        const timeToken = JSON.parse(atob(authToken.split(".")[1])).exp;
-
-        if (Date.now() >= timeToken * 1000) {
+      const lifetimeToken = localStorage.lifetimeToken;
+      console.log(Date.now() >= new Date(lifetimeToken));
+      if (lifetimeToken) {
+        if (Date.now() >= new Date(lifetimeToken)) {
           const token = await refreshToken({ refresh: cookieToken });
           localStorage.token = token.access;
         }
@@ -47,12 +46,15 @@ const actions = {
   async getToken({ commit }, { username, password }) {
     try {
       const token = await getNewToken({
-        username,
-        password,
+        user: {
+          id: username,
+          password,
+        },
       });
 
-      Cockies.set("refresh_token", token.refresh, "30d");
-      localStorage.token = token.access;
+      // Cockies.set("refresh_token", token.token_b, "7d");
+      localStorage.token = token.token_f;
+      localStorage.lifetimeToken = token.token_f_lifetime;
 
       commit("SET_AUTH", { token: token.access, error: false });
 

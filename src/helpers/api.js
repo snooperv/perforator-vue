@@ -1,13 +1,13 @@
 import urlQueryParts from "@/helpers/urlQueryParts";
 
 const API_URL = "http://localhost:8000";
-const AUTH = API_URL + "/api/token/";
+const API = API_URL + "/api/";
 const MAIN_API = API_URL + "/perforator/";
 const PEERS = MAIN_API + "peers/";
 const SELF_REVIEW = MAIN_API + "self-review/";
 
-export const refreshTokenAPI = () => AUTH + "refresh/";
-export const getNewTokenAPI = () => AUTH;
+export const refreshTokenAPI = () => MAIN_API + "api/refresh-token";
+export const getNewTokenAPI = () => MAIN_API + "api/login";
 export const registerUserAPI = () => MAIN_API + "registration/";
 
 export const getMyPeersAPI = () => PEERS + "my/";

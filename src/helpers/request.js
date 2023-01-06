@@ -10,21 +10,32 @@ const request = async (url, method = "GET", data) => {
   try {
     if (method === "GET" || method === "get") {
       response = await axios({
-        method,
+        method: "GET",
         url,
         headers: {
-          Authorization: `Bearer ${authToken}`,
+          // Authorization: `Bearer ${authToken}`,
+          token: authToken,
         },
+        // withCredentials: true,
       });
     } else {
-      response = await axios({
-        method,
-        url,
-        data,
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
+      console.log(url);
+      if (url.includes("/login"))
+        response = await axios({
+          method,
+          url,
+          data,
+          withCredentials: true,
+        });
+      else
+        response = await axios({
+          method,
+          url,
+          data,
+          headers: {
+            token: authToken,
+          },
+        });
     }
 
     return await response.data;
