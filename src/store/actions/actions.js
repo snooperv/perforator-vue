@@ -18,6 +18,7 @@ import {
 import Cockies from "vue-cookies";
 import router from "@/router";
 import {
+  getMyProfile,
   getRates,
   getSelfReview,
   getUserReviewIsDraft,
@@ -81,6 +82,15 @@ const actions = {
     } catch (e) {
       console.log(e.message);
       //commit("SET_AUTH", { error: "Неверный логин или пароль" });
+    }
+  },
+
+  async getMyProfile({ commit }) {
+    try {
+      const profile = await getMyProfile();
+      commit("SET_MY_PROFILE", profile);
+    } catch (e) {
+      console.log(e);
     }
   },
 

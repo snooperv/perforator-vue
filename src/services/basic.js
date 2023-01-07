@@ -1,10 +1,15 @@
 import request from "../helpers/request";
 import {
+  getMyProfileAPI,
   getRatesAPI,
   getSelfReviewAPI,
   getUserReviewIsDraftAPI,
   saveSelfReviewAPI,
 } from "@/helpers/api";
+
+export const getMyProfile = async () => {
+  return await request(getMyProfileAPI());
+};
 
 export const getSelfReview = async () => {
   return await request(getSelfReviewAPI());

@@ -9,6 +9,7 @@ const SELF_REVIEW = MAIN_API + "self-review/";
 export const refreshTokenAPI = () => MAIN_API + "api/refresh-token";
 export const getNewTokenAPI = () => MAIN_API + "api/login";
 export const registerUserAPI = () => MAIN_API + "registration/";
+export const getMyProfileAPI = () => MAIN_API + "api/myprofile";
 export const getPeersRatedMeAPI = () => MAIN_API + "rate_list";
 export const postPeersRatedMeAPI = () => MAIN_API + "process_rate/";
 

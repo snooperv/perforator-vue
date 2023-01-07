@@ -18,6 +18,7 @@ export default {
 
   mounted() {
     this.$route.path === "/" && this.$router.push("/self-review");
+    this.$store.dispatch("getMyProfile");
   },
 };
 </script>

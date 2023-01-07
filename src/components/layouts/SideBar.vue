@@ -9,7 +9,7 @@
         />
       </div>
       <div class="profile-name">
-        <h2>Менеджер Сергей1</h2>
+        <h2>{{ user.username }}</h2>
       </div>
     </div>
 

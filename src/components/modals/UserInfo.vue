@@ -12,16 +12,16 @@
         <div class="user-info">
           <p class="name">
             Имя и фамилия:
-            <span class="text"> Менеджер Сергей1 </span>
+            <span class="text"> {{ user.username }} </span>
           </p>
           <p class="tel">
             Номер телефона:
-            <span class="text"> +79876543211 </span>
+            <span class="text"> {{ user.phone }} </span>
           </p>
           <p class="url">
             Профиль СБИС:
-            <a class="url-sbis text" href="https://sbis.com" target="_blank">
-              Менеджер Сергей1
+            <a class="url-sbis text" :href="user.sbis" target="_blank">
+              {{ user.username }}
             </a>
           </p>
         </div>

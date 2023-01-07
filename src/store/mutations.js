@@ -14,6 +14,13 @@ const mutations = {
     state.user.authError = error;
   },
 
+  [types.SET_MY_PROFILE](state, payload) {
+    const { name, phone, sbis } = payload;
+    state.user.username = name;
+    state.user.phone = phone;
+    state.user.sbis = sbis;
+  },
+
   [types.CLEAR_AUTH_ERRORS](state) {
     state.user.authError = false;
   },
