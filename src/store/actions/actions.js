@@ -27,11 +27,15 @@ const actions = {
     try {
       const cookieToken = getters.cookieToken;
       const lifetimeToken = localStorage.lifetimeToken;
-      console.log(Date.now() >= new Date(lifetimeToken));
       if (lifetimeToken) {
-        if (Date.now() >= new Date(lifetimeToken)) {
-          const token = await refreshToken({ refresh: cookieToken });
-          localStorage.token = token.access;
+        const dateToken = new Date(lifetimeToken);
+        if (
+          Date.now() >=
+          dateToken.getTime() + dateToken.getTimezoneOffset() * 60 * 1000
+        ) {
+          const token = await refreshToken();
+          localStorage.token = token.token;
+          localStorage.lifetimeToken = token.lifetime;
         }
 
         if (!state.user.token)
@@ -39,6 +43,7 @@ const actions = {
       }
     } catch (e) {
       console.log(e);
+      localStorage.token = "";
       await router.push("/login");
     }
   },

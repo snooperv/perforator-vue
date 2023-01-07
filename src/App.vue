@@ -13,7 +13,7 @@ export default {
   mounted() {
     const cookieToken = this.$store.getters.cookieToken;
 
-    if (!cookieToken) {
+    if (!localStorage.token) {
       this.$router.push("/login");
     }
   },

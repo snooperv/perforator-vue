@@ -64,10 +64,7 @@ export default {
 
   methods: {
     userLogout() {
-      Cockies.remove("refresh_token");
-      localStorage.removeItem("token");
-      localStorage.removeItem("selfReviewForm");
-      localStorage.removeItem("isManager");
+      this.$store.commit("CLEAR_lOCALSTORGE");
       window.location = "/login";
     },
   },

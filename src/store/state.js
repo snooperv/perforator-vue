@@ -1,7 +1,7 @@
 import Cockies from "vue-cookies";
 
 const state = {
-  cookieToken: Cockies.get("refresh_token"),
+  cookieToken: Cockies.get("token_b"),
   user: {
     username: "",
     phone: "",

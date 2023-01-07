@@ -135,9 +135,11 @@ export default {
   mounted() {
     const cookieToken = this.$store.getters.cookieToken;
 
-    if (cookieToken) {
+    if (localStorage.token) {
       this.$router.push("/self-review");
+      return;
     }
+    this.$store.commit("CLEAR_lOCALSTORGE");
   },
 
   data() {

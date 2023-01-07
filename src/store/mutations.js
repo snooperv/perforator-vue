@@ -1,6 +1,13 @@
 import { types } from "@/types";
 
 const mutations = {
+  [types.CLEAR_lOCALSTORGE]() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("lifetimeToken");
+    localStorage.removeItem("selfReviewForm");
+    localStorage.removeItem("isManager");
+  },
+
   [types.SET_AUTH](state, payload) {
     const { token, error } = payload;
     state.user.token = token;

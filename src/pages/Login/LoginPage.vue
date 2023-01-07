@@ -59,8 +59,8 @@
           <p>
             У вас еще нет аккаунта?
             <router-link to="/registration" style="color: #2c286d"
-              >Зарегистрироваться</router-link
-            >
+              >Зарегистрироваться
+            </router-link>
           </p>
         </div>
       </div>
@@ -76,9 +76,11 @@ export default {
   mounted() {
     const cookieToken = this.$store.getters.cookieToken;
 
-    if (cookieToken) {
+    if (localStorage.token) {
       this.$router.push("/self-review");
+      return;
     }
+    this.$store.commit("CLEAR_lOCALSTORGE");
   },
 
   computed: { ...mapState(["user"]) },
