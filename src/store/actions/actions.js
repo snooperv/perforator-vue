@@ -7,6 +7,7 @@ import {
   getMyManager,
   getMyPeers,
   getMyTeam,
+  getPeersRatedMe,
   getUserPeers,
   postProcessOneToOne,
   removeMyPeer,
@@ -255,14 +256,24 @@ const actions = {
 
   async postProcessOneToOne({}, payload) {
     const { common, personal, isManager, workerId } = payload;
-    await postProcessOneToOne({
-      common,
-      personal,
-      interviewed: String(workerId),
-      is_manager:
-        String(isManager).charAt(0).toUpperCase() + String(isManager).slice(1),
-    });
     try {
+      await postProcessOneToOne({
+        common,
+        personal,
+        interviewed: String(workerId),
+        is_manager:
+          String(isManager).charAt(0).toUpperCase() +
+          String(isManager).slice(1),
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async getPeersRatedMe({ commit }) {
+    try {
+      const peers = await getPeersRatedMe();
+      commit("SET_PEERS_RATED_ME", peers.rated);
     } catch (e) {
       console.log(e);
     }

@@ -6,6 +6,7 @@ import {
   getInfoTeamAPI,
   getMyManagerAPI,
   getMyPeersAPI,
+  getPeersRatedMeAPI,
   getUserPeersAPI,
   postProcessOneToOneAPI,
   removeMyPeerAPI,
@@ -55,4 +56,8 @@ export const approveWorker = async (id) => {
 
 export const postProcessOneToOne = async (data) => {
   return await request(postProcessOneToOneAPI(), "POST", data);
+};
+
+export const getPeersRatedMe = async () => {
+  return await request(getPeersRatedMeAPI());
 };

@@ -73,6 +73,10 @@ const mutations = {
   [types.SET_SELFREVIEW](state, payload) {
     state.selfReview = payload;
   },
+
+  [types.SET_PEERS_RATED_ME](state, payload) {
+    state.user.peersIRate = payload;
+  },
 };
 
 const peersSort = (peer1, peer2) => {

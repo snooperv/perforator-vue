@@ -35,7 +35,7 @@
     <div class="wait">
       <h2>Ожидают моей оценки</h2>
       <div class="peers">
-        <div class="one-peer">
+        <div class="one-peer" v-for="peer in user.peersIRate">
           <button @click="toggleForm" class="peer dropbtn">
             <span class="peers-pic">
               <img
@@ -44,7 +44,7 @@
                 class="avatar"
               />
             </span>
-            <span class="name"> Сотрудник Дима2 </span>
+            <span class="name"> {{ peer.name }} </span>
             <a href="#" class="chevron">
               <i class="fas fa-chevron-right" aria-hidden="true"></i>
             </a>
@@ -64,8 +64,16 @@ export default {
   name: "IRate",
 
   components: {
-    ...mapState(["user"]),
     DropdownContent,
+  },
+
+  computed: {
+    ...mapState(["user"]),
+  },
+
+  mounted() {
+    this.$store.dispatch("getPeersRatedMe");
+    console.log("I-rate", this.user);
   },
 
   data() {
