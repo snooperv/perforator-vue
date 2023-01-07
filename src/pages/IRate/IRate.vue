@@ -36,7 +36,10 @@
       <h2>Ожидают моей оценки</h2>
       <div class="peers">
         <div class="one-peer" v-for="peer in user.peersIRate">
-          <button @click="toggleForm" class="peer dropbtn">
+          <button
+            @click="() => (peer.isOpen = !peer.isOpen)"
+            class="peer dropbtn"
+          >
             <span class="peers-pic">
               <img
                 src="@/assets/img/pic.png"
@@ -49,7 +52,7 @@
               <i class="fas fa-chevron-right" aria-hidden="true"></i>
             </a>
           </button>
-          <DropdownContent v-if="isOpen" />
+          <DropdownContent v-if="peer.isOpen" :peer-id="peer.id" />
         </div>
       </div>
     </div>
@@ -73,20 +76,14 @@ export default {
 
   mounted() {
     this.$store.dispatch("getPeersRatedMe");
-    console.log("I-rate", this.user);
+    console.log(this.user.peersIRate);
   },
 
   data() {
-    return {
-      isOpen: false,
-    };
+    return {};
   },
 
-  methods: {
-    toggleForm() {
-      this.isOpen = !this.isOpen;
-    },
-  },
+  methods: {},
 };
 </script>
 

@@ -11,7 +11,7 @@
           maxlength="512"
           class="ta"
           id="deadlines"
-          required=""
+          required
         ></textarea>
         <div class="char-count">
           <span id="imp-zones-chars" class="chars">0</span>
@@ -24,9 +24,9 @@
             name="rates_deadlines"
             value="4"
             class="radio-1-1"
-            id="radio-1-1-1"
+            :id="`radio-${peerId}-1-1`"
           />
-          <label for="radio-1-1-1">
+          <label :for="`radio-${peerId}-1-1`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -35,9 +35,9 @@
             name="rates_deadlines"
             value="3"
             class="radio-1-1"
-            id="radio-1-2-1"
+            :id="`radio-${peerId}-2-1`"
           />
-          <label for="radio-1-2-1">
+          <label :for="`radio-${peerId}-2-1`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -46,9 +46,9 @@
             name="rates_deadlines"
             value="2"
             class="radio-1-1"
-            id="radio-1-3-1"
+            :id="`radio-${peerId}-3-1`"
           />
-          <label for="radio-1-3-1">
+          <label :for="`radio-${peerId}-3-1`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -57,9 +57,9 @@
             name="rates_deadlines"
             value="1"
             class="radio-1-1"
-            id="radio-1-4-1"
+            :id="`radio-${peerId}-4-1`"
           />
-          <label for="radio-1-4-1">
+          <label :for="`radio-${peerId}-4-1`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -80,7 +80,7 @@
           maxlength="512"
           class="ta"
           id="goals"
-          required=""
+          required
         ></textarea>
         <div class="char-count">
           <span id="imp-zones-chars" class="chars">0</span>
@@ -93,9 +93,9 @@
             name="rates_approaches"
             value="4"
             class="radio-1-2"
-            id="radio-1-1-2"
+            :id="`radio-${peerId}-1-2`"
           />
-          <label for="radio-1-1-2">
+          <label :for="`radio-${peerId}-1-2`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -104,9 +104,9 @@
             name="rates_approaches"
             value="3"
             class="radio-1-2"
-            id="radio-1-2-2"
+            :id="`radio-${peerId}-2-2`"
           />
-          <label for="radio-1-2-2">
+          <label :for="`radio-${peerId}-2-2`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -115,9 +115,9 @@
             name="rates_approaches"
             value="2"
             class="radio-1-2"
-            id="radio-1-3-2"
+            :id="`radio-${peerId}-3-2`"
           />
-          <label for="radio-1-3-2">
+          <label :for="`radio-${peerId}-3-2`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -126,9 +126,9 @@
             name="rates_approaches"
             value="1"
             class="radio-1-2"
-            id="radio-1-4-2"
+            :id="`radio-${peerId}-4-2`"
           />
-          <label for="radio-1-4-2">
+          <label :for="`radio-${peerId}-4-2`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -148,7 +148,7 @@
           maxlength="512"
           class="ta"
           id="teamwork"
-          required=""
+          required
         ></textarea>
         <div class="char-count">
           <span id="imp-zones-chars" class="chars">0</span>
@@ -161,9 +161,9 @@
             name="rates_teamwork"
             value="4"
             class="radio-1-3"
-            id="radio-1-1-3"
+            :id="`radio-${peerId}-1-3`"
           />
-          <label for="radio-1-1-3">
+          <label :for="`radio-${peerId}-1-3`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -172,9 +172,9 @@
             name="rates_teamwork"
             value="3"
             class="radio-1-3"
-            id="radio-1-2-3"
+            :id="`radio-${peerId}-2-3`"
           />
-          <label for="radio-1-2-3">
+          <label :for="`radio-${peerId}-2-3`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -183,9 +183,9 @@
             name="rates_teamwork"
             value="2"
             class="radio-1-3"
-            id="radio-1-3-3"
+            :id="`radio-${peerId}-3-3`"
           />
-          <label for="radio-1-3-3">
+          <label :for="`radio-${peerId}-3-3`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -194,9 +194,9 @@
             name="rates_teamwork"
             value="1"
             class="radio-1-3"
-            id="radio-1-4-3"
+            :id="`radio-${peerId}-4-3`"
           />
-          <label for="radio-1-4-3">
+          <label :for="`radio-${peerId}-4-3`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -217,7 +217,7 @@
           maxlength="512"
           class="ta"
           id="techPrac"
-          required=""
+          required
         ></textarea>
         <div class="char-count">
           <span id="imp-zones-chars" class="chars">0</span>
@@ -230,9 +230,9 @@
             name="rates_practices"
             value="4"
             class="radio-1-4"
-            id="radio-1-1-4"
+            :id="`radio-${peerId}-1-4`"
           />
-          <label for="radio-1-1-4">
+          <label :for="`radio-${peerId}-1-4`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -241,9 +241,9 @@
             name="rates_practices"
             value="3"
             class="radio-1-4"
-            id="radio-1-2-4"
+            :id="`radio-${peerId}-2-4`"
           />
-          <label for="radio-1-2-4">
+          <label :for="`radio-${peerId}-2-4`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -252,9 +252,9 @@
             name="rates_practices"
             value="2"
             class="radio-1-4"
-            id="radio-1-3-4"
+            :id="`radio-${peerId}-3-4`"
           />
-          <label for="radio-1-3-4">
+          <label :for="`radio-${peerId}-3-4`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -263,9 +263,9 @@
             name="rates_practices"
             value="1"
             class="radio-1-4"
-            id="radio-1-4-4"
+            :id="`radio-${peerId}-4-4`"
           />
-          <label for="radio-1-4-4">
+          <label :for="`radio-${peerId}-4-4`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -286,7 +286,7 @@
           maxlength="512"
           class="ta"
           id="techSkills"
-          required=""
+          required
         ></textarea>
         <div class="char-count">
           <span id="imp-zones-chars" class="chars">0</span>
@@ -299,9 +299,9 @@
             name="rates_experience"
             value="4"
             class="radio-1-5"
-            id="radio-1-1-5"
+            :id="`radio-${peerId}-1-5`"
           />
-          <label for="radio-1-1-5">
+          <label :for="`radio-${peerId}-1-5`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -310,9 +310,9 @@
             name="rates_experience"
             value="3"
             class="radio-1-5"
-            id="radio-1-2-5"
+            :id="`radio-${peerId}-2-5`"
           />
-          <label for="radio-1-2-5">
+          <label :for="`radio-${peerId}-2-5`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -321,9 +321,9 @@
             name="rates_experience"
             value="2"
             class="radio-1-5"
-            id="radio-1-3-5"
+            :id="`radio-${peerId}-3-5`"
           />
-          <label for="radio-1-3-5">
+          <label :for="`radio-${peerId}-3-5`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -332,9 +332,9 @@
             name="rates_experience"
             value="1"
             class="radio-1-5"
-            id="radio-1-4-5"
+            :id="`radio-${peerId}-4-5`"
           />
-          <label for="radio-1-4-5">
+          <label :for="`radio-${peerId}-4-5`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -355,7 +355,7 @@
           maxlength="512"
           class="ta"
           id="adaptive"
-          required=""
+          required
         ></textarea>
         <div class="char-count">
           <span id="imp-zones-chars" class="chars">0</span>
@@ -368,9 +368,9 @@
             name="rates_adaptation"
             value="4"
             class="radio-1-6"
-            id="radio-1-1-6"
+            :id="`radio-${peerId}-1-6`"
           />
-          <label for="radio-1-1-6">
+          <label :for="`radio-${peerId}-1-6`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -379,9 +379,9 @@
             name="rates_adaptation"
             value="3"
             class="radio-1-6"
-            id="radio-1-2-6"
+            :id="`radio-${peerId}-2-6`"
           />
-          <label for="radio-1-2-6">
+          <label :for="`radio-${peerId}-2-6`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -390,9 +390,9 @@
             name="rates_adaptation"
             value="2"
             class="radio-1-6"
-            id="radio-1-3-6"
+            :id="`radio-${peerId}-3-6`"
           />
-          <label for="radio-1-3-6">
+          <label :for="`radio-${peerId}-3-6`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
@@ -401,17 +401,17 @@
             name="rates_adaptation"
             value="1"
             class="radio-1-6"
-            id="radio-1-4-6"
+            :id="`radio-${peerId}-4-6`"
           />
-          <label for="radio-1-4-6">
+          <label :for="`radio-${peerId}-4-6`">
             <img src="@/assets/img/rating2.png" alt="" />
           </label>
 
           <p id="text-rate-1-6" class="text_rate"></p>
         </div>
 
-        <input type="hidden" name="profile" value="3" />
-        <input type="submit" value="Отправить отзыв" name="rate-3" />
+        <input type="hidden" name="profile" :value="peerId" />
+        <input type="submit" value="Отправить отзыв" @click="postForm" />
       </form>
     </div>
   </div>
@@ -420,6 +420,22 @@
 <script>
 export default {
   name: "DropdownContent",
+
+  props: {
+    peerId: {
+      type: Number,
+      required: true,
+    },
+  },
+
+  methods: {
+    postForm(event) {
+      event.preventDefault();
+      const form = new FormData(event.target.parentElement);
+      console.log(event.target.parentElement);
+      this.$store.dispatch("postPeersRatedMe", form);
+    },
+  },
 };
 </script>
 

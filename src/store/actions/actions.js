@@ -9,6 +9,7 @@ import {
   getMyTeam,
   getPeersRatedMe,
   getUserPeers,
+  postPeersRatedMe,
   postProcessOneToOne,
   removeMyPeer,
   removeWorkerPeer,
@@ -274,6 +275,15 @@ const actions = {
     try {
       const peers = await getPeersRatedMe();
       commit("SET_PEERS_RATED_ME", peers.rated);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async postPeersRatedMe({ commit }, form) {
+    try {
+      await postPeersRatedMe(form);
+      // TODO
     } catch (e) {
       console.log(e);
     }

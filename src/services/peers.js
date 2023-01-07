@@ -8,6 +8,7 @@ import {
   getMyPeersAPI,
   getPeersRatedMeAPI,
   getUserPeersAPI,
+  postPeersRatedMeAPI,
   postProcessOneToOneAPI,
   removeMyPeerAPI,
   removeWorkerPeerAPI,
@@ -60,4 +61,8 @@ export const postProcessOneToOne = async (data) => {
 
 export const getPeersRatedMe = async () => {
   return await request(getPeersRatedMeAPI());
+};
+
+export const postPeersRatedMe = async (data) => {
+  return await request(postPeersRatedMeAPI(), "POST", data);
 };

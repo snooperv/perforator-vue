@@ -76,6 +76,7 @@ const mutations = {
 
   [types.SET_PEERS_RATED_ME](state, payload) {
     state.user.peersIRate = payload;
+    state.user.peersIRate.map?.((peer) => (peer.isOpen = false));
   },
 };
 
