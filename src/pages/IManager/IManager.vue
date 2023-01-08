@@ -22,13 +22,16 @@ export default {
     ...mapState(["user"]),
   },
 
+  updated() {
+    if (this.$route.path === "/i-manager")
+      this.$router.push("/i-manager/approval");
+  },
+
   mounted() {
     if (localStorage.getItem("isManager") !== "true") {
       this.$router.push("/self-review");
       return;
     }
-    if (this.$route.path === "/i-manager")
-      this.$router.push("/i-manager/approval");
   },
 };
 </script>

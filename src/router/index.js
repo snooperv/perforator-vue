@@ -11,6 +11,7 @@ import MyTeam from "@/pages/IManager/MyTeam/MyTeam";
 import OneToOne from "@/pages/OneToOne/OneToOne";
 import Current from "@/pages/OneToOne/Current/Current";
 import Previous from "@/pages/OneToOne/Previous/Previous";
+import OneWorker from "@/pages/IManager/MyTeam/OneWorker/OneWorker.vue";
 
 const routes = [
   {
@@ -53,6 +54,11 @@ const routes = [
             path: "my-team",
             component: MyTeam,
             meta: { title: "Я менеджер - моя команда" },
+          },
+          {
+            path: "employee",
+            component: OneWorker,
+            meta: { title: "Итоговая обратная связь" },
           },
         ],
       },

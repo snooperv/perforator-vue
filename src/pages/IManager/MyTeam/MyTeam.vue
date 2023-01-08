@@ -52,7 +52,9 @@
               <img class="avatar" src="@/assets/img/pic.png" alt="Аватар" />
             </div>
           </a>
-          <a href="#" onclick="stats4()" class="name-link">Сотрудник Вадим3</a>
+          <router-link to="/i-manager/employee" class="name-link"
+            >Сотрудник Дима2
+          </router-link>
         </div>
         <a href="#" onclick="stats4()">
           <div class="grade">

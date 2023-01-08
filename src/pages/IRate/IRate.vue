@@ -76,7 +76,6 @@ export default {
 
   mounted() {
     this.$store.dispatch("getPeersRatedMe");
-    console.log(this.user.peersIRate);
   },
 
   data() {
