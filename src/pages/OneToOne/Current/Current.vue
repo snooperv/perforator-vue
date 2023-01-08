@@ -20,7 +20,11 @@
           <i class="fas fa-chevron-right" aria-hidden="true"></i>
         </a>
       </button>
-      <DropdownForm v-if="worker.isDropdown" :workerId="worker.profile_id" />
+      <DropdownForm
+        v-if="worker.isDropdown"
+        :my-id="user.myId"
+        :worker-id="worker.profile_id"
+      />
     </div>
   </div>
 </template>

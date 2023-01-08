@@ -1,6 +1,6 @@
 <template>
   <div :id="'myDropdown-' + workerId" class="dropdown-content">
-    <form :id="'one-to-one-' + workerId" @keyup="postForm">
+    <form :id="'one-to-one-' + workerId" @keyup="postNotes">
       <h3 class="dropdownTitle">Общие заметки</h3>
 
       <textarea
@@ -34,35 +34,51 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "DropdownForm",
 
-  props: ["workerId"],
+  props: ["myId", "workerId"],
+
+  computed: {
+    ...mapState(["commonNote", "privateNote"]),
+  },
 
   data() {
     return {
       common: "",
       personal: "",
-      isManager: localStorage.getItem("isManager") !== "true",
+      isManager: localStorage.getItem("isManager") === "true",
       timerId: null,
     };
   },
 
   mounted() {
-    console.log(this.workerId);
+    this.$store
+      .dispatch("getOneToOne", {
+        is_manager: this.isManager,
+        manager_id: this.myId,
+        employee_id: this.workerId,
+      })
+      .then((result) => {
+        this.common = result.commonNote;
+        this.personal = result.privateNote;
+      });
   },
 
   methods: {
-    postForm(e) {
+    postNotes(e) {
       clearTimeout(this.timerId);
       if (e.target.name === "common") this.common = e.target.value;
       if (e.target.name === "personal") this.personal = e.target.value;
       this.timerId = setTimeout(() => {
         this.$store.dispatch("postProcessOneToOne", {
-          common: this.common,
-          personal: this.personal,
-          workerId: this.workerId,
-          isManager: this.isManager,
+          is_manager: this.isManager,
+          manager_id: this.myId,
+          employee_id: this.workerId,
+          personalNote: this.personal,
+          commonNote: this.common,
         });
       }, 1000);
     },

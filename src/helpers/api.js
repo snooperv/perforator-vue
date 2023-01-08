@@ -32,4 +32,9 @@ export const getInfoTeamAPI = () => MAIN_API + "team";
 export const getRatesAPI = (id) =>
   MAIN_API + "imanager/employee/rating" + urlQueryParts(id);
 export const getMyManagerAPI = () => MAIN_API + "manager";
-export const postProcessOneToOneAPI = () => MAIN_API + "process_one_to_one/";
+export const postProcessOneToOneCommonAPI = () =>
+  MAIN_API + "1to1/update_common_notes/";
+export const postProcessOneToOnePrivateAPI = () =>
+  MAIN_API + "1to1/update_private_notes/";
+export const getOneToOneCommonAPI = () => MAIN_API + "1to1/get_common_notes/";
+export const getOneToOnePrivateAPI = () => MAIN_API + "1to1/get_private_notes/";

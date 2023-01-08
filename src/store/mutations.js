@@ -15,10 +15,11 @@ const mutations = {
   },
 
   [types.SET_MY_PROFILE](state, payload) {
-    const { name, phone, sbis } = payload;
+    const { name, phone, sbis, id } = payload;
     state.user.username = name;
     state.user.phone = phone;
     state.user.sbis = sbis;
+    state.user.myId = id;
   },
 
   [types.CLEAR_AUTH_ERRORS](state) {

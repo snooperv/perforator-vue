@@ -6,10 +6,13 @@ import {
   getInfoTeamAPI,
   getMyManagerAPI,
   getMyPeersAPI,
+  getOneToOneCommonAPI,
+  getOneToOnePrivateAPI,
   getPeersRatedMeAPI,
   getUserPeersAPI,
   postPeersRatedMeAPI,
-  postProcessOneToOneAPI,
+  postProcessOneToOneCommonAPI,
+  postProcessOneToOnePrivateAPI,
   removeMyPeerAPI,
   removeWorkerPeerAPI,
   saveMyPeerAPI,
@@ -55,8 +58,20 @@ export const approveWorker = async (id) => {
   return await request(approveWorkerAPI({ id }), "POST");
 };
 
-export const postProcessOneToOne = async (data) => {
-  return await request(postProcessOneToOneAPI(), "POST", data);
+export const getOneToOneCommon = async (data) => {
+  return await request(getOneToOneCommonAPI(), "POST", data);
+};
+
+export const getOneToOnePrivate = async (data) => {
+  return await request(getOneToOnePrivateAPI(), "POST", data);
+};
+
+export const postProcessOneToOneCommon = async (data) => {
+  return await request(postProcessOneToOneCommonAPI(), "POST", data);
+};
+
+export const postProcessOneToOnePrivate = async (data) => {
+  return await request(postProcessOneToOnePrivateAPI(), "POST", data);
 };
 
 export const getPeersRatedMe = async () => {

@@ -7,10 +7,13 @@ import {
   getMyManager,
   getMyPeers,
   getMyTeam,
+  getOneToOneCommon,
+  getOneToOnePrivate,
   getPeersRatedMe,
   getUserPeers,
   postPeersRatedMe,
-  postProcessOneToOne,
+  postProcessOneToOneCommon,
+  postProcessOneToOnePrivate,
   removeMyPeer,
   removeWorkerPeer,
   saveMyPeer,
@@ -265,17 +268,50 @@ const actions = {
     }
   },
 
-  async postProcessOneToOne({}, payload) {
-    const { common, personal, isManager, workerId } = payload;
+  async getOneToOne({ commit }, payload) {
+    const { is_manager, manager_id, employee_id } = payload;
     try {
-      await postProcessOneToOne({
-        common,
-        personal,
-        interviewed: String(workerId),
-        is_manager:
-          String(isManager).charAt(0).toUpperCase() +
-          String(isManager).slice(1),
+      const commonNote = await getOneToOneCommon({
+        manager_id,
+        employee_id,
       });
+
+      const privateNote = await getOneToOnePrivate({
+        is_manager,
+        manager_id,
+        employee_id,
+      });
+
+      return { commonNote: commonNote.notes, privateNote: privateNote.notes };
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async postProcessOneToOne({}, payload) {
+    const { is_manager, manager_id, employee_id, personalNote, commonNote } =
+      payload;
+    try {
+      await postProcessOneToOneCommon({
+        manager_id,
+        employee_id,
+        note: commonNote,
+      });
+
+      await postProcessOneToOnePrivate({
+        is_manager,
+        manager_id,
+        employee_id,
+        note: personalNote,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async postProcessOneToOnePrivate({}, payload) {
+    const { is_manager, manager_id, employee_id, note } = payload;
+    try {
     } catch (e) {
       console.log(e);
     }
