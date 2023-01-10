@@ -27,16 +27,19 @@
     <div class="inside-wrapper rating" style="width: 95%">
       <div v-for="worker in user.team">
         <div class="items rating-name">
-          <a href="#" onclick="stats4()" class="name-link">
+          <a href="#" class="name-link">
             <div class="peers-pic-raiting">
               <img class="avatar" src="@/assets/img/pic.png" alt="Аватар" />
             </div>
           </a>
-          <router-link to="/i-manager/employee" class="name-link"
+          <a
+            href=""
+            @click="(e) => toEmployee(e, worker.profile_id)"
+            class="name-link"
             >{{ worker.username }}
-          </router-link>
+          </a>
         </div>
-        <a href="#" onclick="stats4()">
+        <a href="#">
           <div class="grade">
             <div
               class="grade-number"
@@ -58,36 +61,33 @@ import colorGrade from "@/helpers/colorGrade";
 export default {
   name: "MyTeam",
 
-  data() {
-    return {
-      test: {
-        name: "John",
-        surname: "Jonson",
-        age: 18,
-        city: "New-York",
-      },
-    };
-  },
-
   computed: {
     ...mapState(["user"]),
   },
 
   mounted() {
-    if (this.user.team) {
-      this.$store.dispatch("getTeamScores", this.user.team);
-    }
+    this.loadScores();
   },
 
   methods: {
     colorGrade,
+    toEmployee(e, id) {
+      e.preventDefault();
+      this.$router.push({ name: "employee", params: { id } });
+    },
+
+    loadScores() {
+      console.log(this.user.team);
+      if (this.user.team) {
+        this.$store.dispatch("getTeamScores", this.user.team);
+      }
+    },
   },
 
   watch: {
     "user.team": {
       handler() {
-        console.log(this.user.team);
-        this.$store.dispatch("getTeamScores", this.user.team);
+        this.loadScores();
       },
     },
   },

@@ -93,7 +93,7 @@ const mutations = {
   },
 
   [types.SET_GENERAL_SCORE](state, payload) {
-    const userReadable = {
+    state.user.team.generalRating = {
       "Соблюдение сроков": payload.deadline,
       "Пути достижения целей": payload.approaches,
       "Умение работать в команде": payload.teamwork,
@@ -102,8 +102,6 @@ const mutations = {
       Адаптивность: payload.adaptation,
       "Средняя оценка": payload.average,
     };
-
-    state.user.team.generalRating = userReadable;
   },
 };
 

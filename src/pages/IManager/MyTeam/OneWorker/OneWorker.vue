@@ -1,136 +1,49 @@
 <template>
   <div class="self-review">
-    <div class="form" id="head">Сотрудник Дима2</div>
+    <div class="form" id="head">{{ worker?.username }}</div>
 
     <div class="form">
       <div class="container">
         <h2 class="title">Итоговая обратная связь</h2>
-        <table>
+        <table id="finalScore">
           <tbody>
             <tr>
               <td></td>
+              <td class="text-in-table" v-for="text in userReadable">
+                {{ text }}
+              </td>
+            </tr>
+            <tr>
               <td class="table-heading">менеджер</td>
+              <td
+                class="numbers-in-table"
+                v-for="rate in worker.rating?.manager"
+              >
+                <div
+                  class="grade-number"
+                  :class="colorGrade(rate)"
+                  id="average_avg_manager"
+                >
+                  {{ rate }}
+                </div>
+              </td>
+            </tr>
+            <tr>
               <td class="table-heading">пиры</td>
-              <td class="table-heading">средняя</td>
-            </tr>
-            <tr>
-              <td class="text-in-table">Средняя оценка</td>
-              <td class="numbers-in-table">
+              <td class="numbers-in-table" v-for="rate in worker.rating?.peers">
                 <div class="grade-number good" id="average_avg_manager">
-                  2.67
-                </div>
-              </td>
-              <td class="numbers-in-table">
-                <div class="grade-number good" id="average_avg_peers">2.67</div>
-              </td>
-              <td class="numbers-in-table">
-                <div class="grade-number good" id="average_avg_averages">
-                  2.67
+                  {{ rate }}
                 </div>
               </td>
             </tr>
             <tr>
-              <td colspan="4">
-                <div class="table-title">Оценки по каждому критерию</div>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-in-table">Соблюдение сроков</td>
-              <td class="numbers-in-table">
-                <div class="grade-number great" id="time_avg_manager">3.00</div>
-              </td>
-              <td class="numbers-in-table">
-                <div class="grade-number good" id="time_avg_peers">2.00</div>
-              </td>
-              <td class="numbers-in-table">
-                <div class="grade-number good" id="time_avg_averages">2.50</div>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-in-table">Пути достижения целей</td>
-              <td class="numbers-in-table">
-                <div class="grade-number great" id="target_avg_manager">
-                  4.00
-                </div>
-              </td>
-              <td class="numbers-in-table">
-                <div class="grade-number great" id="target_avg_peers">4.00</div>
-              </td>
-              <td class="numbers-in-table">
-                <div class="grade-number great" id="target_avg_averages">
-                  4.00
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-in-table">Умение работать в команде</td>
-              <td class="numbers-in-table">
-                <div class="grade-number good" id="teamwork_avg_manager">
-                  2.00
-                </div>
-              </td>
-              <td class="numbers-in-table">
-                <div class="grade-number bad" id="teamwork_avg_peers">1.00</div>
-              </td>
-              <td class="numbers-in-table">
-                <div class="grade-number bad" id="teamwork_avg_averages">
-                  1.50
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-in-table">
-                Приверженность к хорошим техническим практикам
-              </td>
-              <td class="numbers-in-table">
-                <div class="grade-number bad" id="practices_avg_manager">
-                  1.00
-                </div>
-              </td>
-              <td class="numbers-in-table">
-                <div class="grade-number great" id="practices_avg_peers">
-                  3.00
-                </div>
-              </td>
-              <td class="numbers-in-table">
-                <div class="grade-number good" id="practices_avg_averages">
-                  2.00
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-in-table">Уровень владения технологиями</td>
-              <td class="numbers-in-table">
-                <div class="grade-number great" id="technologies_avg_manager">
-                  4.00
-                </div>
-              </td>
-              <td class="numbers-in-table">
-                <div class="grade-number good" id="technologies_avg_peers">
-                  2.00
-                </div>
-              </td>
-              <td class="numbers-in-table">
-                <div class="grade-number great" id="technologies_avg_averages">
-                  3.00
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-in-table">Адаптивность</td>
-              <td class="numbers-in-table">
-                <div class="grade-number good" id="adaptive_avg_manager">
-                  2.00
-                </div>
-              </td>
-              <td class="numbers-in-table">
-                <div class="grade-number great" id="adaptive_avg_peers">
-                  4.00
-                </div>
-              </td>
-              <td class="numbers-in-table">
-                <div class="grade-number great" id="adaptive_avg_averages">
-                  3.00
+              <td class="table-heading">средняя</td>
+              <td
+                class="numbers-in-table"
+                v-for="rate in worker.rating?.averages"
+              >
+                <div class="grade-number good" id="average_avg_manager">
+                  {{ rate }}
                 </div>
               </td>
             </tr>
@@ -340,8 +253,96 @@
 </template>
 
 <script>
+import colorGrade from "@/helpers/colorGrade";
+import { mapState } from "vuex";
+
 export default {
   name: "OneWorker",
+
+  data() {
+    return {
+      worker: {},
+      userReadable: [
+        "Соблюдение сроков",
+        "Пути достижения целей",
+        "Умение работать в команде",
+        "Приверженность к хорошим техническим практикам",
+        "Уровень владения технологиями",
+        "Адаптивность",
+        "Средняя оценка",
+      ],
+    };
+  },
+
+  computed: {
+    ...mapState(["user"]),
+  },
+
+  mounted() {
+    this.user.team.length > 0 && this.loadWorker();
+    this.rotate();
+  },
+
+  methods: {
+    colorGrade,
+
+    rotate() {
+      const table = document.getElementById("finalScore");
+      let tr = table.rows;
+      if (!tr[1].cells[1]) {
+        setTimeout(() => this.rotate(), 1);
+        return;
+      }
+
+      let i = tr.length,
+        j = tr[0].cells.length + 1,
+        new_table = document.createElement("table"),
+        flag = 1;
+
+      while (j--) {
+        for (let new_tr = new_table.insertRow(0), l = 0; l < i; l++) {
+          if (j === 1 && flag) {
+            let newTd = document.createElement("td");
+            newTd.colSpan = 4;
+            newTd.innerHTML =
+              '<div class="table-title">Оценки по каждому критерию</div>';
+            new_tr.append(newTd);
+            flag = 0;
+            continue;
+          }
+          if (j === 1 && !flag) continue;
+          new_tr.append(tr[l].cells[j - flag]);
+        }
+      }
+
+      new_table.childNodes[0].children[0].after(
+        new_table.childNodes[0].lastChild
+      );
+      table.replaceChild(new_table.childNodes[0], table.childNodes[0]);
+    },
+
+    loadScores() {
+      if (this.user.team) {
+        this.$store.dispatch("getTeamScores", this.user.team);
+      }
+      this.loadWorker();
+    },
+
+    loadWorker() {
+      this.worker = this.user.team.filter(
+        (oneUser) => oneUser.profile_id === +this.$route.params.id
+      )[0];
+      console.log(this.worker);
+    },
+  },
+
+  watch: {
+    "user.team": {
+      handler() {
+        this.loadScores();
+      },
+    },
+  },
 };
 </script>
 
@@ -426,7 +427,7 @@ td {
 table {
   display: grid;
   width: 95%;
-  height: 575px;
+  /*height: 575px;*/
   margin: 15px;
   background: #ececf2;
   padding-left: 20px;

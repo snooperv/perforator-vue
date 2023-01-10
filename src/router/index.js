@@ -56,7 +56,8 @@ const routes = [
             meta: { title: "Я менеджер - моя команда" },
           },
           {
-            path: "employee",
+            path: "employee/:id",
+            name: "employee",
             component: OneWorker,
             meta: { title: "Итоговая обратная связь" },
           },
