@@ -31,7 +31,11 @@
             <tr>
               <td class="table-heading">пиры</td>
               <td class="numbers-in-table" v-for="rate in worker.rating?.peers">
-                <div class="grade-number good" id="average_avg_manager">
+                <div
+                  class="grade-number"
+                  :class="colorGrade(rate)"
+                  id="average_avg_manager"
+                >
                   {{ rate }}
                 </div>
               </td>
@@ -42,7 +46,11 @@
                 class="numbers-in-table"
                 v-for="rate in worker.rating?.averages"
               >
-                <div class="grade-number good" id="average_avg_manager">
+                <div
+                  class="grade-number"
+                  :class="colorGrade(rate)"
+                  id="average_avg_manager"
+                >
                   {{ rate }}
                 </div>
               </td>
