@@ -10,6 +10,7 @@ import {
   getOneToOneCommon,
   getOneToOnePrivate,
   getPeersRatedMe,
+  getTeamScores,
   getUserPeers,
   postPeersRatedMe,
   postProcessOneToOneCommon,
@@ -27,6 +28,7 @@ import {
   getUserReviewIsDraft,
   saveSelfReview,
 } from "@/services/basic";
+import grades from "@/helpers/grades";
 
 const actions = {
   async refreshAuthToken({ commit, getters, state }) {
@@ -329,7 +331,94 @@ const actions = {
   async postPeersRatedMe({ commit }, form) {
     try {
       await postPeersRatedMe(form);
-      // TODO
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async getTeamScores({ commit }, team) {
+    try {
+      const averagesTeam = Object.assign({}, grades);
+      let countAverages = 0;
+
+      const calcAverage = (dict) => {
+        let result = 0,
+          count = 0;
+        for (let item of Object.values(dict)) {
+          count++;
+          result += item;
+        }
+        return +(result / count).toFixed(2);
+      };
+
+      for (let worker of team) {
+        const workerScore = await getTeamScores(`?id=${worker.profile_id}`);
+
+        const finalRating = {
+          manager: Object.assign({}, grades),
+          peers: Object.assign({}, grades),
+          averages: Object.assign({}, grades),
+        };
+
+        if (workerScore[0].rates.length > 0) {
+          let countPeers = 0;
+
+          workerScore[0].rates.map((scores) => {
+            let result = {
+              deadline: scores.r_deadline,
+              approaches: scores.r_approaches,
+              teamwork: scores.r_teamwork,
+              practices: scores.r_practices,
+              experience: scores.r_experience,
+              adaptation: scores.r_adaptation,
+            };
+            if (scores.is_manager) {
+              result.average = calcAverage(result);
+              finalRating.manager = result;
+            } else {
+              countPeers++;
+              for (let score in finalRating.peers) {
+                finalRating.peers[score] += result[score];
+              }
+              delete finalRating.peers.average;
+            }
+
+            for (let score in averagesTeam) {
+              averagesTeam[score] += result[score];
+              averagesTeam.average && delete averagesTeam.average;
+            }
+            countAverages++;
+          });
+
+          if (countPeers) {
+            for (let score in finalRating.peers) {
+              finalRating.peers[score] = +(
+                finalRating.peers[score] / countPeers
+              ).toFixed(2);
+            }
+            finalRating.peers.average = calcAverage(finalRating.peers);
+          }
+
+          for (let score in finalRating.averages) {
+            finalRating.averages[score] = +(
+              (finalRating.peers[score] + finalRating.manager[score]) /
+              2
+            ).toFixed(2);
+          }
+          finalRating.averages.average = calcAverage(finalRating.averages);
+        }
+
+        commit("SET_WORKER_SCORE", {
+          id: workerScore[0].user_id,
+          score: finalRating,
+        });
+      }
+
+      for (let score in averagesTeam) {
+        averagesTeam[score] = +(averagesTeam[score] / countAverages).toFixed(2);
+      }
+      averagesTeam.average = calcAverage(averagesTeam);
+      commit("SET_GENERAL_SCORE", averagesTeam);
     } catch (e) {
       console.log(e);
     }

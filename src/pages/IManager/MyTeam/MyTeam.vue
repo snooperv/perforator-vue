@@ -2,33 +2,13 @@
   <div class="block-container">
     <h2 class="block-title">Средняя оценка по всей команде</h2>
     <div class="inside-wrapper">
-      <div class="items">Соблюдение сроков</div>
-      <div class="grade">
-        <div class="grade-number good" id="time">NaN</div>
-      </div>
-      <div class="items">Пути достижения целей</div>
-      <div class="grade">
-        <div class="grade-number good" id="target">NaN</div>
-      </div>
-      <div class="items">Умение работать в команде</div>
-      <div class="grade">
-        <div class="grade-number good" id="teamwork">NaN</div>
-      </div>
-      <div class="items">Приверженность к хорошим техническим практикам</div>
-      <div class="grade">
-        <div class="grade-number good" id="practices">NaN</div>
-      </div>
-      <div class="items">Уровень владения технологиями</div>
-      <div class="grade">
-        <div class="grade-number good" id="technologies">NaN</div>
-      </div>
-      <div class="items">Адаптивность</div>
-      <div class="grade">
-        <div class="grade-number good" id="adaptive">NaN</div>
-      </div>
-      <div class="items sum">Средняя оценка</div>
-      <div class="grade">
-        <div class="grade-number good" id="average">NaN</div>
+      <div v-for="(score, key) in user.team.generalRating">
+        <div class="items" :class="key === 'Средняя оценка' && 'sum'">
+          {{ key }}
+        </div>
+        <div class="grade">
+          <div class="grade-number" :class="colorGrade(score)">{{ score }}</div>
+        </div>
       </div>
       <!--<div class="items sum">
           Нормированная оценка
@@ -45,7 +25,7 @@
       *кликните на сотрудника, чтобы посмотреть результаты его ревью
     </p>
     <div class="inside-wrapper rating" style="width: 95%">
-      <div id="employee-4">
+      <div v-for="worker in user.team">
         <div class="items rating-name">
           <a href="#" onclick="stats4()" class="name-link">
             <div class="peers-pic-raiting">
@@ -53,12 +33,17 @@
             </div>
           </a>
           <router-link to="/i-manager/employee" class="name-link"
-            >Сотрудник Дима2
+            >{{ worker.username }}
           </router-link>
         </div>
         <a href="#" onclick="stats4()">
           <div class="grade">
-            <div class="grade-number good">NaN</div>
+            <div
+              class="grade-number"
+              :class="colorGrade(worker.rating?.averages.average)"
+            >
+              {{ worker.rating?.averages.average }}
+            </div>
           </div>
         </a>
       </div>
@@ -67,8 +52,45 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import colorGrade from "@/helpers/colorGrade";
+
 export default {
   name: "MyTeam",
+
+  data() {
+    return {
+      test: {
+        name: "John",
+        surname: "Jonson",
+        age: 18,
+        city: "New-York",
+      },
+    };
+  },
+
+  computed: {
+    ...mapState(["user"]),
+  },
+
+  mounted() {
+    if (this.user.team) {
+      this.$store.dispatch("getTeamScores", this.user.team);
+    }
+  },
+
+  methods: {
+    colorGrade,
+  },
+
+  watch: {
+    "user.team": {
+      handler() {
+        console.log(this.user.team);
+        this.$store.dispatch("getTeamScores", this.user.team);
+      },
+    },
+  },
 };
 </script>
 
@@ -110,6 +132,7 @@ input[type="submit"]:active {
 .inside-wrapper {
   display: inline-block;
   margin-left: 45px;
+  width: 95%;
 }
 
 .items {

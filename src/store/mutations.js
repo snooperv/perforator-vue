@@ -86,6 +86,25 @@ const mutations = {
     state.user.peersIRate = payload;
     state.user.peersIRate.map?.((peer) => (peer.isOpen = false));
   },
+
+  [types.SET_WORKER_SCORE](state, payload) {
+    const { id, score } = payload;
+    state.user.team.filter((worker) => worker.user_id === id)[0].rating = score;
+  },
+
+  [types.SET_GENERAL_SCORE](state, payload) {
+    const userReadable = {
+      "Соблюдение сроков": payload.deadline,
+      "Пути достижения целей": payload.approaches,
+      "Умение работать в команде": payload.teamwork,
+      "Приверженность к хорошим техническим практикам": payload.practices,
+      "Уровень владения технологиями": payload.experience,
+      Адаптивность: payload.adaptation,
+      "Средняя оценка": payload.average,
+    };
+
+    state.user.team.generalRating = userReadable;
+  },
 };
 
 const peersSort = (peer1, peer2) => {

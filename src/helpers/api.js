@@ -1,7 +1,6 @@
 import urlQueryParts from "@/helpers/urlQueryParts";
 
 const API_URL = "http://localhost:8000";
-const API = API_URL + "/api/";
 const MAIN_API = API_URL + "/perforator/";
 const PEERS = MAIN_API + "peers/";
 const SELF_REVIEW = MAIN_API + "self-review/";
@@ -32,6 +31,9 @@ export const getInfoTeamAPI = () => MAIN_API + "team";
 export const getRatesAPI = (id) =>
   MAIN_API + "imanager/employee/rating" + urlQueryParts(id);
 export const getMyManagerAPI = () => MAIN_API + "manager";
+export const getTeamScoresAPI = (params) =>
+  MAIN_API + "imanager/employee/rating" + params;
+
 export const postProcessOneToOneCommonAPI = () =>
   MAIN_API + "1to1/update_common_notes/";
 export const postProcessOneToOnePrivateAPI = () =>

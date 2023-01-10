@@ -28,6 +28,9 @@ export default {
   },
 
   mounted() {
+    if (this.$route.path === "/i-manager")
+      this.$router.push("/i-manager/approval");
+
     if (localStorage.getItem("isManager") !== "true") {
       this.$router.push("/self-review");
       return;
