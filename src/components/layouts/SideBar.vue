@@ -55,12 +55,7 @@
           <div class="link-container">1-on-1</div>
         </router-link>
       </nav>
-      <router-link
-        to="/last-periods"
-        active-class="active"
-        tag="button"
-        class="side-btn link"
-      >
+      <router-link to="/last-periods" tag="button" class="side-btn link">
         <div class="link-container">
           <img
             src="@/assets/img/history.svg"
@@ -91,7 +86,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .photo-sidebar {
   width: auto;
   height: 100%;
@@ -198,6 +193,7 @@ a {
 
 .router-link-active {
   position: relative;
+  color: #000 !important;
   background-color: rgba(165, 164, 245, 0.56);
   border-radius: 3em;
   transition: 0.2s;
@@ -236,6 +232,12 @@ a {
 .link-container {
   text-align: left;
   margin-left: 20px;
+  display: flex;
+  align-items: center;
+
+  img {
+    margin-right: 7px;
+  }
 }
 
 .side-btn:last-child {

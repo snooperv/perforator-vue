@@ -12,6 +12,7 @@ import OneToOne from "@/pages/OneToOne/OneToOne";
 import Current from "@/pages/OneToOne/Current/Current";
 import Previous from "@/pages/OneToOne/Previous/Previous";
 import OneWorker from "@/pages/IManager/MyTeam/OneWorker/OneWorker.vue";
+import PreviousPeriods from "@/pages/PreviousPeriods/PreviousPeriods.vue";
 
 const routes = [
   {
@@ -79,6 +80,11 @@ const routes = [
             meta: { title: "One to one" },
           },
         ],
+      },
+      {
+        path: "/last-periods",
+        component: PreviousPeriods,
+        meta: { title: "Прошлые периоды оценки" },
       },
       {
         path: "/page-not-found",
