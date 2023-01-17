@@ -4,13 +4,18 @@
     <p class="description">
       Чтобы увидеть результаты предыдущих ревью, нажмите на точку на графике
     </p>
-    <div class="back-statistic"></div>
+    <div class="back-statistic">
+      <LineChart />
+    </div>
   </div>
 </template>
 
 <script>
+import LineChart from "@/pages/PreviousPeriods/LineChart.vue";
+
 export default {
   name: "PreviousPeriods",
+  components: { LineChart },
 };
 </script>
 
@@ -43,6 +48,7 @@ h2 {
 }
 
 .back-statistic {
+  padding: 35px 60px;
   height: 400px;
   background: #ffffff;
   border-radius: 31px;
