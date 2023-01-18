@@ -58,8 +58,8 @@ export default {
     this.$store
       .dispatch("getOneToOne", {
         is_manager: this.isManager,
-        manager_id: this.myId,
-        employee_id: this.workerId,
+        manager_id: this.isManager ? this.myId : this.workerId,
+        employee_id: this.isManager ? this.workerId : this.myId,
       })
       .then((result) => {
         this.common = result.commonNote;
@@ -75,8 +75,8 @@ export default {
       this.timerId = setTimeout(() => {
         this.$store.dispatch("postProcessOneToOne", {
           is_manager: this.isManager,
-          manager_id: this.myId,
-          employee_id: this.workerId,
+          manager_id: this.isManager ? this.myId : this.workerId,
+          employee_id: this.isManager ? this.workerId : this.myId,
           personalNote: this.personal,
           commonNote: this.common,
         });

@@ -1,6 +1,6 @@
 import urlQueryParts from "@/helpers/urlQueryParts";
 
-const API_URL = "http://localhost:8000";
+export const API_URL = "http://localhost:8000";
 const MAIN_API = API_URL + "/perforator/";
 const PEERS = MAIN_API + "peers/";
 const SELF_REVIEW = MAIN_API + "self-review/";

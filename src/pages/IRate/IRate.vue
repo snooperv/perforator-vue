@@ -42,7 +42,7 @@
           >
             <span class="peers-pic">
               <img
-                src="@/assets/img/pic.png"
+                :src="API_URL() + peer.photo"
                 alt="Фото сотрудника"
                 class="avatar"
               />
@@ -62,6 +62,7 @@
 <script>
 import DropdownContent from "@/components/irate/DropdownContent";
 import { mapState } from "vuex";
+import { API_URL } from "@/helpers/api";
 
 export default {
   name: "IRate",
@@ -82,7 +83,11 @@ export default {
     return {};
   },
 
-  methods: {},
+  methods: {
+    API_URL() {
+      return API_URL;
+    },
+  },
 };
 </script>
 
@@ -228,7 +233,9 @@ b {
 }
 
 .avatar {
-  width: 100%;
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
 }
 
 .chevron {

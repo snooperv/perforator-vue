@@ -7,7 +7,7 @@
       <h3>Мои данные</h3>
       <div class="user">
         <div class="header-pic">
-          <img class="avatar" src="@/assets/img/pic.png" alt="Фото профиля" />
+          <img class="avatar" :src="user.photo" alt="Фото профиля" />
         </div>
         <div class="user-info">
           <p class="name">

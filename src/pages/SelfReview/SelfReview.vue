@@ -62,7 +62,7 @@
           <div class="peers-pic">
             <img
               class="avatar"
-              src="@/assets/img/pic.png"
+              :src="API_URL() + peer.photo"
               alt="Фото сотрудника"
             />
           </div>
@@ -129,6 +129,7 @@
 import { mapState } from "vuex";
 import { openModal } from "jenesius-vue-modal";
 import PeersList from "@/components/modals/PeersList";
+import { API_URL } from "@/helpers/api";
 
 export default {
   name: "SelfReview",
@@ -158,6 +159,9 @@ export default {
   },
 
   methods: {
+    API_URL() {
+      return API_URL;
+    },
     saveReview(e, isDraft) {
       this.selfReview.is_draft = isDraft;
       this.$store.dispatch("saveSelfReview", this.selfReview);
@@ -186,7 +190,7 @@ export default {
 
   mounted() {
     this.$store.dispatch("getSelfReview");
-    this.$store.dispatch("getMyPeers");
+    this.$store.dispatch("getMyPeers").then(() => console.log(this.user.peers));
   },
 
   watch: {
@@ -332,7 +336,9 @@ p {
 }
 
 .avatar {
-  width: 100%;
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
 }
 
 .close-icon {

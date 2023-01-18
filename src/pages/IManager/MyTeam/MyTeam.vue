@@ -29,7 +29,11 @@
         <div class="items rating-name">
           <a href="#" class="name-link">
             <div class="peers-pic-raiting">
-              <img class="avatar" src="@/assets/img/pic.png" alt="Аватар" />
+              <img
+                class="avatar"
+                :src="API_URL() + worker.photo"
+                alt="Аватар"
+              />
             </div>
           </a>
           <a
@@ -57,6 +61,7 @@
 <script>
 import { mapState } from "vuex";
 import colorGrade from "@/helpers/colorGrade";
+import { API_URL } from "@/helpers/api";
 
 export default {
   name: "MyTeam",
@@ -70,6 +75,9 @@ export default {
   },
 
   methods: {
+    API_URL() {
+      return API_URL;
+    },
     colorGrade,
     toEmployee(e, id) {
       e.preventDefault();
@@ -222,7 +230,9 @@ input[type="submit"]:active {
   left: -30px;
 
   img {
-    width: 100%;
+    width: 63px;
+    height: 63px;
+    object-fit: cover;
   }
 }
 </style>

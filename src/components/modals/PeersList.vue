@@ -14,7 +14,7 @@
       >
         <div class="one-peer" v-if="peer.profile_id !== 1">
           <div class="peers-pic">
-            <img class="avatar" src="@/assets/img/pic.png" alt="Avatar" />
+            <img class="avatar" :src="API_URL() + peer.photo" alt="Avatar" />
           </div>
           <div class="peer-info">{{ peer.username }}</div>
           <button class="choose" @click="selectPeerRemote(peer.profile_id)">
@@ -30,6 +30,7 @@
 <script>
 import { mapState } from "vuex";
 import { closeModal } from "jenesius-vue-modal";
+import { API_URL } from "@/helpers/api";
 
 export default {
   name: "PeersList",
@@ -68,6 +69,9 @@ export default {
   },
 
   methods: {
+    API_URL() {
+      return API_URL;
+    },
     selectPeerRemote(id) {
       this.$store.dispatch("addMyPeer", {
         peerId: id,
@@ -244,6 +248,8 @@ export default {
 }
 
 .avatar {
-  width: 100%;
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
 }
 </style>

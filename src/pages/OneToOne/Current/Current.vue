@@ -11,7 +11,7 @@
         class="peer dropbtn"
       >
         <span class="peers-pic">
-          <img src="@/assets/img/pic.png" class="avatar" alt="Аватар" />
+          <img :src="API_URL() + worker.photo" class="avatar" alt="Аватар" />
         </span>
         <span class="name">{{ worker.username }}</span>
 
@@ -32,6 +32,7 @@
 <script>
 import DropdownForm from "@/components/OneToOne/DropdownForm";
 import { mapState } from "vuex";
+import { API_URL } from "@/helpers/api";
 
 export default {
   name: "Current",
@@ -58,6 +59,9 @@ export default {
   },
 
   methods: {
+    API_URL() {
+      return API_URL;
+    },
     toggleForm() {
       this.isOpen = !this.isOpen;
     },
@@ -191,7 +195,9 @@ h2 {
   top: -22px;
 
   img {
-    width: 100%;
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
   }
 }
 </style>

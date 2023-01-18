@@ -15,7 +15,7 @@ import {
   Filler,
 } from "chart.js";
 import { Line } from "vue-chartjs";
-import { data, options } from "./chartConfig.js";
+import { data, options } from "@/helpers/chartConfig";
 
 ChartJS.register(
   CategoryScale,

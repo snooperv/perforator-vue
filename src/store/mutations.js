@@ -1,4 +1,5 @@
 import { types } from "@/types";
+import { API_URL } from "@/helpers/api";
 
 const mutations = {
   [types.CLEAR_lOCALSTORGE]() {
@@ -15,10 +16,11 @@ const mutations = {
   },
 
   [types.SET_MY_PROFILE](state, payload) {
-    const { name, phone, sbis, id } = payload;
+    const { name, phone, sbis, photo, id } = payload;
     state.user.username = name;
     state.user.phone = phone;
     state.user.sbis = sbis;
+    state.user.photo = API_URL + photo;
     state.user.myId = id;
   },
 

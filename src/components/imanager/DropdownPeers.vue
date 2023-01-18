@@ -10,7 +10,7 @@
       >
         <img
           class="selected-peer-avatar"
-          src="@/assets/img/pic.png"
+          :src="API_URL() + peer.photo"
           alt="Аватар"
         />
         <div class="selected-peer-name">
@@ -42,6 +42,7 @@
 import { openModal } from "jenesius-vue-modal";
 import PeersList from "@/components/modals/PeersList";
 import { mapState } from "vuex";
+import { API_URL } from "@/helpers/api";
 
 export default {
   name: "DropdownPeers",
@@ -57,6 +58,9 @@ export default {
   },
 
   methods: {
+    API_URL() {
+      return API_URL;
+    },
     removePeer(workerId, peerId) {
       console.log(workerId, peerId);
       this.$store.dispatch("removeWorkerPeer", { workerId, peerId });
@@ -161,6 +165,7 @@ input[type="submit"]:active {
   position: relative;
   width: 57px;
   height: 57px;
+  object-fit: cover;
   left: -20px;
   top: -15px;
   border-radius: 50%;

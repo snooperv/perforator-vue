@@ -9,7 +9,7 @@
         <h3>Изменение данных</h3>
         <div class="user">
           <div class="header-pic">
-            <img class="avatar" src="@/assets/img/pic.png" alt="Фото профиля" />
+            <img class="avatar" :src="user.photo" alt="Фото профиля" />
           </div>
           <div class="user-info">
             <p class="name">
@@ -72,11 +72,13 @@
 <script>
 import { closeModal, openModal } from "jenesius-vue-modal";
 import UserInfo from "@/components/modals/UserInfo";
+import { mapState } from "vuex";
 
 export default {
   name: "EditUserInfo",
 
   computed: {
+    ...mapState(["user"]),
     closeEditUserInfo() {
       closeModal();
       openModal(UserInfo);

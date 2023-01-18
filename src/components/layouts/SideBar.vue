@@ -2,11 +2,7 @@
   <div class="sidebar">
     <div class="profile-div">
       <div class="profile-pic">
-        <img
-          class="photo-sidebar"
-          src="@/assets/img/pic.png"
-          alt="Фото профиля"
-        />
+        <img class="photo-sidebar" :src="user.photo" alt="Фото профиля" />
       </div>
       <div class="profile-name">
         <h2>{{ user.username }}</h2>

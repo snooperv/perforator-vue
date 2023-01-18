@@ -14,7 +14,7 @@
           class="peer dropbtn"
         >
           <span class="peers-pic-manager">
-            <img class="avatar" src="@/assets/img/pic.png" alt="Аватар" />
+            <img class="avatar" :src="API_URL() + worker.photo" alt="Аватар" />
           </span>
           <span class="name" style="margin-left: 0">{{ worker.username }}</span>
           <a href="#" class="chevron" id="remove_ref3">
@@ -37,7 +37,7 @@
       <div class="peers" v-for="worker in user.teamWithoutReview">
         <button id="remove_btn4" class="peer dropbtn" style="cursor: default">
           <span class="peers-pic-manager">
-            <img class="avatar" src="@/assets/img/pic.png" alt="Аватар" />
+            <img class="avatar" :src="API_URL() + worker.photo" alt="Аватар" />
           </span>
           <span class="name" style="margin-left: 0">{{ worker.username }}</span>
         </button>
@@ -56,7 +56,7 @@
       <div class="peers" v-for="worker in user.teamApprove">
         <button id="remove_btn4" class="peer dropbtn" style="cursor: default">
           <span class="peers-pic-manager">
-            <img class="avatar" src="@/assets/img/pic.png" alt="Аватар" />
+            <img class="avatar" :src="API_URL() + worker.photo" alt="Аватар" />
           </span>
           <span class="name" style="margin-left: 0">{{ worker.username }}</span>
         </button>
@@ -68,6 +68,7 @@
 <script>
 import DropdownPeers from "@/components/imanager/DropdownPeers";
 import { mapState } from "vuex";
+import { API_URL } from "@/helpers/api";
 
 export default {
   name: "PeerApproval",
@@ -81,7 +82,11 @@ export default {
     ...mapState(["user"]),
   },
 
-  methods: {},
+  methods: {
+    API_URL() {
+      return API_URL;
+    },
+  },
 };
 </script>
 
@@ -198,7 +203,9 @@ input[type="submit"]:active {
   top: -19px;
 
   img {
-    width: 100%;
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
   }
 }
 </style>
