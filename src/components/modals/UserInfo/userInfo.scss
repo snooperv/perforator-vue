@@ -202,12 +202,32 @@ p {
   top: 72px;
   left: 0;
   box-shadow: 0 8px 6px rgba(0, 0, 0, 0.4);
-  border-radius: 16px 16px 0 0;
-  transform: matrix(1, 0, 0, -1, 0, 0);
+  border-radius: 0 0 16px 16px;
+  overflow: hidden;
+
+  .mobile {
+    margin: 7px 12px;
+  }
+
+  .btn-mobile {
+    flex-direction: column;
+    margin: 7px 12px;
+    width: auto;
+    align-items: center;
+
+    button {
+      width: 100%;
+      padding: 10px 25px;
+      margin: 10px 0 0;
+    }
+  }
 
   .draggable-block {
     //margin: 12px auto;
     padding: 12px 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 
     .draggable-line {
       width: 118px;

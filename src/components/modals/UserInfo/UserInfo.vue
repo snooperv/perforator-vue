@@ -42,7 +42,30 @@
     </div>
 
     <div class="popup-mobile" v-if="isMobile">
-      <div class="draggable-block" @mousedown="dragStart">
+      <p class="tel mobile">
+        Номер телефона:
+        <span class="text"> {{ user.phone }} </span>
+      </p>
+      <p class="url mobile">
+        Профиль:
+        <a class="url-sbis text" :href="user.sbis" target="_blank">
+          {{ user.username }}
+        </a>
+      </p>
+      <div class="buttons btn-mobile">
+        <button class="change" @click="openEditUserInfo">
+          Изменить данные
+        </button>
+        <button class="exit" @click="userLogout">
+          <img src="@/assets/img/exit.png" class="exit-icon" alt="Exit" />
+          Выйти из аккаунта
+        </button>
+      </div>
+      <div
+        class="draggable-block"
+        @mousedown="dragStart"
+        @touchstart="dragStart"
+      >
         <div class="draggable-line"></div>
       </div>
     </div>
@@ -57,6 +80,12 @@ import { mapState } from "vuex";
 
 export default {
   name: "UserInfo",
+
+  data() {
+    return {
+      modalHeight: 200,
+    };
+  },
 
   computed: {
     ...mapState(["user", "isMobile"]),
@@ -77,16 +106,27 @@ export default {
     },
 
     dragStart(e) {
-      document.addEventListener("mousemove", this.drag);
-      document.addEventListener("mouseup", this.dragStop);
+      if (e.type === "mousedown") {
+        document.addEventListener("mousemove", this.drag);
+        document.addEventListener("mouseup", this.dragStop);
+      }
+      if (e.type === "touchstart") {
+        document.addEventListener("touchmove", this.drag);
+        document.addEventListener("touchend", this.dragStop);
+      }
     },
 
     drag(e) {
       const popup =
         e.target.closest(".popup-mobile") ||
         e.target.querySelector(".popup-mobile");
-      if (popup && popup.offsetHeight <= 220) {
-        popup.style.height = e.y - 57 + "px";
+      if (popup) {
+        if (
+          e.y <= this.modalHeight + 57 ||
+          e.changedTouches?.[0].pageY <= this.modalHeight + 57
+        )
+          popup.style.height = (e.y || e.changedTouches[0].pageY) - 57 + "px";
+        else popup.style.height = this.modalHeight + "px";
       }
     },
 
@@ -94,8 +134,11 @@ export default {
       const popup =
         e.target.closest(".popup-mobile") ||
         e.target.querySelector(".popup-mobile");
-      if (popup.offsetHeight > 100) {
-        popup.style.height = "200px";
+      if (
+        e.y > this.modalHeight / 2 + 57 ||
+        e.changedTouches?.[0].pageY > this.modalHeight / 2 + 57
+      ) {
+        popup.style.height = this.modalHeight + "px";
       } else {
         closeModal();
       }
