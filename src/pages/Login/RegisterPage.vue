@@ -45,7 +45,7 @@
             <input
               type="url"
               name="sbis"
-              placeholder="Ссылка на профиль СБИС"
+              placeholder="Ссылка на профиль"
               class="fadeIn third"
               :class="{ hasError: this.referenceError }"
               :value="reference"

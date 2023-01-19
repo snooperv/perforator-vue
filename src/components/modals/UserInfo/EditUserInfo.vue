@@ -71,7 +71,7 @@
 
 <script>
 import { closeModal, openModal } from "jenesius-vue-modal";
-import UserInfo from "@/components/modals/UserInfo";
+import UserInfo from "@/components/modals/UserInfo/UserInfo.vue";
 import { mapState } from "vuex";
 
 export default {

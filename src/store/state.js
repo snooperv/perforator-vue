@@ -17,6 +17,7 @@ const state = {
   workerPeers: {},
   peersAll: [],
   selfReview: {},
+  isMobile: window.innerWidth <= 800,
 };
 
 export default state;

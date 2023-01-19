@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Header from "@/components/layouts/Header";
+import Header from "@/components/layouts/Header/Header.vue";
 import SideBar from "@/components/layouts/SideBar";
 
 export default {
@@ -19,6 +19,17 @@ export default {
   mounted() {
     this.$route.path === "/" && this.$router.push("/self-review");
     this.$store.dispatch("getMyProfile");
+    window.addEventListener("resize", this.updateIsMobile);
+  },
+
+  methods: {
+    updateIsMobile() {
+      this.$store.state.isMobile = window.innerWidth <= 800;
+    },
+  },
+
+  unmounted() {
+    window.removeEventListener("resize", this.updateIsMobile);
   },
 };
 </script>

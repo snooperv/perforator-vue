@@ -49,9 +49,9 @@
               <p class="input-error" v-html="user.authError"></p>
             </div>
           </form>
-          <div class="admin fadeIn fourth">
-            <button class="adminLogin">Администратор</button>
-          </div>
+          <!--          <div class="admin fadeIn fourth">-->
+          <!--            <button class="adminLogin">Администратор</button>-->
+          <!--          </div>-->
         </div>
       </div>
       <div class="enter fadeInDown">

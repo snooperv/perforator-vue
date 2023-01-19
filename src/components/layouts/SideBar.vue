@@ -84,9 +84,9 @@ export default {
 
 <style lang="scss" scoped>
 .photo-sidebar {
-  width: auto;
-  height: 100%;
-  margin: 0 auto;
+  width: 132px;
+  height: 132px;
+  object-fit: cover;
 }
 
 a {
@@ -273,6 +273,11 @@ a {
   .profile-pic {
     width: 102px;
     height: 102px;
+
+    .photo-sidebar {
+      width: 102px;
+      height: 102px;
+    }
   }
 
   .profile-name {
