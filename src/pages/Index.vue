@@ -1,20 +1,27 @@
 <template>
   <Header />
-  <SideBar />
+  <SideBar v-if="!isMobile" />
   <div class="main">
     <div class="content">
       <router-view />
     </div>
   </div>
+  <Footer v-if="isMobile" />
 </template>
 
 <script>
 import Header from "@/components/layouts/Header/Header.vue";
 import SideBar from "@/components/layouts/SideBar";
+import { mapState } from "vuex";
+import Footer from "@/components/layouts/Footer/Footer.vue";
 
 export default {
   name: "Index",
-  components: { SideBar, Header },
+  components: { Footer, SideBar, Header },
+
+  computed: {
+    ...mapState(["isMobile"]),
+  },
 
   mounted() {
     this.$route.path === "/" && this.$router.push("/self-review");
