@@ -77,15 +77,10 @@ import { closeModal, openModal } from "jenesius-vue-modal";
 import EditUserInfo from "@/components/modals/UserInfo/EditUserInfo.vue";
 import Cockies from "vue-cookies";
 import { mapState } from "vuex";
+import { dragStart } from "@/helpers/dragMethods";
 
 export default {
   name: "UserInfo",
-
-  data() {
-    return {
-      modalHeight: 200,
-    };
-  },
 
   computed: {
     ...mapState(["user", "isMobile"]),
@@ -100,50 +95,10 @@ export default {
   },
 
   methods: {
+    dragStart,
     userLogout() {
       this.$store.commit("CLEAR_lOCALSTORGE");
       window.location = "/login";
-    },
-
-    dragStart(e) {
-      if (e.type === "mousedown") {
-        document.addEventListener("mousemove", this.drag);
-        document.addEventListener("mouseup", this.dragStop);
-      }
-      if (e.type === "touchstart") {
-        document.addEventListener("touchmove", this.drag);
-        document.addEventListener("touchend", this.dragStop);
-      }
-    },
-
-    drag(e) {
-      const popup =
-        e.target.closest(".popup-mobile") ||
-        e.target.querySelector(".popup-mobile");
-      if (popup) {
-        if (
-          e.y <= this.modalHeight + 57 ||
-          e.changedTouches?.[0].pageY <= this.modalHeight + 57
-        )
-          popup.style.height = (e.y || e.changedTouches[0].pageY) - 57 + "px";
-        else popup.style.height = this.modalHeight + "px";
-      }
-    },
-
-    dragStop(e) {
-      const popup =
-        e.target.closest(".popup-mobile") ||
-        e.target.querySelector(".popup-mobile");
-      if (
-        e.y > this.modalHeight / 2 + 57 ||
-        e.changedTouches?.[0].pageY > this.modalHeight / 2 + 57
-      ) {
-        popup.style.height = this.modalHeight + "px";
-      } else {
-        closeModal();
-      }
-      document.removeEventListener("mousemove", this.drag);
-      document.removeEventListener("mouseup", this.dragStop);
     },
   },
 };

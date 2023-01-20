@@ -65,6 +65,10 @@ const actions = {
         },
       });
 
+      if (token.status !== "ok") {
+        throw Error(token.status);
+      }
+
       // Cockies.set("refresh_token", token.token_b, "7d");
       localStorage.token = token.token_f;
       localStorage.lifetimeToken = token.token_f_lifetime;

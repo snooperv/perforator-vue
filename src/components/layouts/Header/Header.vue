@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="mobile-settings">
-      <div class="mobile-time">
+      <div class="mobile-time" @click="openTime">
         <img src="@/assets/img/carbonTime.svg" alt="Время" />
       </div>
       <div class="user-setting" @click="openUserInfo">
@@ -51,6 +51,8 @@
 import { openModal } from "jenesius-vue-modal";
 import UserInfo from "@/components/modals/UserInfo/UserInfo.vue";
 import { mapState } from "vuex";
+import EditUserInfo from "@/components/modals/UserInfo/EditUserInfo.vue";
+import HeaderTime from "@/components/layouts/Header/HeaderTime.vue";
 
 export default {
   name: "Header",
@@ -59,6 +61,10 @@ export default {
     ...mapState(["isMobile", "user"]),
     openUserInfo() {
       openModal(UserInfo);
+    },
+
+    openTime() {
+      openModal(HeaderTime);
     },
   },
 };
