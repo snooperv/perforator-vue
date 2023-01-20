@@ -14,7 +14,7 @@
       </svg>
       Self-review
     </router-link>
-    <router-link class="menu-item" to="/i-manager">
+    <router-link class="menu-item" to="/i-rate">
       <svg
         width="25"
         height="24"
@@ -31,7 +31,7 @@
       </svg>
       Я оцениваю
     </router-link>
-    <router-link class="menu-item" to="/i-rate">
+    <router-link class="menu-item" to="/i-manager" v-if="user.team.length > 0">
       <svg
         width="24"
         height="23"
@@ -90,8 +90,18 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "Footer",
+
+  computed: {
+    ...mapState(["user"]),
+  },
+
+  mounted() {
+    this.$store.dispatch("getMyTeam");
+  },
 };
 </script>
 
