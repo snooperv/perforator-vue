@@ -1,7 +1,19 @@
 <template>
-  <div class="me-estimate">
-    <div class="instruction" v-if="!isMobile">
-      <h2 class="main-title">Система баллов:</h2>
+  <div class="instruction-container">
+    <div
+      class="instruction-mobile"
+      :class="isInstructionOpen && 'open'"
+      @click="() => (isInstructionOpen = !isInstructionOpen)"
+    >
+      <img
+        src="@/assets/img/starIcon.png"
+        class="instruction-icon"
+        alt="Инструкция"
+      />
+      Система баллов
+      <img src="@/assets/img/arrowMobile.svg" class="arrow-icon" alt="Arrow" />
+    </div>
+    <div class="opened-instruction" v-if="isInstructionOpen">
       <div class="number">1</div>
       <p>
         <span>Значительно ниже моих ожиданий</span> <br />
@@ -31,68 +43,19 @@
         он не только написал его, но и сделал его полностью рабочим
       </p>
     </div>
-
-    <Instruction v-if="isMobile" />
-
-    <div class="wait">
-      <h2>Ожидают моей оценки</h2>
-      <div class="peers">
-        <div class="one-peer" v-for="peer in user.peersIRate">
-          <button
-            @click="() => (peer.isOpen = !peer.isOpen)"
-            class="peer dropbtn"
-          >
-            <span class="peers-pic">
-              <img
-                :src="API_URL() + peer.photo"
-                alt="Фото сотрудника"
-                class="avatar"
-              />
-            </span>
-            <span class="name"> {{ peer.name }} </span>
-            <a href="#" class="chevron">
-              <i class="fas fa-chevron-right" aria-hidden="true"></i>
-            </a>
-          </button>
-          <DropdownContent v-if="peer.isOpen" :peer-id="peer.id" />
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
-import DropdownContent from "@/components/irate/DropdownContent";
-import { mapState } from "vuex";
-import { API_URL } from "@/helpers/api";
-import Instruction from "@/components/modals/IRate/Instruction.vue";
-
 export default {
-  name: "IRate",
-
-  components: {
-    Instruction,
-    DropdownContent,
-  },
-
-  computed: {
-    ...mapState(["user", "isMobile"]),
-  },
-
-  mounted() {
-    this.$store.dispatch("getPeersRatedMe");
-  },
+  name: "Instruction",
 
   data() {
-    return {};
-  },
-
-  methods: {
-    API_URL() {
-      return API_URL;
-    },
+    return {
+      isInstructionOpen: false,
+    };
   },
 };
 </script>
 
-<style lang="scss" src="./iRate.scss" scoped></style>
+<style lang="scss" src="./instruction.scss" scoped></style>
