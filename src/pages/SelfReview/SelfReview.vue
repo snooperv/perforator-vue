@@ -133,6 +133,7 @@ import { openModal } from "jenesius-vue-modal";
 import PeersList from "@/components/modals/PeersList/PeersList.vue";
 import { API_URL } from "@/helpers/api";
 import Instruction from "@/components/modals/SelfReview/Instruction.vue";
+import PeersListMobile from "@/components/modals/PeersList/peersListMobile.vue";
 
 export default {
   name: "SelfReview",
@@ -148,7 +149,9 @@ export default {
     ...mapState(["user", "selfReview", "isMobile"]),
 
     openModalPeers() {
-      openModal(PeersList, { isManager: false });
+      this.isMobile
+        ? openModal(PeersListMobile, { isManager: false })
+        : openModal(PeersList, { isManager: false });
     },
 
     isSendDisabled() {

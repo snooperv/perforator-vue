@@ -1,16 +1,21 @@
 <template>
-  <div class="selection" v-if="!isMobile">
-    <a class="close" @click="closeModalPeers">
-      <i class="fas fa-times" aria-hidden="true"></i>
-    </a>
+  <div class="selection-mobile" v-if="isMobile">
+    <div class="draggable-block" @mousedown="dragStart" @touchstart="dragStart">
+      <div class="draggable-line"></div>
+    </div>
     <h3>Выберите оценивающего</h3>
-    <input type="text" v-model="search" class="peers-text" />
+    <input
+      type="text"
+      v-model="search"
+      class="peers-text"
+      placeholder="Введите имя"
+    />
     <div id="list_peers">
       <div
         v-for="peer in searchPeers"
         :id="'peer-' + peer.profile_id"
         :key="peer.profile_id"
-        style="margin: 0 25px 0 5px"
+        style="margin: 0 0 0 5px"
       >
         <div class="one-peer" v-if="peer.username !== 'Админ'">
           <div class="peers-pic">
@@ -30,9 +35,10 @@
 import { mapState } from "vuex";
 import { closeModal } from "jenesius-vue-modal";
 import { API_URL } from "@/helpers/api";
+import { dragStart } from "@/helpers/dragMethodsBottom";
 
 export default {
-  name: "PeersList",
+  name: "peersListMobile",
 
   props: ["isManager", "workerId"],
 
@@ -68,6 +74,7 @@ export default {
   },
 
   methods: {
+    dragStart,
     API_URL() {
       return API_URL;
     },

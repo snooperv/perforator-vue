@@ -7,8 +7,8 @@ const dragStop = (e) => {
     e.target.closest(".popup-mobile") ||
     e.target.querySelector(".popup-mobile");
   if (
-    e.y > modalHeight / 2 + 57 ||
-    e.changedTouches?.[0].clientY > modalHeight / 2 + 57
+    e.y >= modalHeight / 2 + 57 ||
+    e.changedTouches?.[0].clientY >= modalHeight / 2 + 57
   ) {
     popup.style.height = modalHeight + "px";
   } else {

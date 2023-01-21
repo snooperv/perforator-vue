@@ -52,7 +52,7 @@
 import { mapState } from "vuex";
 import { closeModal, openModal } from "jenesius-vue-modal";
 import UserInfoMobile from "@/components/modals/UserInfo/UserInfoMobile.vue";
-import { dragStart } from "@/helpers/dragMethods";
+import { dragStart } from "@/helpers/dragMethodsTop";
 
 export default {
   name: "EditUserInfoMobile",

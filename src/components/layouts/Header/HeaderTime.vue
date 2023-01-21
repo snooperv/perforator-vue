@@ -28,7 +28,7 @@
 <script>
 import { closeModal } from "jenesius-vue-modal";
 import { mapState } from "vuex";
-import { dragStart } from "@/helpers/dragMethods";
+import { dragStart } from "@/helpers/dragMethodsTop";
 
 export default {
   name: "UserInfo",

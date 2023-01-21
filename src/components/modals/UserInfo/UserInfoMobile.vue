@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { dragStart } from "@/helpers/dragMethods";
+import { dragStart } from "@/helpers/dragMethodsTop";
 import { mapState } from "vuex";
 import { closeModal, openModal } from "jenesius-vue-modal";
 import EditUserInfoMobile from "@/components/modals/UserInfo/EditUserInfoMobile.vue";
