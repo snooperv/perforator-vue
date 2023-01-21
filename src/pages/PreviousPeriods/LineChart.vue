@@ -48,4 +48,10 @@ export default {
   border-radius: 43px;
   padding: 30px 35px;
 }
+
+@media (max-width: 800px) {
+  .line-chart {
+    padding: 15px;
+  }
+}
 </style>
