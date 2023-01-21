@@ -40,7 +40,7 @@
       <div class="mobile-time" @click="openTime">
         <img src="@/assets/img/carbonTime.svg" alt="Время" />
       </div>
-      <div class="user-setting" @click="openUserInfo">
+      <div class="user-setting" @click="openUserInfoMobile">
         <img src="@/assets/img/buttonSettings.svg" alt="Настройки" />
       </div>
     </div>
@@ -53,6 +53,7 @@ import UserInfo from "@/components/modals/UserInfo/UserInfo.vue";
 import { mapState } from "vuex";
 import EditUserInfo from "@/components/modals/UserInfo/EditUserInfo.vue";
 import HeaderTime from "@/components/layouts/Header/HeaderTime.vue";
+import UserInfoMobile from "@/components/modals/UserInfo/UserInfoMobile.vue";
 
 export default {
   name: "Header",
@@ -61,6 +62,10 @@ export default {
     ...mapState(["isMobile", "user"]),
     openUserInfo() {
       openModal(UserInfo);
+    },
+
+    openUserInfoMobile() {
+      openModal(UserInfoMobile);
     },
 
     openTime() {

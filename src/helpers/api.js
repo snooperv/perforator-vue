@@ -1,6 +1,7 @@
 import urlQueryParts from "@/helpers/urlQueryParts";
 
 export const API_URL = "https://192.168.0.102:8000";
+// export const API_URL = "https://5118-94-190-67-166.eu.ngrok.io";
 const MAIN_API = API_URL + "/perforator/";
 const PEERS = MAIN_API + "peers/";
 const SELF_REVIEW = MAIN_API + "self-review/";

@@ -219,6 +219,10 @@ p {
       width: 100%;
       padding: 10px 25px;
       margin: 10px 0 0;
+
+      &.editor {
+        margin-top: 20px;
+      }
     }
   }
 
@@ -283,4 +287,18 @@ p {
   letter-spacing: 0.025em;
   font-size: 11px;
   color: #9c9c9c;
+}
+
+.mobile {
+  .name-field {
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 400;
+    width: 150px;
+    margin-right: 5px;
+  }
+
+  .text {
+    margin: 0;
+  }
 }

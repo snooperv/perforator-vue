@@ -1,5 +1,5 @@
 <template>
-  <div class="selection">
+  <div class="selection" v-if="!isMobile">
     <a class="close" @click="closeModalPeers">
       <i class="fas fa-times" aria-hidden="true"></i>
     </a>
@@ -23,7 +23,6 @@
         </div>
       </div>
     </div>
-    <!--Сюда добавляются все пиры, которых можно выбрать-->
   </div>
 </template>
 
@@ -35,7 +34,7 @@ import { API_URL } from "@/helpers/api";
 export default {
   name: "PeersList",
 
-  props: ["isManager", "workerId"],
+  props: ["isManager", "workerId", "isMobile"],
 
   data() {
     return {

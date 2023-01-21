@@ -1,6 +1,6 @@
 <template>
   <div class="self-review">
-    <div class="instruction">
+    <div class="instruction" v-if="!isMobile">
       <h3 class="instr-title">Инструкция</h3>
       <p class="instr-p">
         В данной форме вам нужно будет провести самоанализ по проделанной работе
@@ -12,6 +12,7 @@
         навыков.
       </p>
     </div>
+    <Instruction v-if="isMobile" />
     <h2 class="title">Self Review</h2>
     <div class="form">
       <div class="container">
@@ -54,8 +55,9 @@
     <div class="peers">
       <p>
         <i class="icon-circle fas fa-circle" aria-hidden="true"></i>
-        <span>Пиры</span> Люди, с которыми вы взаимодействуете по рабочим
-        вопросам. Рекомендуем выбирать 3-7 человек
+        <span>Пиры</span><br />
+        Люди, с которыми вы взаимодействуете по рабочим вопросам. Рекомендуем
+        выбирать 3-7 человек
       </p>
       <div id="my_peers" v-for="peer in user.peers">
         <div class="peer-sel" :id="'my-peer-' + peer.profile_id">
@@ -128,11 +130,13 @@
 <script>
 import { mapState } from "vuex";
 import { openModal } from "jenesius-vue-modal";
-import PeersList from "@/components/modals/PeersList";
+import PeersList from "@/components/modals/PeersList/PeersList.vue";
 import { API_URL } from "@/helpers/api";
+import Instruction from "@/components/modals/SelfReview/Instruction.vue";
 
 export default {
   name: "SelfReview",
+  components: { Instruction },
 
   data() {
     return {
@@ -141,7 +145,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["user", "selfReview"]),
+    ...mapState(["user", "selfReview", "isMobile"]),
 
     openModalPeers() {
       openModal(PeersList, { isManager: false });

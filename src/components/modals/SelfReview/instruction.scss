@@ -1,0 +1,43 @@
+.instruction-container {
+  width: 100%;
+  position: relative;
+}
+
+.instruction-mobile {
+  height: 50px;
+  background: #a5a4f5;
+  width: 100%;
+  border-radius: 8px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+
+  &.open {
+    border-radius: 8px 8px 0 0;
+  }
+
+  .instruction-icon {
+    margin: 0 8px 0 20px;
+  }
+
+  .arrow-icon {
+    margin-left: auto;
+    margin-right: 15px;
+  }
+}
+
+.opened-instruction {
+  background: #a5a4f5;
+  color: #fff;
+  padding: 0 15px 0 20px;
+  border-radius: 0 0 8px 8px;
+  position: absolute;
+
+  .instr-p {
+    margin: 0;
+    padding-top: 5px;
+    padding-bottom: 15px;
+    font-size: 16px;
+  }
+}

@@ -40,7 +40,7 @@
 
 <script>
 import { openModal } from "jenesius-vue-modal";
-import PeersList from "@/components/modals/PeersList";
+import PeersList from "@/components/modals/PeersList/PeersList.vue";
 import { mapState } from "vuex";
 import { API_URL } from "@/helpers/api";
 

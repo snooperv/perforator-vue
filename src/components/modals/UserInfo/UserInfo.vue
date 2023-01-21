@@ -1,72 +1,41 @@
 <template>
-  <div>
-    <div class="popup" id="popup" v-if="!isMobile">
-      <div class="popup-content">
-        <a class="close" @click="closeUserInfo">
-          <i class="fas fa-times" aria-hidden="true"></i>
-        </a>
-        <h3>Мои данные</h3>
-        <div class="user">
-          <div class="header-pic">
-            <img class="avatar" :src="user.photo" alt="Фото профиля" />
-          </div>
-          <div class="user-info">
-            <p class="name">
-              Имя и фамилия:
-              <span class="text"> {{ user.username }} </span>
-            </p>
-            <p class="tel">
-              Номер телефона:
-              <span class="text"> {{ user.phone }} </span>
-            </p>
-            <p class="url">
-              Профиль СБИС:
-              <a class="url-sbis text" :href="user.sbis" target="_blank">
-                {{ user.username }}
-              </a>
-            </p>
-          </div>
+  <div class="popup" id="popup" v-if="!isMobile">
+    <div class="popup-content">
+      <a class="close" @click="closeUserInfo">
+        <i class="fas fa-times" aria-hidden="true"></i>
+      </a>
+      <h3>Мои данные</h3>
+      <div class="user">
+        <div class="header-pic">
+          <img class="avatar" :src="user.photo" alt="Фото профиля" />
         </div>
-        <div class="buttons">
-          <button class="change" @click="openEditUserInfo">
-            Изменить данные
-          </button>
-          <!--          <a href="">-->
-          <button class="exit" @click="userLogout">
-            <img src="@/assets/img/exit.png" class="exit-icon" alt="Exit" />
-            Выйти из аккаунта
-          </button>
-          <!--          </a>-->
+        <div class="user-info">
+          <p class="name">
+            Имя и фамилия:
+            <span class="text"> {{ user.username }} </span>
+          </p>
+          <p class="tel">
+            Номер телефона:
+            <span class="text"> {{ user.phone }} </span>
+          </p>
+          <p class="url">
+            Профиль СБИС:
+            <a class="url-sbis text" :href="user.sbis" target="_blank">
+              {{ user.username }}
+            </a>
+          </p>
         </div>
       </div>
-    </div>
-
-    <div class="popup-mobile" v-if="isMobile">
-      <p class="tel mobile">
-        Номер телефона:
-        <span class="text"> {{ user.phone }} </span>
-      </p>
-      <p class="url mobile">
-        Профиль:
-        <a class="url-sbis text" :href="user.sbis" target="_blank">
-          {{ user.username }}
-        </a>
-      </p>
-      <div class="buttons btn-mobile">
+      <div class="buttons">
         <button class="change" @click="openEditUserInfo">
           Изменить данные
         </button>
+        <!--          <a href="">-->
         <button class="exit" @click="userLogout">
           <img src="@/assets/img/exit.png" class="exit-icon" alt="Exit" />
           Выйти из аккаунта
         </button>
-      </div>
-      <div
-        class="draggable-block"
-        @mousedown="dragStart"
-        @touchstart="dragStart"
-      >
-        <div class="draggable-line"></div>
+        <!--          </a>-->
       </div>
     </div>
   </div>
@@ -77,7 +46,6 @@ import { closeModal, openModal } from "jenesius-vue-modal";
 import EditUserInfo from "@/components/modals/UserInfo/EditUserInfo.vue";
 import Cockies from "vue-cookies";
 import { mapState } from "vuex";
-import { dragStart } from "@/helpers/dragMethods";
 
 export default {
   name: "UserInfo",
@@ -95,7 +63,6 @@ export default {
   },
 
   methods: {
-    dragStart,
     userLogout() {
       this.$store.commit("CLEAR_lOCALSTORGE");
       window.location = "/login";
