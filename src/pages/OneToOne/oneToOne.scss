@@ -1,0 +1,70 @@
+h2 {
+  display: inline-block;
+  color: #222;
+  font-size: 32px;
+}
+
+.main-title {
+  text-align: left;
+  color: #222;
+  margin-top: 30px;
+  font-size: 38px;
+  margin-bottom: 0;
+}
+
+.double-links {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 10px 0px;
+  background-color: #fff;
+  border-radius: 25px;
+  border: 1px solid #edbd31;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
+}
+
+.d-link {
+  background-color: transparent;
+  border-radius: 20px;
+  padding: 12px 50px 11px 50px;
+  letter-spacing: 1px;
+  font-weight: 1000;
+  font-family: "Gotham Pro light", sans-serif;
+  text-decoration: none;
+  color: black;
+}
+
+.router-link-active {
+  background: #a5a4f5;
+  color: #fff;
+}
+
+.second-link {
+  margin-left: -5px;
+}
+
+.container {
+  margin-left: 50px;
+}
+
+@media (max-width: 800px) {
+  .container {
+    margin: 0 14px;
+
+    .main-title {
+      text-align: center;
+      font-size: 28px;
+    }
+
+    .double-links {
+      display: flex;
+      flex-direction: column;
+      max-width: 500px;
+      margin: 25px auto 0;
+      padding: 0;
+
+      .d-link {
+        margin: -1px 0;
+      }
+    }
+  }
+}
