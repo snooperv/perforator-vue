@@ -78,7 +78,7 @@ export default {
     },
     selectPeerRemote(id) {
       if (this.isAllUsers) {
-        console.log("Click to my team");
+        this.$store.dispatch("addUserImMyTeam", id);
       } else {
         this.$store.dispatch("addMyPeer", {
           peerId: id,

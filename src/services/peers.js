@@ -1,7 +1,9 @@
 import request from "../helpers/request";
 import {
+  addUserImMyTeamAPI,
   addWorkerPeerAPI,
   approveWorkerAPI,
+  deleteUserImMyTeamAPI,
   getAllPeersAPI,
   getAllUsersAPI,
   getInfoTeamAPI,
@@ -100,4 +102,12 @@ export const getPeersRatedMe = async () => {
 
 export const postPeersRatedMe = async (data) => {
   return await request(postPeersRatedMeAPI(), "POST", data);
+};
+
+export const addUserImMyTeam = async (data) => {
+  return await request(addUserImMyTeamAPI(), "POST", data);
+};
+
+export const deleteUserImMyTeam = async (data) => {
+  return await request(deleteUserImMyTeamAPI(), "POST", data);
 };

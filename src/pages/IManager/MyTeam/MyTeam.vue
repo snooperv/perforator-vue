@@ -42,6 +42,9 @@
             class="name-link"
             >{{ worker.username }}
           </a>
+          <button @click="deleteUser(worker.profile_id)">
+            Удалить из команды
+          </button>
         </div>
         <a href="#">
           <div class="grade">
@@ -104,6 +107,11 @@ export default {
     openAllUsers() {
       if (!this.isMobile)
         openModal(PeersList, { isManager: true, isAllUsers: true });
+    },
+
+    deleteUser(id) {
+      console.log("Delete user");
+      this.$store.dispatch("deleteUserImMyTeam", id);
     },
   },
 

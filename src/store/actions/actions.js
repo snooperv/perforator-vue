@@ -1,8 +1,10 @@
 import { types } from "@/types";
 import { refreshToken, getNewToken, registerUser } from "@/services/auth";
 import {
+  addUserImMyTeam,
   addWorkerPeer,
   approveWorker,
+  deleteUserImMyTeam,
   getAllPeers,
   getAllUsers,
   getManagerStatus,
@@ -148,6 +150,24 @@ const actions = {
         return user;
       });
       commit(types.SET_ALL_USERS, usersWithoutTeam);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async addUserImMyTeam({ commit, state, dispatch }, id) {
+    try {
+      await addUserImMyTeam({ profile_id: id });
+      await dispatch("getAllUsers");
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async deleteUserImMyTeam({ commit, state, dispatch }, id) {
+    try {
+      await deleteUserImMyTeam({ profile_id: id });
+      await dispatch("getMyTeam");
     } catch (e) {
       console.log(e);
     }
