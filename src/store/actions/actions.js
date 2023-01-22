@@ -87,7 +87,7 @@ const actions = {
     try {
       const [username, password] = [data.get("phone"), data.get("password")];
       await registerUser(data);
-      dispatch("getToken", { username, password });
+      await dispatch("getToken", { username, password });
       await router.push("/self-review");
     } catch (e) {
       console.log(e.message);
