@@ -45,3 +45,4 @@ export const getOneToOnePrivateAPI = () => MAIN_API + "1to1/get_private_notes/";
 
 export const getManagerStatusAPI = () => MANAGER + "status";
 export const setManagerStatusAPI = () => MANAGER + "become";
+export const getAllUsersAPI = () => MAIN_API + "all_users";

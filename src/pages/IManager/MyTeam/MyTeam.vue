@@ -56,22 +56,33 @@
       </div>
     </div>
   </div>
+
+  <div class="block-container">
+    <h2 class="block-title">Выбор сотрудников в мою команду</h2>
+    <p class="block-description">
+      *здесь вы можете выбрать сотрудников, которые работают в вашей команде
+    </p>
+    <button @click="openAllUsers">Добавить сотрудников</button>
+  </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import colorGrade from "@/helpers/colorGrade";
 import { API_URL } from "@/helpers/api";
+import { openModal } from "jenesius-vue-modal";
+import PeersList from "@/components/modals/PeersList/PeersList.vue";
 
 export default {
   name: "MyTeam",
 
   computed: {
-    ...mapState(["user"]),
+    ...mapState(["user", "isMobile"]),
   },
 
   mounted() {
     this.loadScores();
+    if (this.user.team.length === 0) this.$store.dispatch("getMyTeam");
   },
 
   methods: {
@@ -85,10 +96,14 @@ export default {
     },
 
     loadScores() {
-      console.log(this.user.team);
       if (this.user.team) {
         this.$store.dispatch("getTeamScores", this.user.team);
       }
+    },
+
+    openAllUsers() {
+      if (!this.isMobile)
+        openModal(PeersList, { isManager: true, isAllUsers: true });
     },
   },
 

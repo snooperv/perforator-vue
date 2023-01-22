@@ -38,6 +38,10 @@ const mutations = {
     team.length > 0 && localStorage.setItem("isManager", "true");
   },
 
+  [types.SET_ALL_USERS](state, users) {
+    state.usersAll = users;
+  },
+
   [types.SET_MANAGER_STATUS](state, status) {
     state.user.statusManager = status === "True";
     status && localStorage.setItem("isManager", "true");

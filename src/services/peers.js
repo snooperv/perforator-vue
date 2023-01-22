@@ -3,6 +3,7 @@ import {
   addWorkerPeerAPI,
   approveWorkerAPI,
   getAllPeersAPI,
+  getAllUsersAPI,
   getInfoTeamAPI,
   getManagerStatusAPI,
   getMyManagerAPI,
@@ -47,6 +48,10 @@ export const getManagerStatus = async (id) => {
 
 export const setManagerStatus = async () => {
   return await request(setManagerStatusAPI(), "POST");
+};
+
+export const getAllUsers = async () => {
+  return await request(getAllUsersAPI());
 };
 
 export const getMyManager = async () => {

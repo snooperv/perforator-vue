@@ -4,6 +4,7 @@ import {
   addWorkerPeer,
   approveWorker,
   getAllPeers,
+  getAllUsers,
   getManagerStatus,
   getMyManager,
   getMyPeers,
@@ -128,6 +129,25 @@ const actions = {
   async setManagerStatus() {
     try {
       await setManagerStatus();
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async getAllUsers({ commit, state, dispatch }) {
+    try {
+      const users = await getAllUsers();
+      const usersWithoutMe = users.users.filter(
+        (user) => user.profile_id !== state.user.myId
+      );
+      await dispatch("getMyTeam");
+      const usersWithoutTeam = usersWithoutMe.filter((user) => {
+        for (let teamUser of state.user.team) {
+          if (teamUser.profile_id === user.profile_id) return;
+        }
+        return user;
+      });
+      commit(types.SET_ALL_USERS, usersWithoutTeam);
     } catch (e) {
       console.log(e);
     }
