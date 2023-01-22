@@ -36,10 +36,11 @@ const actions = {
       const cookieToken = getters.cookieToken;
       const lifetimeToken = localStorage.lifetimeToken;
       if (lifetimeToken) {
+        const dateNow = new Date();
         const dateToken = new Date(lifetimeToken);
         if (
-          Date.now() >=
-          dateToken.getTime() + dateToken.getTimezoneOffset() * 60 * 1000
+          dateNow.getTime() + dateNow.getTimezoneOffset() * 60 * 1000 >=
+          dateToken
         ) {
           const token = await refreshToken();
           localStorage.token = token.token;
