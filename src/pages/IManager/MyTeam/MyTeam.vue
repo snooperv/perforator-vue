@@ -42,8 +42,12 @@
             class="name-link"
             >{{ worker.username }}
           </a>
-          <button @click="deleteUser(worker.profile_id)">
-            Удалить из команды
+          <button
+            class="exit"
+            @click="deleteUser(worker.profile_id)"
+            v-if="!isMobile"
+          >
+            Удалить
           </button>
         </div>
         <a href="#">
@@ -65,7 +69,7 @@
     <p class="block-description">
       *здесь вы можете выбрать сотрудников, которые работают в вашей команде
     </p>
-    <button @click="openAllUsers">Добавить сотрудников</button>
+    <button class="add-peer" @click="openAllUsers">Добавить сотрудников</button>
   </div>
 </template>
 
@@ -75,6 +79,7 @@ import colorGrade from "@/helpers/colorGrade";
 import { API_URL } from "@/helpers/api";
 import { openModal } from "jenesius-vue-modal";
 import PeersList from "@/components/modals/PeersList/PeersList.vue";
+import PeersListMobile from "@/components/modals/PeersList/peersListMobile.vue";
 
 export default {
   name: "MyTeam",
@@ -107,10 +112,10 @@ export default {
     openAllUsers() {
       if (!this.isMobile)
         openModal(PeersList, { isManager: true, isAllUsers: true });
+      else openModal(PeersListMobile, { isManager: true, isAllUsers: true });
     },
 
     deleteUser(id) {
-      console.log("Delete user");
       this.$store.dispatch("deleteUserImMyTeam", id);
     },
   },

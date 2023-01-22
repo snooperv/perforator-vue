@@ -131,6 +131,49 @@ input[type="submit"]:active {
   }
 }
 
+.exit {
+  background-color: #cd2525;
+  font-family: "Gotham Pro light", sans-serif;
+  font-weight: 1000;
+  letter-spacing: 1px;
+  border: none;
+  color: white;
+  padding: 5px 15px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  cursor: pointer;
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  float: right;
+  right: 10px;
+  top: 15px;
+}
+
+.add-peer {
+  font-family: "Gotham Pro light", sans-serif;
+  font-weight: 1000;
+  font-size: 15px;
+  letter-spacing: 1px;
+  border: none;
+  background-color: #a5a4f5;
+  color: white;
+  padding: 20px 0;
+  width: 200px;
+  cursor: pointer;
+  border-radius: 25px;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 25%);
+  //float: left;
+  display: block;
+  margin: 0 auto;
+}
+
 @media (max-width: 800px) {
   .block-container {
     width: 100%;

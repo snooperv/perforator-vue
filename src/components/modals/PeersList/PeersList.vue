@@ -4,7 +4,12 @@
       <i class="fas fa-times" aria-hidden="true"></i>
     </a>
     <h3>Выберите {{ isAllUsers ? "сотрудника" : "оценивающего" }}</h3>
-    <input type="text" v-model="search" class="peers-text" />
+    <input
+      type="text"
+      v-model="search"
+      class="peers-text"
+      placeholder="Введите имя"
+    />
     <div id="list_peers">
       <div
         v-for="peer in searchPeers"

@@ -3,7 +3,7 @@
     <div class="draggable-block" @mousedown="dragStart" @touchstart="dragStart">
       <div class="draggable-line"></div>
     </div>
-    <h3>Выберите оценивающего</h3>
+    <h3>Выберите {{ isAllUsers ? "сотрудника" : "оценивающего" }}</h3>
     <input
       type="text"
       v-model="search"
@@ -40,7 +40,7 @@ import { dragStart } from "@/helpers/dragMethodsBottom";
 export default {
   name: "peersListMobile",
 
-  props: ["isManager", "workerId"],
+  props: ["isManager", "workerId", "isAllUsers"],
 
   data() {
     return {
@@ -49,16 +49,17 @@ export default {
   },
 
   computed: {
-    ...mapState(["peersAll", "isMobile"]),
+    ...mapState(["peersAll", "isMobile", "usersAll"]),
 
     searchPeers: function () {
       const search = this.search.toLowerCase();
+      const users = this.isAllUsers ? this.usersAll : this.peersAll;
       if (search) {
-        return this.peersAll.filter((option) =>
+        return users.filter((option) =>
           option.username.toLowerCase().includes(search)
         );
       }
-      return this.peersAll;
+      return users;
     },
 
     closeModalPeers() {
@@ -67,10 +68,14 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch("getAllPeers", {
-      isManager: this.isManager,
-      workerId: this.workerId,
-    });
+    if (this.isAllUsers) {
+      this.$store.dispatch("getAllUsers");
+    } else {
+      this.$store.dispatch("getAllPeers", {
+        isManager: this.isManager,
+        workerId: this.workerId,
+      });
+    }
   },
 
   methods: {
@@ -79,11 +84,15 @@ export default {
       return API_URL;
     },
     selectPeerRemote(id) {
-      this.$store.dispatch("addMyPeer", {
-        peerId: id,
-        isManager: this.isManager,
-        workerId: this.workerId,
-      });
+      if (this.isAllUsers) {
+        this.$store.dispatch("addUserImMyTeam", id);
+      } else {
+        this.$store.dispatch("addMyPeer", {
+          peerId: id,
+          isManager: this.isManager,
+          workerId: this.workerId,
+        });
+      }
     },
   },
 };

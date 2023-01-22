@@ -15,7 +15,7 @@ export const getPeersRatedMeAPI = () => MAIN_API + "rate_list";
 export const postPeersRatedMeAPI = () => MAIN_API + "process_rate/";
 
 export const getMyPeersAPI = () => PEERS + "my/";
-export const getAllPeersAPI = () => PEERS + "all/";
+export const getAllPeersAPI = () => MAIN_API + "team";
 export const saveMyPeerAPI = () => PEERS + "save/";
 export const removeMyPeerAPI = () => PEERS + "delete/";
 export const getUserPeersAPI = (id) => PEERS + "uid" + urlQueryParts(id);

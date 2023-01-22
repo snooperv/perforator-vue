@@ -257,6 +257,10 @@
         </div>
       </div>
     </div>
+
+    <button class="exit" @click="deleteUser(worker.profile_id)" v-if="isMobile">
+      Удалить
+    </button>
   </div>
 </template>
 
@@ -283,7 +287,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["user"]),
+    ...mapState(["user", "isMobile"]),
   },
 
   mounted() {
@@ -341,6 +345,12 @@ export default {
         (oneUser) => oneUser.profile_id === +this.$route.params.id
       )[0];
       console.log(this.worker);
+    },
+
+    deleteUser(id) {
+      this.$store
+        .dispatch("deleteUserImMyTeam", id)
+        .then(() => this.$router.push("/i-manager/my-team"));
     },
   },
 

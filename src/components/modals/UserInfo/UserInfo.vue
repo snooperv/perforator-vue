@@ -30,7 +30,7 @@
         <button
           class="change"
           @click="becomeManager"
-          v-if="!user.statusManager"
+          v-if="!user.statusManager && !user.teamId"
         >
           Я менеджер
         </button>

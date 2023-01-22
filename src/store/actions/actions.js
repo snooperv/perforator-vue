@@ -167,6 +167,7 @@ const actions = {
   async deleteUserImMyTeam({ commit, state, dispatch }, id) {
     try {
       await deleteUserImMyTeam({ profile_id: id });
+      commit(types.DELETE_USER_TEAM);
       await dispatch("getMyTeam");
     } catch (e) {
       console.log(e);

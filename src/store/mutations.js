@@ -16,12 +16,13 @@ const mutations = {
   },
 
   [types.SET_MY_PROFILE](state, payload) {
-    const { name, phone, sbis, photo, id } = payload;
+    const { name, phone, sbis, photo, id, team_id } = payload;
     state.user.username = name;
     state.user.phone = phone;
     state.user.sbis = sbis;
     state.user.photo = API_URL + photo;
     state.user.myId = id;
+    state.user.teamId = team_id;
   },
 
   [types.CLEAR_AUTH_ERRORS](state) {
@@ -51,19 +52,32 @@ const mutations = {
     state.user.manager = [manager];
   },
 
+  [types.DELETE_USER_TEAM](state, manager) {
+    state.user.teamWithoutReview = [];
+    state.user.teamWithReview = [];
+    state.user.teamApprove = [];
+  },
+
   [types.SET_TEAM_WITHOUT_REVIEW](state, user) {
     user.isDropdown = false;
-    !state.user.teamWithoutReview.includes(user) &&
-      state.user.teamWithoutReview.push(user);
+    const isOld = state.user.teamWithoutReview.filter(
+      (inTeam) => inTeam.profile_id === user.profile_id
+    ).length;
+    !isOld && state.user.teamWithoutReview.push(user);
   },
 
   [types.SET_TEAM_WITH_REVIEW](state, user) {
-    !state.user.teamWithReview.includes(user) &&
-      state.user.teamWithReview.push(user);
+    const isOld = state.user.teamWithReview.filter(
+      (inTeam) => inTeam.profile_id === user.profile_id
+    ).length;
+    !isOld && state.user.teamWithReview.push(user);
   },
 
   [types.SET_TEAM_APPROVE](state, user) {
-    !state.user.teamApprove.includes(user) && state.user.teamApprove.push(user);
+    const isOld = state.user.teamApprove.filter(
+      (inTeam) => inTeam.profile_id === user.profile_id
+    ).length;
+    !isOld && state.user.teamApprove.push(user);
   },
 
   [types.SET_WORKER_PEERS](state, payload) {
