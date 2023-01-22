@@ -31,7 +31,7 @@
       </svg>
       Я оцениваю
     </router-link>
-    <router-link class="menu-item" to="/i-manager" v-if="user.team.length > 0">
+    <router-link class="menu-item" to="/i-manager" v-if="user.statusManager">
       <svg
         width="24"
         height="23"
@@ -99,8 +99,16 @@ export default {
     ...mapState(["user"]),
   },
 
-  mounted() {
-    this.$store.dispatch("getMyTeam");
+  // mounted() {
+  //   this.$store.dispatch("getMyTeam");
+  // },
+
+  watch: {
+    "user.myId": {
+      handler() {
+        this.$store.dispatch("getManagerStatus", this.user.myId);
+      },
+    },
   },
 };
 </script>

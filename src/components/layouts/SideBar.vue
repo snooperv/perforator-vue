@@ -35,7 +35,7 @@
           </div>
         </router-link>
       </nav>
-      <nav class="side-btn small" v-if="user.team.length > 0">
+      <nav class="side-btn small" v-if="user.statusManager">
         <router-link to="/i-manager" class="link">
           <div class="link-container">
             я менеджер
@@ -76,8 +76,16 @@ export default {
     ...mapState(["user"]),
   },
 
-  mounted() {
-    this.$store.dispatch("getMyTeam");
+  // mounted() {
+  //   this.$store.dispatch("getMyTeam");
+  // },
+
+  watch: {
+    "user.myId": {
+      handler() {
+        this.$store.dispatch("getManagerStatus", this.user.myId);
+      },
+    },
   },
 };
 </script>

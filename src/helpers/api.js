@@ -1,10 +1,11 @@
 import urlQueryParts from "@/helpers/urlQueryParts";
 
-export const API_URL = "https://snooperv.pythonanywhere.com";
-// export const API_URL = "http://localhost:8000";
+// export const API_URL = "https://snooperv.pythonanywhere.com";
+export const API_URL = "http://localhost:8000";
 const MAIN_API = API_URL + "/perforator/";
 const PEERS = MAIN_API + "peers/";
 const SELF_REVIEW = MAIN_API + "self-review/";
+const MANAGER = MAIN_API + "manager/";
 
 export const refreshTokenAPI = () => MAIN_API + "api/refresh-token";
 export const getNewTokenAPI = () => MAIN_API + "api/login";
@@ -41,3 +42,6 @@ export const postProcessOneToOnePrivateAPI = () =>
   MAIN_API + "1to1/update_private_notes/";
 export const getOneToOneCommonAPI = () => MAIN_API + "1to1/get_common_notes/";
 export const getOneToOnePrivateAPI = () => MAIN_API + "1to1/get_private_notes/";
+
+export const getManagerStatusAPI = () => MANAGER + "status";
+export const setManagerStatusAPI = () => MANAGER + "become";

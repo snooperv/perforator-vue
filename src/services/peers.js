@@ -4,6 +4,7 @@ import {
   approveWorkerAPI,
   getAllPeersAPI,
   getInfoTeamAPI,
+  getManagerStatusAPI,
   getMyManagerAPI,
   getMyPeersAPI,
   getOneToOneCommonAPI,
@@ -17,6 +18,7 @@ import {
   removeMyPeerAPI,
   removeWorkerPeerAPI,
   saveMyPeerAPI,
+  setManagerStatusAPI,
 } from "@/helpers/api";
 
 export const getMyPeers = async () => {
@@ -37,6 +39,14 @@ export const removeMyPeer = async (id) => {
 
 export const getMyTeam = async () => {
   return await request(getInfoTeamAPI());
+};
+
+export const getManagerStatus = async (id) => {
+  return await request(getManagerStatusAPI(), "POST", id);
+};
+
+export const setManagerStatus = async () => {
+  return await request(setManagerStatusAPI(), "POST");
 };
 
 export const getMyManager = async () => {

@@ -4,6 +4,7 @@ import {
   addWorkerPeer,
   approveWorker,
   getAllPeers,
+  getManagerStatus,
   getMyManager,
   getMyPeers,
   getMyTeam,
@@ -18,6 +19,7 @@ import {
   removeMyPeer,
   removeWorkerPeer,
   saveMyPeer,
+  setManagerStatus,
 } from "@/services/peers";
 import Cockies from "vue-cookies";
 import router from "@/router";
@@ -29,6 +31,7 @@ import {
   saveSelfReview,
 } from "@/services/basic";
 import grades from "@/helpers/grades";
+import { getManagerStatusAPI } from "@/helpers/api";
 
 const actions = {
   async refreshAuthToken({ commit, getters, state }) {
@@ -108,6 +111,23 @@ const actions = {
     try {
       const peers = await getMyPeers();
       if (!peers.error) commit(types.SET_PEERS, peers);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async getManagerStatus({ commit }, id) {
+    try {
+      const status = await getManagerStatus({ profile_id: id });
+      commit(types.SET_MANAGER_STATUS, status.is_manager);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async setManagerStatus() {
+    try {
+      await setManagerStatus();
     } catch (e) {
       console.log(e);
     }
