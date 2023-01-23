@@ -429,11 +429,12 @@ const actions = {
 
       for (let worker of team) {
         let workerScore;
+
         if (!period)
           workerScore = await getTeamScores(`?id=${worker.profile_id}`);
         else
           workerScore = await getTeamScoresPrevious({
-            id: worker.profile_id,
+            id: worker.profile_id || worker.myId,
             pr_id: period,
           });
 

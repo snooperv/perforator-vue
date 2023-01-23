@@ -114,7 +114,11 @@ const mutations = {
 
   [types.SET_WORKER_SCORE](state, payload) {
     const { id, score } = payload;
-    state.user.team.filter((worker) => worker.user_id === id)[0].rating = score;
+    if (state.user.statusManager)
+      state.user.team.filter(
+        (worker) => (worker.profile_id || worker.myId) === id
+      )[0].rating = score;
+    else state.user.team.push({ rating: score });
   },
 
   [types.SET_GENERAL_SCORE](state, payload) {

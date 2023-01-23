@@ -51,20 +51,22 @@ export default {
         (review) => review.closing_date.split("T")[0]
       );
 
-      if (this.user.statusManager) {
-        if (this.user.team.length === 0)
-          await this.$store.dispatch("getMyTeam");
-        if (data.datasets[0].data.length === 0) {
-          for (let review of this.listReviews) {
-            await this.loadScores(review.pr_id);
-            const resultTeam = { ...this.user.team };
-            this.scores.push({ period: review.pr_id, results: resultTeam });
-            data.datasets[0].data.push(
-              resultTeam.generalRating["Средняя оценка"]
-            );
-          }
+      if (this.user.statusManager && this.user.team.length === 0) {
+        await this.$store.dispatch("getMyTeam");
+      }
+
+      if (data.datasets[0].data.length === 0) {
+        for (let review of this.listReviews) {
+          await this.loadScores(review.pr_id);
+          const resultTeam = { ...this.user.team };
+          this.scores.push({ period: review.pr_id, results: resultTeam });
+          data.datasets[0].data.push(
+            resultTeam.generalRating["Средняя оценка"]
+          );
         }
       }
+
+      console.log(this.scores); // TODO Убрать потом
 
       options.onClick = (e) => {
         console.log(e.chart.tooltip.title[0]);
@@ -84,7 +86,7 @@ export default {
     async loadScores(period) {
       if (this.user.team) {
         await this.$store.dispatch("getTeamScores", {
-          team: this.user.team,
+          team: this.user.statusManager ? this.user.team : [this.user],
           period,
         });
       }
