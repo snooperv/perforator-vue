@@ -3,6 +3,7 @@ import {
   getMyProfileAPI,
   getRatesAPI,
   getSelfReviewAPI,
+  getStatusPerformanceReviewAPI,
   getUserReviewIsDraftAPI,
   saveSelfReviewAPI,
 } from "@/helpers/api";
@@ -25,4 +26,8 @@ export const getUserReviewIsDraft = async (id) => {
 
 export const getRates = async (id) => {
   return await request(getRatesAPI({ id }));
+};
+
+export const getStatusPerformanceReview = async () => {
+  return await request(getStatusPerformanceReviewAPI());
 };

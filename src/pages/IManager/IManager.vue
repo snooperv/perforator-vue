@@ -7,6 +7,9 @@
       <router-link class="d-link second-link" to="/i-manager/my-team">
         моя команда
       </router-link>
+      <router-link class="d-link second-link" to="/i-manager/control-review">
+        управление Review
+      </router-link>
     </div>
     <router-view />
   </div>

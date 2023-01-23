@@ -19,6 +19,7 @@ const state = {
   peersAll: [],
   selfReview: {},
   isMobile: window.innerWidth <= 800,
+  prStatus: null,
 };
 
 export default state;

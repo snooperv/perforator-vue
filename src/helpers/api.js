@@ -6,6 +6,7 @@ const MAIN_API = API_URL + "/perforator/";
 const PEERS = MAIN_API + "peers/";
 const SELF_REVIEW = MAIN_API + "self-review/";
 const MANAGER = MAIN_API + "manager/";
+const CONTROL_REVIEW = MAIN_API + "performance_review/";
 
 export const refreshTokenAPI = () => MAIN_API + "api/refresh-token";
 export const getNewTokenAPI = () => MAIN_API + "api/login";
@@ -48,3 +49,5 @@ export const setManagerStatusAPI = () => MANAGER + "become";
 export const getAllUsersAPI = () => MAIN_API + "all_users";
 export const addUserImMyTeamAPI = () => MAIN_API + "team/update";
 export const deleteUserImMyTeamAPI = () => MAIN_API + "team/delete_user";
+
+export const getStatusPerformanceReviewAPI = () => CONTROL_REVIEW + "status";

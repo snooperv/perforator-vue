@@ -128,6 +128,10 @@ const mutations = {
       "Средняя оценка": payload.average,
     };
   },
+
+  [types.SET_PR_STATUS](state, payload) {
+    state.prStatus = payload;
+  },
 };
 
 const peersSort = (peer1, peer2) => {

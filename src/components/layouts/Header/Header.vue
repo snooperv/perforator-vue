@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="rightWrapper">
-      <div class="timer">
+      <div class="timer" v-if="prStatus && prStatus.status !== 'no pr'">
         <span class="untill">До завершения Self Review</span>
         <span class="under" style="margin-left: 3px">дней</span>
         <span id="days" class="time">-263</span> :
@@ -17,6 +17,9 @@
         <span id="hours" class="time">-16</span> :
         <span class="under">минут</span>
         <span id="minutes" class="time">-15</span>
+      </div>
+      <div class="timer" v-if="prStatus && prStatus.status === 'no pr'">
+        <span class="untill">{{ prStatus.pr_status }}</span>
       </div>
       <a @click="openUserInfo"
         ><img
@@ -58,8 +61,12 @@ import UserInfoMobile from "@/components/modals/UserInfo/UserInfoMobile.vue";
 export default {
   name: "Header",
 
+  mounted() {
+    this.$store.dispatch("getStatusPerformanceReview");
+  },
+
   computed: {
-    ...mapState(["isMobile", "user"]),
+    ...mapState(["isMobile", "user", "prStatus"]),
     openUserInfo() {
       openModal(UserInfo);
     },

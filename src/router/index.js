@@ -13,6 +13,7 @@ import Current from "@/pages/OneToOne/Current/Current";
 import Previous from "@/pages/OneToOne/Previous/Previous";
 import OneWorker from "@/pages/IManager/MyTeam/OneWorker/OneWorker.vue";
 import PreviousPeriods from "@/pages/PreviousPeriods/PreviousPeriods.vue";
+import ControlReview from "@/pages/IManager/ControlReview/ControlReview.vue";
 
 const routes = [
   {
@@ -55,6 +56,11 @@ const routes = [
             path: "my-team",
             component: MyTeam,
             meta: { title: "Я менеджер - моя команда" },
+          },
+          {
+            path: "control-review",
+            component: ControlReview,
+            meta: { title: "Я менеджер - управление Review" },
           },
           {
             path: "employee/:id",

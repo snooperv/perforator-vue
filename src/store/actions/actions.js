@@ -30,6 +30,7 @@ import {
   getMyProfile,
   getRates,
   getSelfReview,
+  getStatusPerformanceReview,
   getUserReviewIsDraft,
   saveSelfReview,
 } from "@/services/basic";
@@ -485,6 +486,15 @@ const actions = {
       }
       averagesTeam.average = calcAverage(averagesTeam);
       commit("SET_GENERAL_SCORE", averagesTeam);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async getStatusPerformanceReview({ commit }) {
+    try {
+      const status = await getStatusPerformanceReview();
+      commit(types.SET_PR_STATUS, status);
     } catch (e) {
       console.log(e);
     }
