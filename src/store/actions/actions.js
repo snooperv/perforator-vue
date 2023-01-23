@@ -12,6 +12,8 @@ import {
   getMyPeers,
   getMyTeam,
   getOneToOneCommon,
+  getOneToOnePreviousCommon,
+  getOneToOnePreviousPrivate,
   getOneToOnePrivate,
   getPeersRatedMe,
   getTeamScores,
@@ -29,6 +31,7 @@ import router from "@/router";
 import {
   beginPerformanceReview,
   closePerformanceReview,
+  getListPerformanceReview,
   getMyProfile,
   getRates,
   getSelfReview,
@@ -525,6 +528,37 @@ const actions = {
     try {
       await closePerformanceReview();
       await dispatch("getStatusPerformanceReview");
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async getListPerformanceReview({ commit }) {
+    try {
+      const listReviews = await getListPerformanceReview();
+      commit(types.SET_LIST_REVIEWS, listReviews.rp);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async getOneToOnePrevious({ commit }, payload) {
+    const { is_manager, manager_id, employee_id, pr_id } = payload;
+    try {
+      const commonNote = await getOneToOnePreviousCommon({
+        pr_id,
+        manager_id,
+        employee_id,
+      });
+
+      const privateNote = await getOneToOnePreviousPrivate({
+        pr_id,
+        is_manager,
+        manager_id,
+        employee_id,
+      });
+
+      return { commonNote: commonNote.notes, privateNote: privateNote.notes };
     } catch (e) {
       console.log(e);
     }

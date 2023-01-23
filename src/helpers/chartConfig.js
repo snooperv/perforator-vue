@@ -1,5 +1,5 @@
 export const data = {
-  labels: ["Q1", "Q2", "Q3", "Q4", "Q5"],
+  labels: [],
   datasets: [
     {
       label: "Средняя оценка",
@@ -21,7 +21,7 @@ export const data = {
       },
       pointRadius: 8,
       pointHoverRadius: 12,
-      data: [1.12, 2.25, 3.5, 2.1, 3.8],
+      data: [3],
       tension: 0.4,
       borderWidth: 5,
     },
@@ -40,8 +40,5 @@ export const options = {
         stepSize: 1,
       },
     },
-  },
-  onClick: (e) => {
-    console.log(e.chart.tooltip.title[0]);
   },
 };

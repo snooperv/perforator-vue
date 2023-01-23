@@ -55,3 +55,8 @@ export const beginPerformanceReviewAPI = () => CONTROL_REVIEW + "begin";
 export const nextStagePerformanceReviewAPI = () =>
   CONTROL_REVIEW + "next_stage";
 export const closePerformanceReviewAPI = () => CONTROL_REVIEW + "close";
+export const getListPerformanceReviewAPI = () => CONTROL_REVIEW + "list";
+export const getOneToOnePreviousCommonAPI = () =>
+  CONTROL_REVIEW + "get/common_notes";
+export const getOneToOnePreviousPrivateAPI = () =>
+  CONTROL_REVIEW + "get/private_notes";

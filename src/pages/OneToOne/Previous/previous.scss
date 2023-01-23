@@ -109,8 +109,14 @@ h2 {
   top: -22px;
 
   img {
-    width: 100%;
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
   }
+}
+
+.period {
+  margin-left: 10px;
 }
 
 @media (max-width: 800px) {

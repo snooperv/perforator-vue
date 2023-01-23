@@ -1,5 +1,5 @@
 <template>
-  <Line :data="data" :options="options" class="line-chart" />
+  <Line :data="data" :options="options" class="line-chart" v-if="loaded" />
 </template>
 
 <script>
@@ -16,6 +16,7 @@ import {
 } from "chart.js";
 import { Line } from "vue-chartjs";
 import { data, options } from "@/helpers/chartConfig";
+import { mapState } from "vuex";
 
 ChartJS.register(
   CategoryScale,
@@ -37,7 +38,31 @@ export default {
     Line,
   },
   data() {
-    return { data, options };
+    return { data, options, loaded: false };
+  },
+
+  async mounted() {
+    this.loaded = false;
+
+    try {
+      this.listReviews.length === 0 &&
+        (await this.$store.dispatch("getListPerformanceReview"));
+      data.labels = this.listReviews.map(
+        (review) => review.closing_date.split("T")[0]
+      );
+
+      options.onClick = (e) => {
+        console.log(e.chart.tooltip.title[0]);
+      };
+
+      this.loaded = true;
+    } catch (e) {
+      console.error(e);
+    }
+  },
+
+  computed: {
+    ...mapState(["listReviews"]),
   },
 };
 </script>

@@ -12,6 +12,7 @@
         class="ta big"
         id="generalNotes"
         v-model="common"
+        :disabled="period === 'previous'"
       ></textarea>
 
       <h3 class="dropdownTitle">
@@ -28,6 +29,7 @@
         class="ta big"
         id="personalNotes"
         v-model="personal"
+        :disabled="period === 'previous'"
       ></textarea>
     </form>
   </div>
@@ -39,7 +41,7 @@ import { mapState } from "vuex";
 export default {
   name: "DropdownForm",
 
-  props: ["myId", "workerId"],
+  props: ["myId", "workerId", "period", "pr_id"],
 
   computed: {
     ...mapState(["commonNote", "privateNote", "user"]),
@@ -54,16 +56,29 @@ export default {
   },
 
   mounted() {
-    this.$store
-      .dispatch("getOneToOne", {
-        is_manager: this.user.statusManager,
-        manager_id: this.user.statusManager ? this.myId : this.workerId,
-        employee_id: this.user.statusManager ? this.workerId : this.myId,
-      })
-      .then((result) => {
-        this.common = result.commonNote;
-        this.personal = result.privateNote;
-      });
+    if (this.period === "current")
+      this.$store
+        .dispatch("getOneToOne", {
+          is_manager: this.user.statusManager,
+          manager_id: this.user.statusManager ? this.myId : this.workerId,
+          employee_id: this.user.statusManager ? this.workerId : this.myId,
+        })
+        .then((result) => {
+          this.common = result.commonNote;
+          this.personal = result.privateNote;
+        });
+    else if (this.period === "previous")
+      this.$store
+        .dispatch("getOneToOnePrevious", {
+          pr_id: this.pr_id,
+          is_manager: this.user.statusManager,
+          manager_id: this.user.statusManager ? this.myId : this.workerId,
+          employee_id: this.user.statusManager ? this.workerId : this.myId,
+        })
+        .then((result) => {
+          this.common = result.commonNote;
+          this.personal = result.privateNote;
+        });
   },
 
   methods: {

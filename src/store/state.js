@@ -20,6 +20,7 @@ const state = {
   selfReview: {},
   isMobile: window.innerWidth <= 800,
   prStatus: null,
+  listReviews: [],
 };
 
 export default state;

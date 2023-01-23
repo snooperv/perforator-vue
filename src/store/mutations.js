@@ -132,6 +132,10 @@ const mutations = {
   [types.SET_PR_STATUS](state, payload) {
     state.prStatus = payload;
   },
+
+  [types.SET_LIST_REVIEWS](state, payload) {
+    state.listReviews = payload;
+  },
 };
 
 const peersSort = (peer1, peer2) => {

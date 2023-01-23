@@ -11,6 +11,8 @@ import {
   getMyManagerAPI,
   getMyPeersAPI,
   getOneToOneCommonAPI,
+  getOneToOnePreviousCommonAPI,
+  getOneToOnePreviousPrivateAPI,
   getOneToOnePrivateAPI,
   getPeersRatedMeAPI,
   getTeamScoresAPI,
@@ -86,6 +88,14 @@ export const getOneToOneCommon = async (data) => {
 
 export const getOneToOnePrivate = async (data) => {
   return await request(getOneToOnePrivateAPI(), "POST", data);
+};
+
+export const getOneToOnePreviousCommon = async (data) => {
+  return await request(getOneToOnePreviousCommonAPI(), "POST", data);
+};
+
+export const getOneToOnePreviousPrivate = async (data) => {
+  return await request(getOneToOnePreviousPrivateAPI(), "POST", data);
 };
 
 export const postProcessOneToOneCommon = async (data) => {

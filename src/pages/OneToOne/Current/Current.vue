@@ -18,7 +18,9 @@
         </span>
         <span class="name">{{ worker.username }}</span>
 
-        <span class="position" v-if="isManager"> Мой руководитель</span>
+        <span class="position" v-if="!isMobile && isManager">
+          Мой руководитель</span
+        >
         <a href="#" id="chev-1" class="chevron rotate">
           <i class="fas fa-chevron-right" aria-hidden="true"></i>
         </a>
@@ -27,6 +29,7 @@
         v-if="worker.isDropdown"
         :my-id="user.myId"
         :worker-id="worker.profile_id"
+        period="current"
       />
     </div>
   </div>
@@ -61,7 +64,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["user", "prStatus"]),
+    ...mapState(["user", "prStatus", "isMobile"]),
   },
 
   methods: {
