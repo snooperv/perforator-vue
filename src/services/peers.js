@@ -16,6 +16,7 @@ import {
   getOneToOnePrivateAPI,
   getPeersRatedMeAPI,
   getTeamScoresAPI,
+  getTeamScoresPreviousAPI,
   getUserPeersAPI,
   postPeersRatedMeAPI,
   postProcessOneToOneCommonAPI,
@@ -120,4 +121,8 @@ export const addUserImMyTeam = async (data) => {
 
 export const deleteUserImMyTeam = async (data) => {
   return await request(deleteUserImMyTeamAPI(), "POST", data);
+};
+
+export const getTeamScoresPrevious = async (data) => {
+  return await request(getTeamScoresPreviousAPI(), "POST", data);
 };

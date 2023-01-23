@@ -51,6 +51,19 @@ export default {
         (review) => review.closing_date.split("T")[0]
       );
 
+      if (this.user.statusManager) {
+        if (this.user.team.length === 0)
+          await this.$store.dispatch("getMyTeam");
+        if (data.datasets[0].data.length === 0) {
+          for (let review of this.listReviews) {
+            await this.loadScores(review.pr_id);
+            data.datasets[0].data.push(
+              this.user.team.generalRating["Средняя оценка"]
+            );
+          }
+        }
+      }
+
       options.onClick = (e) => {
         console.log(e.chart.tooltip.title[0]);
       };
@@ -62,7 +75,18 @@ export default {
   },
 
   computed: {
-    ...mapState(["listReviews"]),
+    ...mapState(["listReviews", "user"]),
+  },
+
+  methods: {
+    async loadScores(period) {
+      if (this.user.team) {
+        await this.$store.dispatch("getTeamScores", {
+          team: this.user.team,
+          period,
+        });
+      }
+    },
   },
 };
 </script>

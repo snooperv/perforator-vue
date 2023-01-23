@@ -17,6 +17,7 @@ import {
   getOneToOnePrivate,
   getPeersRatedMe,
   getTeamScores,
+  getTeamScoresPrevious,
   getUserPeers,
   postPeersRatedMe,
   postProcessOneToOneCommon,
@@ -409,8 +410,9 @@ const actions = {
     }
   },
 
-  async getTeamScores({ commit }, team) {
+  async getTeamScores({ commit }, payload) {
     try {
+      const { team, period } = payload;
       const averagesTeam = Object.assign({}, grades);
       let countAverages = 0;
 
@@ -425,7 +427,14 @@ const actions = {
       };
 
       for (let worker of team) {
-        const workerScore = await getTeamScores(`?id=${worker.profile_id}`);
+        let workerScore;
+        if (!period)
+          workerScore = await getTeamScores(`?id=${worker.profile_id}`);
+        else
+          workerScore = await getTeamScoresPrevious({
+            id: worker.profile_id,
+            pr_id: period,
+          });
 
         const finalRating = {
           manager: Object.assign({}, grades),

@@ -21,7 +21,7 @@ export const data = {
       },
       pointRadius: 8,
       pointHoverRadius: 12,
-      data: [3],
+      data: [],
       tension: 0.4,
       borderWidth: 5,
     },

@@ -60,3 +60,5 @@ export const getOneToOnePreviousCommonAPI = () =>
   CONTROL_REVIEW + "get/common_notes";
 export const getOneToOnePreviousPrivateAPI = () =>
   CONTROL_REVIEW + "get/private_notes";
+export const getTeamScoresPreviousAPI = () =>
+  CONTROL_REVIEW + "employee/rating";

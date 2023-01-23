@@ -335,7 +335,9 @@ export default {
 
     loadScores() {
       if (this.user.team) {
-        this.$store.dispatch("getTeamScores", this.user.team);
+        this.$store.dispatch("getTeamScores", {
+          team: this.user.team,
+        });
       }
       this.loadWorker();
     },
