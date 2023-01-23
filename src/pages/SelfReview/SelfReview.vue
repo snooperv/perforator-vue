@@ -51,8 +51,8 @@
         </form>
       </div>
     </div>
-    <h2 class="title">Оценивающие</h2>
-    <div class="peers">
+    <h2 class="title" v-if="!user.statusManager">Оценивающие</h2>
+    <div class="peers" v-if="!user.statusManager">
       <p>
         <i class="icon-circle fas fa-circle" aria-hidden="true"></i>
         <span>Пиры</span><br />
@@ -160,7 +160,7 @@ export default {
       );
       return !(
         isFillText.length === this.selfReview.grades.length &&
-        this.user.peers.length > 0
+        (this.user.peers.length > 0 || this.user.statusManager)
       );
     },
   },

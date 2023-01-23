@@ -46,12 +46,7 @@ export default {
   },
 
   mounted() {
-    if (localStorage.getItem("isManager") === "true") {
-      this.myTeam = this.user.team;
-    } else {
-      !this.user.manager && this.$store.dispatch("getMyManager");
-      this.myTeam = this.user.manager;
-    }
+    this.user.statusManager !== undefined && this.getMyTeam();
   },
 
   computed: {
@@ -65,6 +60,15 @@ export default {
     toggleForm() {
       this.isOpen = !this.isOpen;
     },
+    getMyTeam() {
+      if (this.user.statusManager) {
+        if (this.user.team.length === 0) this.$store.dispatch("getMyTeam");
+        this.myTeam = this.user.team;
+      } else {
+        !this.user.manager && this.$store.dispatch("getMyManager");
+        this.myTeam = this.user.manager;
+      }
+    },
   },
 
   watch: {
@@ -77,6 +81,12 @@ export default {
     "user.manager": {
       handler() {
         this.myTeam = this.user.manager;
+      },
+    },
+
+    "user.statusManager": {
+      handler() {
+        this.getMyTeam();
       },
     },
   },

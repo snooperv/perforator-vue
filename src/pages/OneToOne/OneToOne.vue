@@ -20,6 +20,10 @@ export default {
   mounted() {
     this.$route.path === "/1to1" && this.$router.push("/1to1/current");
   },
+
+  updated() {
+    this.$route.path === "/1to1" && this.$router.push("/1to1/current");
+  },
 };
 </script>
 

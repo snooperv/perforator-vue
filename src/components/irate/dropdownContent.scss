@@ -3,6 +3,7 @@
   margin-top: 50px;
   margin-right: -88px;
   width: 270px;
+  font-size: 16px !important;
 }
 
 b {
@@ -14,12 +15,11 @@ b {
 .rating {
   display: flex;
   flex-direction: row-reverse;
+  justify-content: flex-end;
   width: 200px;
-  float: right;
-  margin-right: 120px;
-  margin-top: -190px;
-  position: relative;
   flex-wrap: wrap-reverse;
+  margin-top: 15px;
+  margin-left: 15px;
 
   .text_rate {
     margin: 0 0 10px;
@@ -37,20 +37,14 @@ b {
   transition: 0.5s;
   filter: grayscale(1);
   margin-right: 7px;
-}
+  margin-top: -65px;
 
-.rating input:hover + label,
-.rating input:checked + label {
-  filter: grayscale(0);
-}
-
-.rating input:not(:checked) ~ label:hover,
-.rating input:not(:checked) ~ label:hover ~ label {
-  filter: grayscale(0);
-}
-
-.rating input:checked ~ label {
-  filter: grayscale(0);
+  &:hover,
+  &:hover ~ label,
+  &:has(input:checked),
+  &:has(input:checked) ~ label {
+    filter: grayscale(0);
+  }
 }
 
 .instruction p {
@@ -96,10 +90,11 @@ b {
 }
 
 .ta {
+  box-sizing: border-box;
   display: block;
   border-radius: 15px;
   border: 1px solid #8683f8;
-  width: 60%;
+  width: 100%;
   padding: 5px;
   font-size: 16px;
   resize: none;
@@ -163,7 +158,7 @@ input[type="submit"]:active {
   font-size: 14px;
   position: relative;
   top: -55px;
-  right: 41%;
+  right: 5%;
 }
 
 .chars,
@@ -178,6 +173,22 @@ input[type="submit"]:active {
 
 .show {
   display: block;
+}
+
+.question {
+  display: flex;
+  width: 100%;
+}
+
+.user-text-input {
+  flex: 1;
+  max-width: 650px;
+}
+
+@media (max-width: 1100px) {
+  .dropdown-container {
+    margin-left: 25px;
+  }
 }
 
 @media (max-width: 800px) {
@@ -209,6 +220,10 @@ input[type="submit"]:active {
         top: -25px;
       }
 
+      .question {
+        flex-direction: column;
+      }
+
       .rating {
         position: static;
         float: none;
@@ -218,11 +233,11 @@ input[type="submit"]:active {
 
         .text_rate {
           text-align: center;
-          font-size: 16px;
         }
 
         label {
           position: static;
+          margin-top: 0;
         }
       }
 
