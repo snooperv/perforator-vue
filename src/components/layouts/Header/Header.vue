@@ -9,7 +9,12 @@
       </div>
     </div>
     <div class="rightWrapper">
-      <div class="timer" v-if="prStatus && prStatus.status !== 'no pr'">
+      <div
+        class="timer"
+        v-if="
+          prStatus && prStatus.status !== 'no pr' && prStatus.pr_status !== 0
+        "
+      >
         <span class="untill">До завершения Self Review</span>
         <span class="under" style="margin-left: 3px">дней</span>
         <span id="days" class="time">-263</span> :
@@ -18,8 +23,18 @@
         <span class="under">минут</span>
         <span id="minutes" class="time">-15</span>
       </div>
-      <div class="timer" v-if="prStatus && prStatus.status === 'no pr'">
-        <span class="untill">{{ prStatus.pr_status }}</span>
+      <div
+        class="timer"
+        v-if="
+          prStatus && (prStatus.status === 'no pr' || prStatus.pr_status === 0)
+        "
+      >
+        <span class="untill" v-if="prStatus.status === 'no pr'">{{
+          prStatus.pr_status
+        }}</span>
+        <span class="untill" v-if="prStatus.pr_status === 0"
+          >Performance Review не начато</span
+        >
       </div>
       <a @click="openUserInfo"
         ><img

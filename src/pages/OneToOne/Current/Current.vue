@@ -1,5 +1,8 @@
 <template>
-  <div class="peers">
+  <div
+    class="peers"
+    v-if="prStatus?.status !== 'no pr' && prStatus?.pr_status > 3"
+  >
     <div class="date">
       <h2>Q2</h2>
       <span class="period"> 01.01.2023 - 14.01.2023</span>
@@ -26,6 +29,14 @@
         :worker-id="worker.profile_id"
       />
     </div>
+  </div>
+
+  <div class="stage-closed" v-else>
+    <h3>Данный этап сейчас закрыт</h3>
+    <p>
+      Вы сможете оставить комментарий после того как менеджер запустит этап "One
+      to One"
+    </p>
   </div>
 </template>
 

@@ -1,10 +1,12 @@
 import request from "../helpers/request";
 import {
+  beginPerformanceReviewAPI,
   getMyProfileAPI,
   getRatesAPI,
   getSelfReviewAPI,
   getStatusPerformanceReviewAPI,
   getUserReviewIsDraftAPI,
+  nextStagePerformanceReviewAPI,
   saveSelfReviewAPI,
 } from "@/helpers/api";
 
@@ -30,4 +32,14 @@ export const getRates = async (id) => {
 
 export const getStatusPerformanceReview = async () => {
   return await request(getStatusPerformanceReviewAPI());
+};
+
+export const beginPerformanceReview = async () => {
+  return await request(beginPerformanceReviewAPI(), "POST");
+};
+
+export const nextStagePerformanceReview = async (date) => {
+  return await request(nextStagePerformanceReviewAPI(), "POST", {
+    deadline: date,
+  });
 };

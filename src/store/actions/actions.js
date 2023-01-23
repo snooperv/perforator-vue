@@ -27,11 +27,13 @@ import {
 import Cockies from "vue-cookies";
 import router from "@/router";
 import {
+  beginPerformanceReview,
   getMyProfile,
   getRates,
   getSelfReview,
   getStatusPerformanceReview,
   getUserReviewIsDraft,
+  nextStagePerformanceReview,
   saveSelfReview,
 } from "@/services/basic";
 import grades from "@/helpers/grades";
@@ -495,6 +497,24 @@ const actions = {
     try {
       const status = await getStatusPerformanceReview();
       commit(types.SET_PR_STATUS, status);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async beginPerformanceReview({ commit, dispatch }) {
+    try {
+      await beginPerformanceReview();
+      await dispatch("getStatusPerformanceReview");
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async nextStagePerformanceReview({ commit, dispatch }, date) {
+    try {
+      await nextStagePerformanceReview(date);
+      await dispatch("getStatusPerformanceReview");
     } catch (e) {
       console.log(e);
     }

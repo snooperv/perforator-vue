@@ -34,7 +34,10 @@
 
     <Instruction v-if="isMobile" />
 
-    <div class="wait">
+    <div
+      class="wait"
+      v-if="prStatus?.status !== 'no pr' && prStatus?.pr_status > 2"
+    >
       <h2>Ожидают моей оценки</h2>
       <div class="peers">
         <div class="one-peer" v-for="peer in user.peersIRate">
@@ -57,6 +60,14 @@
           <DropdownContent v-if="peer.isOpen" :peer-id="peer.id" />
         </div>
       </div>
+    </div>
+
+    <div class="stage-closed" v-else>
+      <h3>Данный этап сейчас закрыт</h3>
+      <p>
+        Вы сможете оценить других сотрудников после того как менеджер запустит
+        этап "Взаимное оценивание"
+      </p>
     </div>
   </div>
 </template>

@@ -51,3 +51,6 @@ export const addUserImMyTeamAPI = () => MAIN_API + "team/update";
 export const deleteUserImMyTeamAPI = () => MAIN_API + "team/delete_user";
 
 export const getStatusPerformanceReviewAPI = () => CONTROL_REVIEW + "status";
+export const beginPerformanceReviewAPI = () => CONTROL_REVIEW + "begin";
+export const nextStagePerformanceReviewAPI = () =>
+  CONTROL_REVIEW + "next_stage";
