@@ -87,7 +87,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["user", "isMobile"]),
+    ...mapState(["user", "isMobile", "prStatus"]),
   },
 
   mounted() {

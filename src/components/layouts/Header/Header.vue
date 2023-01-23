@@ -15,13 +15,13 @@
           prStatus && prStatus.status !== 'no pr' && prStatus.pr_status !== 0
         "
       >
-        <span class="untill">До завершения Self Review</span>
+        <span class="untill">До завершения {{ getStage }}</span>
         <span class="under" style="margin-left: 3px">дней</span>
-        <span id="days" class="time">-263</span> :
+        <span id="days" class="time">{{ getDays }}</span> :
         <span class="under">часов</span>
-        <span id="hours" class="time">-16</span> :
+        <span id="hours" class="time">{{ getHours }}</span> :
         <span class="under">минут</span>
-        <span id="minutes" class="time">-15</span>
+        <span id="minutes" class="time">{{ getMinutes }}</span>
       </div>
       <div
         class="timer"
@@ -80,10 +80,48 @@ export default {
     this.$store.dispatch("getStatusPerformanceReview");
   },
 
+  methods: {
+    parseDate() {
+      const dateNow = new Date();
+      const deadline = new Date(this.prStatus.deadline);
+      const offset = deadline - dateNow;
+      const offsetMinutes = Math.ceil((offset / 1000 / 60) % 60);
+      const offsetHours = Math.floor(offset / 1000 / 60 / 60);
+      const offsetDays = Math.floor(offset / 1000 / 60 / 60 / 24);
+
+      return { offsetDays, offsetHours, offsetMinutes };
+    },
+  },
+
   computed: {
     ...mapState(["isMobile", "user", "prStatus"]),
     openUserInfo() {
       openModal(UserInfo);
+    },
+
+    getStage() {
+      switch (this.prStatus.pr_status) {
+        case 1:
+          return '"Self-Review"';
+        case 2:
+          return '"Утверждение пиров"';
+        case 3:
+          return '"Взаимное оценивание"';
+        case 4:
+          return '"One to One"';
+      }
+    },
+
+    getDays() {
+      return this.parseDate().offsetDays;
+    },
+
+    getHours() {
+      return this.parseDate().offsetHours;
+    },
+
+    getMinutes() {
+      return this.parseDate().offsetMinutes;
     },
 
     openUserInfoMobile() {

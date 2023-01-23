@@ -42,14 +42,13 @@ export default {
   props: ["myId", "workerId"],
 
   computed: {
-    ...mapState(["commonNote", "privateNote"]),
+    ...mapState(["commonNote", "privateNote", "user"]),
   },
 
   data() {
     return {
       common: "",
       personal: "",
-      isManager: localStorage.getItem("isManager") === "true",
       timerId: null,
     };
   },
@@ -57,9 +56,9 @@ export default {
   mounted() {
     this.$store
       .dispatch("getOneToOne", {
-        is_manager: this.isManager,
-        manager_id: this.isManager ? this.myId : this.workerId,
-        employee_id: this.isManager ? this.workerId : this.myId,
+        is_manager: this.user.statusManager,
+        manager_id: this.user.statusManager ? this.myId : this.workerId,
+        employee_id: this.user.statusManager ? this.workerId : this.myId,
       })
       .then((result) => {
         this.common = result.commonNote;
@@ -74,9 +73,9 @@ export default {
       if (e.target.name === "personal") this.personal = e.target.value;
       this.timerId = setTimeout(() => {
         this.$store.dispatch("postProcessOneToOne", {
-          is_manager: this.isManager,
-          manager_id: this.isManager ? this.myId : this.workerId,
-          employee_id: this.isManager ? this.workerId : this.myId,
+          is_manager: this.user.statusManager,
+          manager_id: this.user.statusManager ? this.myId : this.workerId,
+          employee_id: this.user.statusManager ? this.workerId : this.myId,
           personalNote: this.personal,
           commonNote: this.common,
         });

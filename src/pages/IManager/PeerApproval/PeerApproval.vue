@@ -1,5 +1,8 @@
 <template>
-  <div class="block-container">
+  <div
+    class="block-container"
+    v-if="prStatus?.status !== 'no pr' && prStatus?.pr_status > 1"
+  >
     <h2 class="block-title">
       Неутвержденные пользователи
       <span class="peers-amount" id="not_approve_users_count">{{
@@ -26,7 +29,10 @@
     </div>
   </div>
 
-  <div class="block-container">
+  <div
+    class="block-container"
+    v-if="prStatus?.status !== 'no pr' && prStatus?.pr_status > 1"
+  >
     <h2 class="block-title">
       Пользователь не отправил Self Review
       <span class="peers-amount" id="without_sr_users_count">{{
@@ -45,7 +51,10 @@
     </div>
   </div>
 
-  <div class="block-container">
+  <div
+    class="block-container"
+    v-if="prStatus?.status !== 'no pr' && prStatus?.pr_status > 1"
+  >
     <h2 class="block-title">
       Утверждённые пользователи
       <span class="peers-amount last" id="approve_users_count">{{
@@ -63,6 +72,14 @@
       </div>
     </div>
   </div>
+
+  <div class="stage-closed" v-else>
+    <h3>Данный этап сейчас закрыт</h3>
+    <p>
+      Вы сможете утвердить выбранный пиров сотрудников после того как перейдете
+      к этапу "Утверждение пиров"
+    </p>
+  </div>
 </template>
 
 <script>
@@ -79,7 +96,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["user"]),
+    ...mapState(["user", "prStatus"]),
   },
 
   methods: {

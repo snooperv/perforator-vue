@@ -61,7 +61,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["user"]),
+    ...mapState(["user", "prStatus"]),
   },
 
   methods: {
