@@ -9,7 +9,7 @@
 
     <div
       class="next-stage"
-      v-if="prStatus?.pr_status >= 0 && prStatus?.pr_status <= 0"
+      v-if="prStatus?.pr_status >= 0 && prStatus?.pr_status < 4"
     >
       <span>Дата окончания {{ getStage }}:</span>
       <Datepicker

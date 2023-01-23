@@ -283,9 +283,10 @@ const actions = {
   async saveSelfReview({ commit }, payload) {
     try {
       await saveSelfReview(payload);
-      localStorage.setItem("selfReviewForm", JSON.stringify(payload));
+      // localStorage.setItem("selfReviewForm", JSON.stringify(payload));
     } catch (e) {
       console.log(e);
+      return e;
     }
   },
 

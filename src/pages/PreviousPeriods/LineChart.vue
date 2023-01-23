@@ -38,7 +38,7 @@ export default {
     Line,
   },
   data() {
-    return { data, options, loaded: false };
+    return { data, options, loaded: false, scores: [] };
   },
 
   async mounted() {
@@ -57,8 +57,10 @@ export default {
         if (data.datasets[0].data.length === 0) {
           for (let review of this.listReviews) {
             await this.loadScores(review.pr_id);
+            const resultTeam = { ...this.user.team };
+            this.scores.push({ period: review.pr_id, results: resultTeam });
             data.datasets[0].data.push(
-              this.user.team.generalRating["Средняя оценка"]
+              resultTeam.generalRating["Средняя оценка"]
             );
           }
         }

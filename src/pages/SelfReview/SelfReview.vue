@@ -111,6 +111,10 @@
         <button class="save" @click="(e) => saveReview(e, true)">
           Сохранить черновик
         </button>
+        <p style="color: red; font-size: 16px" v-if="error">
+          При отправке данных возникла ошибка. Пожалуйста, перезагрузите
+          страницу или повторите позже
+        </p>
         <p class="initial_draft">
           *Черновик сохранен<br />после дедлайна, сохраненный черновик
           автоматически отправляется
@@ -155,6 +159,7 @@ export default {
   data() {
     return {
       reviewContent: [],
+      error: false,
     };
   },
 
@@ -182,9 +187,14 @@ export default {
     API_URL() {
       return API_URL;
     },
-    saveReview(e, isDraft) {
-      this.selfReview.is_draft = isDraft;
-      this.$store.dispatch("saveSelfReview", this.selfReview);
+    async saveReview(e, isDraft) {
+      await this.$store
+        .dispatch("saveSelfReview", this.selfReview)
+        .then((error) => {
+          if (!error) this.selfReview.is_draft = isDraft;
+          else this.error = true;
+        });
+      // this.selfReview.is_draft = isDraft;
 
       if (isDraft) {
         const warningText =

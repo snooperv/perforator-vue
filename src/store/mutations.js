@@ -119,13 +119,13 @@ const mutations = {
 
   [types.SET_GENERAL_SCORE](state, payload) {
     state.user.team.generalRating = {
-      "Соблюдение сроков": payload.deadline,
-      "Пути достижения целей": payload.approaches,
-      "Умение работать в команде": payload.teamwork,
-      "Приверженность к хорошим техническим практикам": payload.practices,
-      "Уровень владения технологиями": payload.experience,
-      Адаптивность: payload.adaptation,
-      "Средняя оценка": payload.average,
+      "Соблюдение сроков": payload.deadline || 0,
+      "Пути достижения целей": payload.approaches || 0,
+      "Умение работать в команде": payload.teamwork || 0,
+      "Приверженность к хорошим техническим практикам": payload.practices || 0,
+      "Уровень владения технологиями": payload.experience || 0,
+      Адаптивность: payload.adaptation || 0,
+      "Средняя оценка": payload.average || 0,
     };
   },
 
