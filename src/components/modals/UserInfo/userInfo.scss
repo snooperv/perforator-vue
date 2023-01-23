@@ -68,8 +68,9 @@ p {
 }
 
 .avatar {
-  width: auto;
-  height: 100%;
+  width: 135px;
+  height: 135px;
+  object-fit: cover;
   margin: 0 auto;
 }
 

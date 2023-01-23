@@ -118,8 +118,9 @@ h1 {
 }
 
 .avatar {
-  width: auto;
-  height: 100%;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
   position: relative;
   margin: 0 auto;
 }

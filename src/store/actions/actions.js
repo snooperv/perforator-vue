@@ -274,8 +274,8 @@ const actions = {
 
   async saveSelfReview({ commit }, payload) {
     try {
-      localStorage.setItem("selfReviewForm", JSON.stringify(payload));
       await saveSelfReview(payload);
+      localStorage.setItem("selfReviewForm", JSON.stringify(payload));
     } catch (e) {
       console.log(e);
     }
