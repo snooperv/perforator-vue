@@ -12,6 +12,7 @@
 
         <input type="hidden" name="profile" :value="peerId" />
         <input type="submit" value="Отправить отзыв" @click="postForm" />
+        <p class="errorForm" v-if="isError">Заполнены не все данные</p>
       </form>
     </div>
   </div>
@@ -25,6 +26,13 @@ export default {
   name: "DropdownContent",
   components: { OneQuestion },
 
+  data() {
+    return {
+      isError: false,
+      btnSubmit: null,
+    };
+  },
+
   props: {
     peerId: {
       type: Number,
@@ -36,12 +44,44 @@ export default {
     questions() {
       return questions;
     },
-    postForm(event) {
-      event.preventDefault();
-      const form = new FormData(event.target.parentElement);
-      console.log(event.target.parentElement);
-      this.$store.dispatch("postPeersRatedMe", form);
+
+    isErrorFalse() {
+      this.isError = false;
     },
+
+    async postForm(event) {
+      event.preventDefault();
+      this.btnSubmit = event.target.parentElement;
+      const form = new FormData(this.btnSubmit);
+      const rating = this.btnSubmit.querySelectorAll(".rating");
+
+      Array.from(rating).map((elem) => {
+        let checked = false;
+        const rates = elem.querySelectorAll("input");
+        Array.from(rates).map((rate) => {
+          if (rate.checked) checked = true;
+        });
+        if (!checked) this.isError = true;
+      });
+
+      for (let pair of form.entries()) {
+        if (pair[0] !== "profile" && !pair[1]) {
+          this.isError = true;
+        }
+      }
+
+      if (!this.isError) {
+        await this.$store.dispatch("postPeersRatedMe", form);
+        await this.$store.dispatch("getPeersRatedMe");
+      } else {
+        this.btnSubmit.addEventListener("focusin", this.isErrorFalse);
+      }
+    },
+  },
+
+  beforeUnmount() {
+    this.btnSubmit &&
+      this.btnSubmit.removeEventListener("focusin", this.isErrorFalse);
   },
 };
 </script>
