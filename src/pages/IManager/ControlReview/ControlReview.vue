@@ -1,9 +1,16 @@
 <template>
   <div class="block-container">
-    <button @click="prBegin" v-if="prStatus?.pr_status < 0">
+    <button
+      @click="prBegin"
+      v-if="prStatus?.pr_status < 0 || prStatus?.status === 'no pr'"
+    >
       Начать цикл Review
     </button>
-    <div class="next-stage" v-if="prStatus?.pr_status >= 0">
+
+    <div
+      class="next-stage"
+      v-if="prStatus?.pr_status >= 0 && prStatus?.pr_status <= 0"
+    >
       <span>Дата окончания {{ getStage }}:</span>
       <Datepicker
         v-model="date"
@@ -28,6 +35,10 @@
       />
       <button @click="prNext">Перейти к этапу {{ getStage }}</button>
     </div>
+
+    <button @click="prClose" v-if="prStatus?.pr_status === 4">
+      Завершить цикл Review
+    </button>
   </div>
 </template>
 
@@ -101,6 +112,10 @@ export default {
       const deadline = `${this.date.getFullYear()}-${month}-${this.date.getDate()}T${hours}:${minutes}`;
       console.log(deadline);
       this.$store.dispatch("nextStagePerformanceReview", deadline);
+    },
+
+    prClose() {
+      this.$store.dispatch("closePerformanceReview");
     },
   },
 };

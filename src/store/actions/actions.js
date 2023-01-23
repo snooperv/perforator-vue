@@ -28,6 +28,7 @@ import Cockies from "vue-cookies";
 import router from "@/router";
 import {
   beginPerformanceReview,
+  closePerformanceReview,
   getMyProfile,
   getRates,
   getSelfReview,
@@ -514,6 +515,15 @@ const actions = {
   async nextStagePerformanceReview({ commit, dispatch }, date) {
     try {
       await nextStagePerformanceReview(date);
+      await dispatch("getStatusPerformanceReview");
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async closePerformanceReview({ commit, dispatch }) {
+    try {
+      await closePerformanceReview();
       await dispatch("getStatusPerformanceReview");
     } catch (e) {
       console.log(e);

@@ -54,3 +54,4 @@ export const getStatusPerformanceReviewAPI = () => CONTROL_REVIEW + "status";
 export const beginPerformanceReviewAPI = () => CONTROL_REVIEW + "begin";
 export const nextStagePerformanceReviewAPI = () =>
   CONTROL_REVIEW + "next_stage";
+export const closePerformanceReviewAPI = () => CONTROL_REVIEW + "close";

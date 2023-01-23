@@ -1,6 +1,7 @@
 import request from "../helpers/request";
 import {
   beginPerformanceReviewAPI,
+  closePerformanceReviewAPI,
   getMyProfileAPI,
   getRatesAPI,
   getSelfReviewAPI,
@@ -42,4 +43,8 @@ export const nextStagePerformanceReview = async (date) => {
   return await request(nextStagePerformanceReviewAPI(), "POST", {
     deadline: date,
   });
+};
+
+export const closePerformanceReview = async () => {
+  return await request(closePerformanceReviewAPI(), "POST");
 };
