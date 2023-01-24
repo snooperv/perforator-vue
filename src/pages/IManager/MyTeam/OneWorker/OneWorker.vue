@@ -257,10 +257,6 @@
         </div>
       </div>
     </div>
-
-    <button class="exit" @click="deleteUser(worker.profile_id)" v-if="isMobile">
-      Удалить
-    </button>
   </div>
 </template>
 
@@ -347,12 +343,6 @@ export default {
         this.data.previousPeriod?.results || this.user.team
       ).filter((oneUser) => oneUser.profile_id === +this.$route.params.id)[0];
       console.log(this.worker);
-    },
-
-    deleteUser(id) {
-      this.$store
-        .dispatch("deleteUserImMyTeam", id)
-        .then(() => this.$router.push("/i-manager/my-team"));
     },
   },
 

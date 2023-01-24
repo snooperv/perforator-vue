@@ -40,6 +40,40 @@
       Завершить цикл Review
     </button>
   </div>
+
+  <div class="block-container">
+    <h2 class="block-title">Рейтинг сотрудников</h2>
+    <p class="block-description">
+      *кликните на сотрудника, чтобы посмотреть результаты его ревью
+    </p>
+    <div class="inside-wrapper rating" style="width: 95%">
+      <div class="grades" v-for="worker in user.team">
+        <div class="items rating-name">
+          <a class="name-link">
+            <div class="peers-pic-raiting">
+              <img
+                class="avatar"
+                :src="API_URL() + worker.photo"
+                alt="Аватар"
+              />
+            </div>
+          </a>
+          <a class="name-link">{{ worker.username }} </a>
+          <button class="exit" @click="deleteUser(worker.profile_id)">
+            Удалить
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block-container">
+    <h2 class="block-title">Выбор сотрудников в мою команду</h2>
+    <p class="block-description">
+      *здесь вы можете выбрать сотрудников, которые работают в вашей команде
+    </p>
+    <button class="add-peer" @click="openAllUsers">Добавить сотрудников</button>
+  </div>
 </template>
 
 <script>
@@ -47,6 +81,10 @@ import { mapState } from "vuex";
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { ref } from "vue";
+import { API_URL } from "@/helpers/api";
+import { openModal } from "jenesius-vue-modal";
+import PeersList from "@/components/modals/PeersList/PeersList.vue";
+import PeersListMobile from "@/components/modals/PeersList/peersListMobile.vue";
 
 export default {
   name: "ControlReview",
@@ -80,8 +118,12 @@ export default {
     };
   },
 
+  mounted() {
+    if (this.user.team.length === 0) this.$store.dispatch("getMyTeam");
+  },
+
   computed: {
-    ...mapState(["prStatus"]),
+    ...mapState(["prStatus", "user"]),
     getStage() {
       switch (this.prStatus.pr_status) {
         case 0:
@@ -97,6 +139,10 @@ export default {
   },
 
   methods: {
+    API_URL() {
+      return API_URL;
+    },
+
     prBegin() {
       this.$store.dispatch("beginPerformanceReview");
     },
@@ -116,6 +162,16 @@ export default {
 
     prClose() {
       this.$store.dispatch("closePerformanceReview");
+    },
+
+    openAllUsers() {
+      if (!this.isMobile)
+        openModal(PeersList, { isManager: true, isAllUsers: true });
+      else openModal(PeersListMobile, { isManager: true, isAllUsers: true });
+    },
+
+    deleteUser(id) {
+      this.$store.dispatch("deleteUserImMyTeam", id);
     },
   },
 };
