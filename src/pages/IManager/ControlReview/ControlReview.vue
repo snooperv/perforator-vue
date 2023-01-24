@@ -47,7 +47,11 @@
       </button>
     </div>
 
-    <button class="exit" @click="prClose" v-if="prStatus?.pr_status === 4">
+    <button
+      class="add-peer review-close"
+      @click="prClose"
+      v-if="prStatus?.pr_status === 4"
+    >
       Завершить цикл Review
     </button>
   </div>

@@ -110,6 +110,10 @@
   //float: left;
   display: block;
   margin: 0 auto;
+
+  &.review-close {
+    background-color: #cd2525;
+  }
 }
 
 .date-end,

@@ -8,7 +8,10 @@
     </div>
     <div v-for="worker in myTeam">
       <button
-        @click="() => (worker.isDropdown = !worker.isDropdown)"
+        @click="
+          () =>
+            (worker.isDropdown[review.pr_id] = !worker.isDropdown[review.pr_id])
+        "
         class="peer dropbtn"
       >
         <span class="peers-pic">
@@ -23,7 +26,7 @@
         </a>
       </button>
       <DropdownForm
-        v-if="worker.isDropdown"
+        v-if="worker.isDropdown[review.pr_id]"
         :my-id="user.myId"
         :worker-id="worker.profile_id"
         period="previous"
@@ -65,6 +68,18 @@ export default {
       this.isOpen = !this.isOpen;
     },
 
+    addPrIdUsers() {
+      for (let user of this.myTeam) {
+        user.isDropdown = {};
+      }
+
+      this.listReviews.map((review) => {
+        for (let user of this.myTeam) {
+          user.isDropdown[review.pr_id] = false;
+        }
+      });
+    },
+
     getMyTeam() {
       if (this.user.statusManager) {
         if (this.user.team.length === 0) this.$store.dispatch("getMyTeam");
@@ -73,6 +88,7 @@ export default {
         !this.user.manager && this.$store.dispatch("getMyManager");
         this.myTeam = this.user.manager;
       }
+      this.addPrIdUsers();
     },
   },
 
@@ -80,12 +96,14 @@ export default {
     "user.team": {
       handler() {
         this.myTeam = this.user.team;
+        this.addPrIdUsers();
       },
     },
 
     "user.manager": {
       handler() {
         this.myTeam = this.user.manager;
+        this.addPrIdUsers();
       },
     },
 
