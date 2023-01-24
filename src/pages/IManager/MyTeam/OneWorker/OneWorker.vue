@@ -287,7 +287,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["user", "isMobile"]),
+    ...mapState(["user", "isMobile", "data"]),
   },
 
   mounted() {
@@ -343,9 +343,9 @@ export default {
     },
 
     loadWorker() {
-      this.worker = this.user.team.filter(
-        (oneUser) => oneUser.profile_id === +this.$route.params.id
-      )[0];
+      this.worker = (
+        this.data.previousPeriod?.results || this.user.team
+      ).filter((oneUser) => oneUser.profile_id === +this.$route.params.id)[0];
       console.log(this.worker);
     },
 

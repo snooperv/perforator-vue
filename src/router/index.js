@@ -97,6 +97,12 @@ const routes = [
             component: MyTeam,
             meta: { title: "Команда менеджера" },
           },
+          {
+            path: "employee/:id",
+            name: "employeePeriods",
+            component: OneWorker,
+            meta: { title: "Итоговая обратная связь" },
+          },
         ],
       },
       {

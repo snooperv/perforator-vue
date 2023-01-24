@@ -322,6 +322,16 @@ table {
   transition: all 0.3s ease-in-out;
 }
 
+.previous-periods {
+  .self-review {
+    width: 100%;
+
+    .form {
+      width: 100%;
+    }
+  }
+}
+
 @media (max-width: 800px) {
   .self-review {
     width: 100%;
