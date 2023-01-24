@@ -92,7 +92,8 @@ export default {
   components: { DropdownPeers },
 
   mounted() {
-    this.$store.dispatch("getIsApproval");
+    if (this.prStatus?.status !== "no pr" && this.prStatus?.pr_status > 1)
+      this.$store.dispatch("getIsApproval");
   },
 
   computed: {

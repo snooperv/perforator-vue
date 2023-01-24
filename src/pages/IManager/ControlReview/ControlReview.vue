@@ -1,6 +1,9 @@
 <template>
   <div class="block-container">
+    <h2 class="block-title">Управление этапами Performance Review</h2>
+
     <button
+      class="add-peer btn-begin"
       @click="prBegin"
       v-if="prStatus?.pr_status < 0 || prStatus?.status === 'no pr'"
     >
@@ -11,32 +14,40 @@
       class="next-stage"
       v-if="prStatus?.pr_status >= 0 && prStatus?.pr_status < 4"
     >
-      <span>Дата окончания {{ getStage }}:</span>
-      <Datepicker
-        v-model="date"
-        :enable-time-picker="false"
-        placeholder="Дата"
-        locale="ru"
-        cancelText="Отмена"
-        selectText="Выбрать"
-        :preview-format="format"
-        :clearable="false"
-        format="dd/MM/yyyy"
-      />
-      <span>Время окончания {{ getStage }}:</span>
-      <Datepicker
-        v-model="time"
-        time-picker
-        placeholder="Время"
-        locale="ru"
-        cancelText="Отмена"
-        selectText="Выбрать"
-        :clearable="false"
-      />
-      <button @click="prNext">Перейти к этапу {{ getStage }}</button>
+      <div class="date-end">
+        <span>Дата окончания {{ getStage }}:</span>
+        <Datepicker
+          v-model="date"
+          :enable-time-picker="false"
+          placeholder="Дата"
+          locale="ru"
+          cancelText="Отмена"
+          selectText="Выбрать"
+          :preview-format="format"
+          :clearable="false"
+          format="dd/MM/yyyy"
+        />
+      </div>
+
+      <div class="time-end">
+        <span>Время окончания {{ getStage }}:</span>
+        <Datepicker
+          v-model="time"
+          time-picker
+          placeholder="Время"
+          locale="ru"
+          cancelText="Отмена"
+          selectText="Выбрать"
+          :clearable="false"
+        />
+      </div>
+
+      <button class="add-peer" @click="prNext">
+        Перейти к этапу {{ getStage }}
+      </button>
     </div>
 
-    <button @click="prClose" v-if="prStatus?.pr_status === 4">
+    <button class="exit" @click="prClose" v-if="prStatus?.pr_status === 4">
       Завершить цикл Review
     </button>
   </div>

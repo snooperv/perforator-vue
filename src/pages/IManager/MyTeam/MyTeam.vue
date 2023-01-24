@@ -1,67 +1,84 @@
 <template>
-  <div class="block-container">
-    <h2 class="block-title">Средняя оценка по всей команде</h2>
-    <div class="inside-wrapper">
-      <div
-        class="grades"
-        v-for="(score, key) in data.previousPeriod?.average ||
-        user.team.generalRating"
-      >
-        <div class="items" :class="key === 'Средняя оценка' && 'sum'">
-          {{ key }}
+  <div
+    v-if="
+      this.$route.path === '/last-periods/team' ||
+      (prStatus?.status !== 'no pr' && prStatus?.pr_status > 2)
+    "
+  >
+    <div class="block-container">
+      <h2 class="block-title">Средняя оценка по всей команде</h2>
+      <div class="inside-wrapper">
+        <div
+          class="grades"
+          v-for="(score, key) in data.previousPeriod?.average ||
+          user.team.generalRating"
+        >
+          <div class="items" :class="key === 'Средняя оценка' && 'sum'">
+            {{ key }}
+          </div>
+          <div class="grade">
+            <div class="grade-number" :class="colorGrade(score)">
+              {{ score }}
+            </div>
+          </div>
+        </div>
+        <!--<div class="items sum">
+            Нормированная оценка
         </div>
         <div class="grade">
-          <div class="grade-number" :class="colorGrade(score)">{{ score }}</div>
+            <div class="grade-number great">3.8</div>
+        </div>-->
+      </div>
+    </div>
+
+    <div class="block-container">
+      <h2 class="block-title">Рейтинг сотрудников</h2>
+      <p class="block-description">
+        *кликните на сотрудника, чтобы посмотреть результаты его ревью
+      </p>
+      <div class="inside-wrapper rating" style="width: 95%">
+        <div
+          class="grades"
+          v-for="worker in data.previousPeriod?.results || user.team"
+        >
+          <div class="items rating-name">
+            <a href="#" class="name-link">
+              <div class="peers-pic-raiting">
+                <img
+                  class="avatar"
+                  :src="API_URL() + worker.photo"
+                  alt="Аватар"
+                />
+              </div>
+            </a>
+            <a
+              href=""
+              @click="(e) => toEmployee(e, worker.profile_id)"
+              class="name-link"
+              >{{ worker.username }}
+            </a>
+          </div>
+          <a href="#">
+            <div class="grade">
+              <div
+                class="grade-number"
+                :class="colorGrade(worker.rating?.averages.average)"
+              >
+                {{ worker.rating?.averages.average }}
+              </div>
+            </div>
+          </a>
         </div>
       </div>
-      <!--<div class="items sum">
-          Нормированная оценка
-      </div>
-      <div class="grade">
-          <div class="grade-number great">3.8</div>
-      </div>-->
     </div>
   </div>
 
-  <div class="block-container">
-    <h2 class="block-title">Рейтинг сотрудников</h2>
-    <p class="block-description">
-      *кликните на сотрудника, чтобы посмотреть результаты его ревью
+  <div class="stage-closed" v-else>
+    <h3>Данный этап сейчас закрыт</h3>
+    <p>
+      Вы сможете посмотреть результаты команды после того как перейдете к этапу
+      "Взаимное оценивание"
     </p>
-    <div class="inside-wrapper rating" style="width: 95%">
-      <div
-        class="grades"
-        v-for="worker in data.previousPeriod?.results || user.team"
-      >
-        <div class="items rating-name">
-          <a href="#" class="name-link">
-            <div class="peers-pic-raiting">
-              <img
-                class="avatar"
-                :src="API_URL() + worker.photo"
-                alt="Аватар"
-              />
-            </div>
-          </a>
-          <a
-            href=""
-            @click="(e) => toEmployee(e, worker.profile_id)"
-            class="name-link"
-            >{{ worker.username }}
-          </a>
-        </div>
-        <a href="#">
-          <div class="grade">
-            <div
-              class="grade-number"
-              :class="colorGrade(worker.rating?.averages.average)"
-            >
-              {{ worker.rating?.averages.average }}
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -83,7 +100,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["user", "isMobile", "data"]),
+    ...mapState(["user", "isMobile", "data", "prStatus"]),
   },
 
   async mounted() {

@@ -219,6 +219,23 @@ input[type="submit"]:active {
 }
 
 @media (max-width: 800px) {
+  .stage-closed {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 15px 20px;
+
+    h3 {
+      font-size: 19px;
+      margin: 0 0 10px;
+    }
+
+    p {
+      margin: 0;
+      font-family: "Gotham Pro light", sans-serif;
+      font-weight: 1000;
+    }
+  }
+
   .me-estimate {
     width: calc(100% - 28px);
     margin: 0 14px;

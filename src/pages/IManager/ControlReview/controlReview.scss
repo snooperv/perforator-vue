@@ -112,9 +112,27 @@
   margin: 0 auto;
 }
 
+.date-end,
+.time-end {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  margin-left: 35px;
+
+  span {
+    margin-right: 10px;
+    width: 300px;
+  }
+}
+
 @media (max-width: 800px) {
   .block-container {
     width: 100%;
+
+    .date-end,
+    .time-end {
+      margin-left: 10px;
+    }
 
     .block-title {
       font-size: 18px;

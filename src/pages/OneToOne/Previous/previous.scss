@@ -124,7 +124,11 @@ h2 {
     box-sizing: border-box;
     width: 100%;
     padding: 10px 10px 20px;
-    margin-bottom: 130px;
+    margin-bottom: 40px;
+
+    &:last-child {
+      margin-bottom: 130px;
+    }
 
     h2 {
       font-size: 26px;
