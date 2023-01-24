@@ -109,11 +109,17 @@ a {
   background-color: #f8f8fa;
   border-right: 1px solid #e7e7e7;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
 }
 
 .profile-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: #000;
+  margin-left: 20px;
   margin-top: 100px;
+  margin-right: 20px;
 }
 
 .profile-div h2 {
@@ -139,16 +145,13 @@ a {
   overflow: hidden;
   display: inline-block;
   vertical-align: middle;
-  margin-left: 20px;
 }
 
 .profile-name {
   position: relative;
   display: inline-block;
-  text-align: left;
-  margin-left: 20px;
+  text-align: center;
   top: 0.5em;
-  width: 40%;
 }
 
 .menu-items {
@@ -259,7 +262,6 @@ a {
   }
 
   .profile-name {
-    margin-top: -20px;
     margin-left: 0;
   }
 
@@ -289,7 +291,6 @@ a {
   }
 
   .profile-name {
-    margin-top: -10px;
     /* margin-left: 0px; */
     position: relative;
   }
@@ -318,6 +319,12 @@ a {
 @media (max-width: 800px) {
   .sidebar {
     display: none;
+  }
+}
+
+@media (max-height: 600px) {
+  .sidebar {
+    overflow-y: scroll;
   }
 }
 

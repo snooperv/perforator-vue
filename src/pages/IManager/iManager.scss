@@ -53,6 +53,22 @@ input[type="submit"]:active {
   transform: scale(0.95);
 }
 
+@media (max-width: 900px) {
+  .manager {
+    .double-links {
+      display: flex;
+      flex-direction: column;
+      margin: 25px 0 0;
+      padding: 0;
+      width: 90%;
+
+      .d-link {
+        margin: -1px 0;
+      }
+    }
+  }
+}
+
 @media (max-width: 800px) {
   .manager {
     margin: 0 14px 80px;
@@ -63,15 +79,9 @@ input[type="submit"]:active {
     }
 
     .double-links {
-      display: flex;
-      flex-direction: column;
+      width: 100%;
       max-width: 500px;
       margin: 25px auto 0;
-      padding: 0;
-
-      .d-link {
-        margin: -1px 0;
-      }
     }
   }
 }
