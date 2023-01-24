@@ -40,7 +40,7 @@ export default {
     Line,
   },
   data() {
-    return { data, options, loaded: false, scores: [] };
+    return { data, options, loaded: false };
   },
 
   mounted() {
@@ -48,7 +48,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["listReviews", "user"]),
+    ...mapState(["listReviews", "user", "scores"]),
   },
 
   methods: {
@@ -125,12 +125,6 @@ export default {
       },
     },
   },
-
-  // beforeDestroy() {
-  //   this.$store.commit(types.SET_SCORE_BEFORE_UNMOUNT, {
-  //     lastPeriod: this.score,
-  //   });
-  // },
 };
 </script>
 

@@ -23,6 +23,7 @@ const state = {
   prStatus: null,
   listReviews: [],
   data: [],
+  scores: [],
 };
 
 export default state;
