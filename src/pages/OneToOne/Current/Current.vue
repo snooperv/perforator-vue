@@ -4,8 +4,7 @@
     v-if="prStatus?.status !== 'no pr' && prStatus?.pr_status > 3"
   >
     <div class="date">
-      <h2>Q2</h2>
-      <span class="period"> 01.01.2023 - 14.01.2023</span>
+      <h2>Текущий цикл Performance-Review</h2>
     </div>
 
     <div v-for="worker in myTeam">

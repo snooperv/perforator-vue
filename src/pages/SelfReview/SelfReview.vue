@@ -188,6 +188,7 @@ export default {
       return API_URL;
     },
     async saveReview(e, isDraft) {
+      this.selfReview.is_draft = isDraft;
       await this.$store
         .dispatch("saveSelfReview", this.selfReview)
         .then((error) => {

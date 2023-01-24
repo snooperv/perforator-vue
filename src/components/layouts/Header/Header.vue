@@ -85,9 +85,13 @@ export default {
       const dateNow = new Date();
       const deadline = new Date(this.prStatus.deadline);
       const offset = deadline - dateNow;
-      const offsetMinutes = Math.ceil((offset / 1000 / 60) % 60);
-      const offsetHours = Math.floor(offset / 1000 / 60 / 60);
+      let offsetMinutes = Math.ceil((offset / 1000 / 60) % 60);
+      let offsetHours = Math.floor(offset / 1000 / 60 / 60);
       const offsetDays = Math.floor(offset / 1000 / 60 / 60 / 24);
+      if (offsetMinutes === 60) {
+        offsetMinutes = 0;
+        offsetHours += 1;
+      }
 
       return { offsetDays, offsetHours, offsetMinutes };
     },

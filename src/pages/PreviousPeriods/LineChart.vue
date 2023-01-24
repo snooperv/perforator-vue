@@ -41,41 +41,8 @@ export default {
     return { data, options, loaded: false, scores: [] };
   },
 
-  async mounted() {
-    this.loaded = false;
-
-    try {
-      this.listReviews.length === 0 &&
-        (await this.$store.dispatch("getListPerformanceReview"));
-      data.labels = this.listReviews.map(
-        (review) => review.closing_date.split("T")[0]
-      );
-
-      if (this.user.statusManager && this.user.team.length === 0) {
-        await this.$store.dispatch("getMyTeam");
-      }
-
-      if (data.datasets[0].data.length === 0) {
-        for (let review of this.listReviews) {
-          await this.loadScores(review.pr_id);
-          const resultTeam = { ...this.user.team };
-          this.scores.push({ period: review.pr_id, results: resultTeam });
-          data.datasets[0].data.push(
-            resultTeam.generalRating["Средняя оценка"]
-          );
-        }
-      }
-
-      console.log(this.scores); // TODO Убрать потом
-
-      options.onClick = (e) => {
-        console.log(e.chart.tooltip.title[0]);
-      };
-
-      this.loaded = true;
-    } catch (e) {
-      console.error(e);
-    }
+  mounted() {
+    if (this.user.statusManager) this.getScores();
   },
 
   computed: {
@@ -85,11 +52,57 @@ export default {
   methods: {
     async loadScores(period) {
       if (this.user.team) {
+        console.log(this.user.statusManager);
         await this.$store.dispatch("getTeamScores", {
           team: this.user.statusManager ? this.user.team : [this.user],
           period,
         });
       }
+    },
+
+    async getScores() {
+      this.loaded = false;
+
+      try {
+        this.listReviews.length === 0 &&
+          (await this.$store.dispatch("getListPerformanceReview"));
+        data.labels = this.listReviews.map(
+          (review) => review.closing_date.split("T")[0]
+        );
+
+        if (this.user.statusManager && this.user.team.length === 0) {
+          await this.$store.dispatch("getMyTeam");
+        }
+
+        if (data.datasets[0].data.length === 0) {
+          for (let review of this.listReviews) {
+            await this.loadScores(review.pr_id);
+            const resultTeam = { ...this.user.team };
+            this.scores.push({ period: review.pr_id, results: resultTeam });
+            data.datasets[0].data.push(
+              resultTeam.generalRating["Средняя оценка"]
+            );
+          }
+        }
+
+        console.log(this.scores); // TODO Убрать потом
+
+        options.onClick = (e) => {
+          console.log(e.chart.tooltip.title[0]);
+        };
+
+        this.loaded = true;
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  },
+
+  watch: {
+    "user.statusManager": {
+      handler() {
+        this.getScores();
+      },
     },
   },
 };

@@ -259,21 +259,12 @@ const actions = {
     }
   },
 
-  async getSelfReview({ commit }) {
+  async getSelfReview({ commit, state }) {
     try {
-      const localContent = localStorage.getItem("selfReviewForm");
       let contentSelfReview;
-
-      if (!localContent) {
+      if (!Object.keys(state.selfReview).length)
         contentSelfReview = await getSelfReview();
-        localStorage.setItem(
-          "selfReviewForm",
-          JSON.stringify(contentSelfReview)
-        );
-      } else {
-        contentSelfReview = JSON.parse(localStorage.getItem("selfReviewForm"));
-      }
-
+      else contentSelfReview = { ...state.selfReview };
       commit(types.SET_SELFREVIEW, contentSelfReview);
     } catch (e) {
       console.log(e);
@@ -411,7 +402,7 @@ const actions = {
     }
   },
 
-  async getTeamScores({ commit }, payload) {
+  async getTeamScores({ commit, dispatch, state }, payload) {
     try {
       const { team, period } = payload;
       const averagesTeam = Object.assign({}, grades);
@@ -428,15 +419,20 @@ const actions = {
       };
 
       for (let worker of team) {
-        let workerScore;
+        let workerScore, managerId;
 
         if (!period)
           workerScore = await getTeamScores(`?id=${worker.profile_id}`);
-        else
+        else {
           workerScore = await getTeamScoresPrevious({
             id: worker.profile_id || worker.myId,
             pr_id: period,
           });
+          if (worker.myId) {
+            await dispatch("getMyManager");
+            managerId = state.user.manager[0].profile_id;
+          }
+        }
 
         const finalRating = {
           manager: Object.assign({}, grades),
@@ -456,7 +452,7 @@ const actions = {
               experience: scores.r_experience,
               adaptation: scores.r_adaptation,
             };
-            if (scores.is_manager) {
+            if (scores.is_manager || scores.who === managerId) {
               result.average = calcAverage(result);
               finalRating.manager = result;
             } else {
