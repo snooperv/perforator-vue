@@ -18,6 +18,7 @@ import { Line } from "vue-chartjs";
 import { data, options } from "@/helpers/chartConfig";
 import { mapState } from "vuex";
 import { types } from "@/types";
+import _ from "lodash";
 
 ChartJS.register(
   CategoryScale,
@@ -53,7 +54,6 @@ export default {
   methods: {
     async loadScores(period) {
       if (this.user.team) {
-        console.log(this.user.statusManager);
         await this.$store.dispatch("getTeamScores", {
           team: this.user.statusManager ? this.user.team : [this.user],
           period,
@@ -78,32 +78,31 @@ export default {
         if (data.datasets[0].data.length === 0) {
           for (let review of this.listReviews) {
             await this.loadScores(review.pr_id);
-            const resultTeam = { ...this.user.team };
-            this.scores.push({ period: review.pr_id, results: resultTeam });
-            data.datasets[0].data.push(
-              resultTeam.generalRating["Средняя оценка"]
-            );
+            const resultTeam = _.cloneDeep(this.user.team);
+            const averageTeam = _.cloneDeep(this.user.team.generalRating);
+            this.scores.push({
+              period: review.pr_id,
+              results: resultTeam,
+              average: averageTeam,
+            });
+            data.datasets[0].data.push(averageTeam["Средняя оценка"]);
           }
         }
 
-        console.log(this.scores); // TODO Убрать потом
-
         options.onClick = (e) => {
-          console.log(this.scores);
           const dataPoints = e.chart.tooltip.dataPoints;
           if (dataPoints) {
             const period = this.listReviews.filter(
               (review) =>
                 review.closing_date.split("T")[0] === dataPoints[0].label
             )[0].pr_id;
-            console.log(period);
 
             const targetScore = this.scores.filter(
               (score) => score.period === period
             );
 
             this.$store.commit(types.SET_SCORE_BEFORE_UNMOUNT, {
-              previousPeriod: targetScore && targetScore[0].results,
+              previousPeriod: targetScore && targetScore[0],
             });
 
             if (this.user.statusManager && targetScore) {

@@ -4,7 +4,7 @@
     <div class="inside-wrapper">
       <div
         class="grades"
-        v-for="(score, key) in data.previousPeriod?.generalRating ||
+        v-for="(score, key) in data.previousPeriod?.average ||
         user.team.generalRating"
       >
         <div class="items" :class="key === 'Средняя оценка' && 'sum'">
@@ -31,7 +31,7 @@
     <div class="inside-wrapper rating" style="width: 95%">
       <div
         class="grades"
-        v-for="(worker, key) in data.previousPeriod || user.team"
+        v-for="worker in data.previousPeriod?.results || user.team"
       >
         <div class="items rating-name">
           <a href="#" class="name-link">
@@ -103,10 +103,7 @@ export default {
 
   async mounted() {
     if (this.user.team.length === 0) await this.$store.dispatch("getMyTeam");
-
     this.user.statusManager && this.loadScores();
-
-    console.log(this.data.previousPeriod, this.user.team);
   },
 
   methods: {
