@@ -10,6 +10,7 @@ const state = {
     authError: false,
     peers: [],
     team: [],
+    averageScore: {},
     teamWithoutReview: [],
     teamWithReview: [],
     teamApprove: [],
@@ -21,6 +22,7 @@ const state = {
   isMobile: window.innerWidth <= 800,
   prStatus: null,
   listReviews: [],
+  data: [],
 };
 
 export default state;

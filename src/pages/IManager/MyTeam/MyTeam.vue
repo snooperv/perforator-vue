@@ -2,7 +2,11 @@
   <div class="block-container">
     <h2 class="block-title">Средняя оценка по всей команде</h2>
     <div class="inside-wrapper">
-      <div class="grades" v-for="(score, key) in user.team.generalRating">
+      <div
+        class="grades"
+        v-for="(score, key) in data.previousPeriod?.generalRating ||
+        user.team.generalRating"
+      >
         <div class="items" :class="key === 'Средняя оценка' && 'sum'">
           {{ key }}
         </div>
@@ -25,7 +29,10 @@
       *кликните на сотрудника, чтобы посмотреть результаты его ревью
     </p>
     <div class="inside-wrapper rating" style="width: 95%">
-      <div class="grades" v-for="worker in user.team">
+      <div
+        class="grades"
+        v-for="(worker, key) in data.previousPeriod || user.team"
+      >
         <div class="items rating-name">
           <a href="#" class="name-link">
             <div class="peers-pic-raiting">
@@ -84,13 +91,22 @@ import PeersListMobile from "@/components/modals/PeersList/peersListMobile.vue";
 export default {
   name: "MyTeam",
 
-  computed: {
-    ...mapState(["user", "isMobile"]),
+  data() {
+    return {
+      targetScore: {},
+    };
   },
 
-  mounted() {
-    this.loadScores();
-    if (this.user.team.length === 0) this.$store.dispatch("getMyTeam");
+  computed: {
+    ...mapState(["user", "isMobile", "data"]),
+  },
+
+  async mounted() {
+    if (this.user.team.length === 0) await this.$store.dispatch("getMyTeam");
+
+    this.user.statusManager && this.loadScores();
+
+    console.log(this.data.previousPeriod, this.user.team);
   },
 
   methods: {
@@ -104,7 +120,7 @@ export default {
     },
 
     loadScores() {
-      if (this.user.team) {
+      if (this.user.team && !this.data.previousPeriod) {
         this.$store.dispatch("getTeamScores", {
           team: this.user.team,
         });
@@ -123,7 +139,7 @@ export default {
   },
 
   watch: {
-    "user.team": {
+    "user.statusManager": {
       handler() {
         this.loadScores();
       },

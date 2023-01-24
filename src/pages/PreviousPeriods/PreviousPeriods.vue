@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container previous-periods">
     <h1 class="main-title">Мои результаты по прошлым периодам оценки</h1>
     <p class="description">
       Чтобы увидеть результаты предыдущих ревью, нажмите на точку на графике
@@ -7,6 +7,8 @@
     <div class="back-statistic">
       <LineChart />
     </div>
+
+    <router-view />
   </div>
 </template>
 

@@ -17,6 +17,7 @@ import {
 import { Line } from "vue-chartjs";
 import { data, options } from "@/helpers/chartConfig";
 import { mapState } from "vuex";
+import { types } from "@/types";
 
 ChartJS.register(
   CategoryScale,
@@ -88,7 +89,27 @@ export default {
         console.log(this.scores); // TODO Убрать потом
 
         options.onClick = (e) => {
-          console.log(e.chart.tooltip.title[0]);
+          console.log(this.scores);
+          const dataPoints = e.chart.tooltip.dataPoints;
+          if (dataPoints) {
+            const period = this.listReviews.filter(
+              (review) =>
+                review.closing_date.split("T")[0] === dataPoints[0].label
+            )[0].pr_id;
+            console.log(period);
+
+            const targetScore = this.scores.filter(
+              (score) => score.period === period
+            );
+
+            this.$store.commit(types.SET_SCORE_BEFORE_UNMOUNT, {
+              previousPeriod: targetScore && targetScore[0].results,
+            });
+
+            if (this.user.statusManager && targetScore) {
+              this.$router.push("/last-periods/team");
+            }
+          }
         };
 
         this.loaded = true;
@@ -105,6 +126,12 @@ export default {
       },
     },
   },
+
+  // beforeDestroy() {
+  //   this.$store.commit(types.SET_SCORE_BEFORE_UNMOUNT, {
+  //     lastPeriod: this.score,
+  //   });
+  // },
 };
 </script>
 

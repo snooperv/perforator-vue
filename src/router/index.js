@@ -91,6 +91,13 @@ const routes = [
         path: "/last-periods",
         component: PreviousPeriods,
         meta: { title: "Прошлые периоды оценки" },
+        children: [
+          {
+            path: "team",
+            component: MyTeam,
+            meta: { title: "Команда менеджера" },
+          },
+        ],
       },
       {
         path: "/page-not-found",

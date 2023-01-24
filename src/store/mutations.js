@@ -140,6 +140,10 @@ const mutations = {
   [types.SET_LIST_REVIEWS](state, payload) {
     state.listReviews = payload;
   },
+
+  [types.SET_SCORE_BEFORE_UNMOUNT](state, payload) {
+    state.data.previousPeriod = payload.previousPeriod;
+  },
 };
 
 const peersSort = (peer1, peer2) => {
