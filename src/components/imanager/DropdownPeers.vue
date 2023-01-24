@@ -65,7 +65,6 @@ export default {
       return API_URL;
     },
     removePeer(workerId, peerId) {
-      console.log(workerId, peerId);
       this.$store.dispatch("removeWorkerPeer", { workerId, peerId });
     },
 

@@ -115,7 +115,6 @@ export default {
     colorGrade,
     toEmployee(e, id) {
       e.preventDefault();
-      console.log(this.data.previousPeriod?.results);
       if (this.data.previousPeriod?.results)
         this.$router.push({ name: "employeePeriods", params: { id } });
       else this.$router.push({ name: "employee", params: { id } });

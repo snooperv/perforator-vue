@@ -216,7 +216,6 @@ export default {
 
     updateImage(e) {
       this.imageFile = e.target.files[0];
-      //console.log(this.imageFile);
 
       let reader = new FileReader();
       reader.addEventListener(

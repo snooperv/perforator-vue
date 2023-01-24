@@ -200,7 +200,6 @@ export default {
       if (isDraft) {
         const warningText =
           e.target.parentNode.querySelector(".initial_draft").classList;
-        console.log(warningText);
         if (warningText.contains("active_draft")) {
           warningText.remove("active_draft");
           warningText.add("hidden_draft");
@@ -221,7 +220,7 @@ export default {
 
   mounted() {
     this.$store.dispatch("getSelfReview");
-    this.$store.dispatch("getMyPeers").then(() => console.log(this.user.peers));
+    this.$store.dispatch("getMyPeers");
   },
 
   watch: {

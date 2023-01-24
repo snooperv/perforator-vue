@@ -167,7 +167,6 @@ export default {
       if (minutes < 10) minutes = "0" + minutes;
 
       const deadline = `${this.date.getFullYear()}-${month}-${this.date.getDate()}T${hours}:${minutes}`;
-      console.log(deadline);
       this.$store.dispatch("nextStagePerformanceReview", deadline);
     },
 
