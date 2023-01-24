@@ -44,7 +44,7 @@ export default {
   },
 
   mounted() {
-    if (this.user.statusManager) this.getScores();
+    if (this.user.statusManager !== undefined) this.getScores();
   },
 
   computed: {
@@ -105,8 +105,15 @@ export default {
               previousPeriod: targetScore && targetScore[0],
             });
 
-            if (this.user.statusManager && targetScore) {
-              this.$router.push("/last-periods/team");
+            if (targetScore) {
+              if (this.user.statusManager) {
+                this.$router.push("/last-periods/team");
+              } else {
+                this.$router.push({
+                  name: "employeePeriods",
+                  params: { id: this.user.myId },
+                });
+              }
             }
           }
         };

@@ -1,6 +1,8 @@
 <template>
   <div class="self-review">
-    <div class="form" id="head">{{ worker?.username }}</div>
+    <div class="form" v-if="worker?.username" id="head">
+      {{ worker?.username }}
+    </div>
 
     <div class="form">
       <div class="container">
@@ -287,7 +289,7 @@ export default {
   },
 
   mounted() {
-    this.user.team.length > 0 && this.loadWorker();
+    this.loadWorker();
     this.rotate();
   },
 
@@ -339,10 +341,14 @@ export default {
     },
 
     loadWorker() {
-      this.worker = (
-        this.data.previousPeriod?.results || this.user.team
-      ).filter((oneUser) => oneUser.profile_id === +this.$route.params.id)[0];
-      console.log(this.worker);
+      if (
+        this.data.previousPeriod?.results.length > 0 ||
+        this.user.team.length > 0
+      )
+        this.worker = (
+          this.data.previousPeriod?.results || this.user.team
+        ).filter((oneUser) => oneUser.profile_id === +this.$route.params.id)[0];
+      else this.worker = this.data.previousPeriod?.results;
     },
   },
 
@@ -350,6 +356,12 @@ export default {
     "user.team": {
       handler() {
         this.loadScores();
+      },
+    },
+
+    "data.previousPeriod": {
+      handler() {
+        this.loadWorker();
       },
     },
   },

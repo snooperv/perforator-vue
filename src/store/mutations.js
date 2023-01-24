@@ -118,7 +118,7 @@ const mutations = {
       state.user.team.filter(
         (worker) => (worker.profile_id || worker.myId) === id
       )[0].rating = score;
-    else state.user.team.push({ rating: score });
+    else state.user.team = { rating: score };
   },
 
   [types.SET_GENERAL_SCORE](state, payload) {
