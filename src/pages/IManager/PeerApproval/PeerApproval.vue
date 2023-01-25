@@ -92,8 +92,7 @@ export default {
   components: { DropdownPeers },
 
   mounted() {
-    if (this.prStatus?.status !== "no pr" && this.prStatus?.pr_status > 1)
-      this.$store.dispatch("getIsApproval");
+    this.getListApproval();
   },
 
   computed: {
@@ -103,6 +102,25 @@ export default {
   methods: {
     API_URL() {
       return API_URL;
+    },
+
+    getListApproval() {
+      if (
+        this.prStatus?.status !== "no pr" &&
+        this.prStatus?.pr_status > 1 &&
+        this.user.teamWithReview.length === 0 &&
+        this.user.teamWithoutReview.length === 0 &&
+        this.user.teamApprove.length === 0
+      )
+        this.$store.dispatch("getIsApproval");
+    },
+  },
+
+  watch: {
+    prStatus: {
+      handler() {
+        this.getListApproval();
+      },
     },
   },
 };
