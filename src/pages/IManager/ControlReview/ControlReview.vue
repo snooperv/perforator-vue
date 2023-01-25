@@ -74,7 +74,11 @@
             </div>
           </a>
           <a class="name-link">{{ worker.username }} </a>
-          <button class="exit" @click="deleteUser(worker.profile_id)">
+          <button
+            class="exit"
+            @click="deleteUser(worker.profile_id)"
+            v-if="prStatus?.status === 'no pr' || prStatus?.pr_status < 0"
+          >
             Удалить
           </button>
         </div>
@@ -82,7 +86,10 @@
     </div>
   </div>
 
-  <div class="block-container">
+  <div
+    class="block-container"
+    v-if="prStatus?.status === 'no pr' || prStatus?.pr_status < 0"
+  >
     <h2 class="block-title">Выбор сотрудников в мою команду</h2>
     <p class="block-description">
       *здесь вы можете выбрать сотрудников, которые работают в вашей команде
