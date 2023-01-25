@@ -152,6 +152,10 @@ const mutations = {
   [types.CLEAR_SELF_REVIEW](state) {
     state.selfReview = {};
   },
+
+  [types.SET_RATE_COMMENT](state, payload) {
+    state.rateComment = payload;
+  },
 };
 
 const peersSort = (peer1, peer2) => {

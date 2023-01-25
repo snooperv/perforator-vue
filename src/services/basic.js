@@ -5,6 +5,7 @@ import {
   getListPerformanceReviewAPI,
   getMyProfileAPI,
   getRatesAPI,
+  getReviewEmployeeAPI,
   getSelfReviewAPI,
   getSelfReviewIdAPI,
   getStatusPerformanceReviewAPI,
@@ -23,6 +24,10 @@ export const getSelfReview = async () => {
 
 export const getSelfReviewId = async (id) => {
   return await request(getSelfReviewIdAPI(), "POST", id);
+};
+
+export const getReviewEmployee = async (data) => {
+  return await request(getReviewEmployeeAPI(), "POST", data);
 };
 
 export const saveSelfReview = async (data) => {

@@ -35,6 +35,7 @@ import {
   getListPerformanceReview,
   getMyProfile,
   getRates,
+  getReviewEmployee,
   getSelfReview,
   getSelfReviewId,
   getStatusPerformanceReview,
@@ -274,6 +275,20 @@ const actions = {
     }
   },
 
+  async getReviewEmployee({ commit, state }, payload) {
+    try {
+      const { evaluatedPerson, prId } = payload;
+      const review = await getReviewEmployee({
+        appraising_person: 1,
+        evaluated_person: evaluatedPerson,
+        pr_id: prId,
+      });
+      commit(types.SET_RATE_COMMENT, review);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
   async saveSelfReview({ commit }, payload) {
     try {
       await saveSelfReview(payload);
@@ -286,8 +301,6 @@ const actions = {
 
   async getIsApproval({ commit, state, dispatch }) {
     try {
-      // const userRates = await getRates(id);
-      // console.log("Оценки определенного пользователя:", userRates);
       if (state.user.team.length === 0) {
         await dispatch("getMyTeam");
       }

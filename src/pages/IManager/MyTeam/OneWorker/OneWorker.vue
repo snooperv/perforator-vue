@@ -63,104 +63,27 @@
     </div>
     <!------->
     <div class="form">
-      <div class="container">
-        <h2 class="title">
+      <div class="container feedback-manager" :class="{ opened: fbIsDropdown }">
+        <h2 class="title" @click="fbIsDropdown = !fbIsDropdown">
           Отзыв от менеджера
-          <button onclick="myFunction()" class="peer dropbtn">
+          <button class="peer dropbtn">
             <a href="" class="chevron">
               <i class="fas fa-chevron-right" aria-hidden="true"></i>
             </a>
           </button>
         </h2>
 
-        <div id="myDropdown" class="drop show">
-          <div class="">
-            <div class="peer-info">
-              <span id="manager_name">Менеджер Сергей1</span>
-            </div>
-            <div class="self-review-manager">
-              <p>
-                <i class="icon-circle fas fa-circle" aria-hidden="true"></i>
-                <span>Соблюдение сроков</span>
-              </p>
-            </div>
-            <div class="self-review-manager gray-border commas">
-              <p id="deadline">Good</p>
-            </div>
-            <div class="self-review-manager">
-              <p>
-                <i class="icon-circle fas fa-circle" aria-hidden="true"></i>
-                <span>Пути достижения целей</span>
-              </p>
-              <span class="description"
-                >идет ли человек по головам или находит пути решения
-                договариваясь с коллегами</span
-              >
-            </div>
-            <div class="self-review-manager gray-border commas">
-              <p id="approaches">Nice</p>
-            </div>
-            <div class="self-review-manager">
-              <p>
-                <i class="icon-circle fas fa-circle" aria-hidden="true"></i>
-                <span>Умение работать в команде</span>
-              </p>
-              <span class="description"
-                >насколько активно человек вовлечен в командную работу</span
-              >
-            </div>
-            <div class="self-review-manager gray-border">
-              <p id="teamwork">You are crazy</p>
-            </div>
-            <div class="self-review-manager">
-              <p>
-                <i class="icon-circle fas fa-circle" aria-hidden="true"></i>
-                <span>Приверженность к хорошим тех.практикам</span>
-              </p>
-              <span class="description"
-                >насколько человек придерживается покрытия кода авто тестами,
-                проектирует хорошую архитектуру, использует хорошие
-                паттерны</span
-              >
-            </div>
-            <div class="self-review-manager gray-border">
-              <p id="practices">Abc</p>
-            </div>
-            <div class="self-review-manager">
-              <p>
-                <i class="icon-circle fas fa-circle" aria-hidden="true"></i>
-                <span>Уровень владения технологиями</span>
-              </p>
-              <span class="description"
-                >насколько хорошо человек владеет технологиями разработки,
-                используемым стеком и т.д.</span
-              >
-            </div>
-            <div class="self-review-manager gray-border">
-              <p id="experience">123</p>
-            </div>
-            <div class="self-review-manager">
-              <p>
-                <i class="icon-circle fas fa-circle" aria-hidden="true"></i>
-                <span>Адаптивность</span>
-              </p>
-              <span class="description"
-                >насколько быстро человек адаптируется к новым условиям работы,
-                вливается в новый коллектив</span
-              >
-            </div>
-            <div class="self-review-manager gray-border">
-              <p id="adaptation">rgsdgsdf</p>
-            </div>
-            <br />
-          </div>
-        </div>
+        <DropdownContent
+          v-if="fbIsDropdown && loaded"
+          :peer-id="Number($route.params.id)"
+          :prId="$route.params.prId"
+        />
       </div>
     </div>
     <!--self review-->
     <div class="form" v-if="data.previousPeriod && !user.statusManager">
-      <div class="container" @click="srIsDropdown = !srIsDropdown">
-        <h2 class="title">
+      <div class="container feedback-manager">
+        <h2 class="title" @click="srIsDropdown = !srIsDropdown">
           Результаты SelfReview
           <button class="peer dropbtn">
             <a href="" class="chevron">
@@ -184,10 +107,11 @@ import colorGrade from "@/helpers/colorGrade";
 import { mapState } from "vuex";
 import SelfReviewContent from "@/pages/SelfReview/SelfReviewContent.vue";
 import { types } from "@/types";
+import DropdownContent from "@/components/irate/DropdownContent.vue";
 
 export default {
   name: "OneWorker",
-  components: { SelfReviewContent },
+  components: { DropdownContent, SelfReviewContent },
 
   data() {
     return {
@@ -203,6 +127,7 @@ export default {
         "Средняя оценка",
       ],
       srIsDropdown: false,
+      fbIsDropdown: false,
     };
   },
 

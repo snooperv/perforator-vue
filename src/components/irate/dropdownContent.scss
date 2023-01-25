@@ -95,7 +95,7 @@ b {
   border-radius: 15px;
   border: 1px solid #8683f8;
   width: 100%;
-  padding: 5px;
+  padding: 7px 10px;
   font-size: 16px;
   resize: none;
   margin-bottom: 30px;
@@ -188,6 +188,18 @@ input[type="submit"]:active {
 .errorForm {
   color: red !important;
   margin-left: 0 !important;
+}
+
+.feedback-manager {
+  .dropdown-content {
+    transform: none;
+    padding-top: 10px;
+  }
+
+  .dropdown-container {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
 }
 
 @media (max-width: 1100px) {

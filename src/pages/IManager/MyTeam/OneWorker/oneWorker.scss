@@ -312,6 +312,14 @@ table {
   }
 }
 
+.feedback-manager {
+  margin: 0 50px;
+
+  &.opened {
+    padding-bottom: 30px;
+  }
+}
+
 #head {
   text-align: center;
   color: #000;

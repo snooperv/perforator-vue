@@ -24,6 +24,7 @@ const state = {
   listReviews: [],
   data: [],
   scores: [],
+  rateComment: [],
 };
 
 export default state;

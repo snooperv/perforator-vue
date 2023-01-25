@@ -63,3 +63,4 @@ export const getOneToOnePreviousPrivateAPI = () =>
 export const getTeamScoresPreviousAPI = () =>
   CONTROL_REVIEW + "employee/rating";
 export const getSelfReviewIdAPI = () => CONTROL_REVIEW + "get/self_review";
+export const getReviewEmployeeAPI = () => CONTROL_REVIEW + "get/review";

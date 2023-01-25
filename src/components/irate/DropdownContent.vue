@@ -1,17 +1,23 @@
 <template>
   <div id="myDropdown" class="dropdown-content show">
     <div class="dropdown-container">
-      <form name="formRate">
+      <form name="formRate" v-if="isLoaded">
         <OneQuestion
           v-for="(qst, index) in questions()"
           :title="qst.title"
           :index-question="index + 1"
           :name="qst.name"
           :peer-id="peerId"
+          :comment="qst.comment"
         />
 
         <input type="hidden" name="profile" :value="peerId" />
-        <input type="submit" value="Отправить отзыв" @click="postForm" />
+        <input
+          type="submit"
+          value="Отправить отзыв"
+          @click="postForm"
+          v-if="isRate"
+        />
         <p class="errorForm" v-if="isError">Заполнены не все данные</p>
       </form>
     </div>
@@ -21,6 +27,7 @@
 <script>
 import OneQuestion from "@/components/irate/OneQuestion.vue";
 import questions from "@/components/irate/helpers/questions";
+import { mapState } from "vuex";
 
 export default {
   name: "DropdownContent",
@@ -30,6 +37,8 @@ export default {
     return {
       isError: false,
       btnSubmit: null,
+      isRate: this.$route.path.includes("i-rate"),
+      isLoaded: false,
     };
   },
 
@@ -38,6 +47,34 @@ export default {
       type: Number,
       required: true,
     },
+    prId: {
+      required: false,
+    },
+  },
+
+  computed: {
+    ...mapState(["rateComment", "listReviews"]),
+  },
+
+  async mounted() {
+    if (!this.isRate) {
+      if (!this.prId && this.listReviews.length === 0)
+        await this.$store.dispatch("getListPerformanceReview");
+
+      await this.$store.dispatch("getReviewEmployee", {
+        evaluatedPerson: this.peerId,
+        prId: this.prId || this.listReviews[this.listReviews.length - 1].pr_id,
+      });
+
+      questions.map((question) => {
+        for (let comment in this.rateComment) {
+          if (question.name === comment)
+            question.comment = this.rateComment[comment];
+        }
+      });
+    }
+
+    this.isLoaded = true;
   },
 
   methods: {

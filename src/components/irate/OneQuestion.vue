@@ -13,15 +13,17 @@
         maxlength="512"
         class="ta"
         id="goals"
+        :disabled="!isRate"
         required
-      ></textarea>
-      <div class="char-count">
+        >{{ comment }}</textarea
+      >
+      <div class="char-count" v-if="isRate">
         <span id="imp-zones-chars" class="chars">0</span>
         <span id="plan-max" class="max">/ 512 символов</span>
       </div>
     </div>
 
-    <div class="rating">
+    <div class="rating" v-if="isRate">
       <label
         v-for="(index, reverse) in [4, 3, 2, 1]"
         :for="`radio-${peerId}-${reverse + 1}-${indexQuestion}`"
@@ -45,6 +47,12 @@
 export default {
   name: "OneQuestion",
 
+  data() {
+    return {
+      isRate: this.$route.path.includes("i-rate"),
+    };
+  },
+
   props: {
     peerId: {
       type: Number,
@@ -64,6 +72,11 @@ export default {
     name: {
       type: String,
       required: true,
+    },
+
+    comment: {
+      type: String,
+      required: false,
     },
 
     indexQuestion: {
