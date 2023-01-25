@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="
-      this.$route.path === '/last-periods/team' ||
+      this.$route.path.includes('last-periods/team') ||
       (prStatus?.status !== 'no pr' && prStatus?.pr_status > 2)
     "
   >
@@ -124,7 +124,12 @@ export default {
     },
 
     loadScores() {
-      if (this.user.team && !this.data.previousPeriod) {
+      if (
+        this.user.team &&
+        !this.data.previousPeriod &&
+        this.prStatus?.status !== "no pr" &&
+        this.prStatus?.pr_status > 2
+      ) {
         this.$store.dispatch("getTeamScores", {
           team: this.user.team,
         });
@@ -134,6 +139,12 @@ export default {
 
   watch: {
     "user.statusManager": {
+      handler() {
+        this.loadScores();
+      },
+    },
+
+    prStatus: {
       handler() {
         this.loadScores();
       },

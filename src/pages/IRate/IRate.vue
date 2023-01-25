@@ -91,7 +91,7 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch("getPeersRatedMe");
+    this.getListPeersRate();
   },
 
   data() {
@@ -101,6 +101,19 @@ export default {
   methods: {
     API_URL() {
       return API_URL;
+    },
+
+    getListPeersRate() {
+      if (this.prStatus?.status !== "no pr" && this.prStatus?.pr_status > 2)
+        this.$store.dispatch("getPeersRatedMe");
+    },
+  },
+
+  watch: {
+    prStatus: {
+      handler() {
+        this.getListPeersRate();
+      },
     },
   },
 };
