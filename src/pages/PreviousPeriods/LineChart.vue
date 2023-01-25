@@ -90,12 +90,15 @@ export default {
         }
 
         options.onClick = (e) => {
-          const dataPoints = e.chart.tooltip.dataPoints;
-          if (dataPoints) {
-            const period = this.listReviews.filter(
-              (review) =>
-                review.closing_date.split("T")[0] === dataPoints[0].label
-            )[0].pr_id;
+          const indexClick = e.chart.getElementsAtEventForMode(
+            e,
+            "nearest",
+            { intersect: true },
+            true
+          )[0]?.index;
+
+          if (indexClick !== undefined) {
+            const period = this.listReviews[indexClick].pr_id;
 
             const targetScore = this.scores.filter(
               (score) => score.period === period

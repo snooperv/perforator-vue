@@ -213,6 +213,13 @@ export default {
         this.loadWorker();
       },
     },
+
+    "$route.params.prId": {
+      handler() {
+        this.srIsDropdown = false;
+        this.fbIsDropdown = false;
+      },
+    },
   },
 
   beforeUnmount() {
