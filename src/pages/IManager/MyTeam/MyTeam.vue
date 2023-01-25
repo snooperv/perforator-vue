@@ -116,7 +116,10 @@ export default {
     toEmployee(e, id) {
       e.preventDefault();
       if (this.data.previousPeriod?.results)
-        this.$router.push({ name: "employeePeriods", params: { id } });
+        this.$router.push({
+          name: "employeePeriods",
+          params: { id, prId: this.$route.params.prId },
+        });
       else this.$router.push({ name: "employee", params: { id } });
     },
 

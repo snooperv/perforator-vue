@@ -38,6 +38,10 @@ td {
   background: #ffffff;
   text-align: left;
   border-radius: 30px;
+
+  &:last-child {
+    margin-bottom: 40px;
+  }
 }
 
 .container {

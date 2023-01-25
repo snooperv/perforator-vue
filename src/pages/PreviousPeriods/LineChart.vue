@@ -107,11 +107,14 @@ export default {
 
             if (targetScore) {
               if (this.user.statusManager) {
-                this.$router.push("/last-periods/team");
+                this.$router.push({
+                  name: "teamPeriods",
+                  params: { prId: period },
+                });
               } else {
                 this.$router.push({
                   name: "employeePeriods",
-                  params: { id: this.user.myId },
+                  params: { id: this.user.myId, prId: period },
                 });
               }
             }

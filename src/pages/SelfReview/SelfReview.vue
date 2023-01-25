@@ -22,36 +22,7 @@
         <div class="container">
           <form id="self-review">
             <!--сюда вставляются все контейнеры с вопросами self-review-->
-            <div class="introduction" v-for="item in reviewContent">
-              <h4>{{ item.title }}</h4>
-
-              <p class="description">
-                {{ item.description }}
-              </p>
-
-              <div v-for="question in item.content">
-                <p class="question">
-                  {{ question.grade_category_description }}
-                </p>
-
-                <!--@input="(e) => setCountSymbols(e, question.id)"-->
-
-                <textarea
-                  maxlength="512"
-                  :name="question.id"
-                  v-model="question.comment"
-                  rows="5"
-                  class="ta"
-                  :disabled="!selfReview.is_draft"
-                >
-                </textarea>
-
-                <div class="char-count">
-                  <span class="chars">{{ question.comment.length }}</span>
-                  <span class="max">/ 512 символов</span>
-                </div>
-              </div>
-            </div>
+            <SelfReviewContent />
           </form>
         </div>
       </div>
@@ -151,10 +122,11 @@ import PeersList from "@/components/modals/PeersList/PeersList.vue";
 import { API_URL } from "@/helpers/api";
 import Instruction from "@/components/modals/SelfReview/Instruction.vue";
 import PeersListMobile from "@/components/modals/PeersList/peersListMobile.vue";
+import SelfReviewContent from "@/pages/SelfReview/SelfReviewContent.vue";
 
 export default {
   name: "SelfReview",
-  components: { Instruction },
+  components: { SelfReviewContent, Instruction },
 
   data() {
     return {
@@ -219,38 +191,7 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch("getSelfReview");
     this.$store.dispatch("getMyPeers");
-  },
-
-  watch: {
-    selfReview: {
-      handler() {
-        let smallArr = [];
-        let title = "";
-
-        this.selfReview.grades.map((grade) => {
-          if (grade.grade_category_name !== title) {
-            title &&
-              this.reviewContent.push({
-                title: title,
-                description: smallArr[0].grade_category_preview_description,
-                content: smallArr,
-              });
-            smallArr = [];
-            title = grade.grade_category_name;
-          }
-
-          smallArr.push(grade);
-        });
-
-        this.reviewContent.push({
-          title: title,
-          description: smallArr[0].grade_category_preview_description,
-          content: smallArr,
-        });
-      },
-    },
   },
 };
 </script>

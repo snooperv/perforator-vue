@@ -158,104 +158,21 @@
       </div>
     </div>
     <!--self review-->
-    <div class="form">
-      <div class="container">
+    <div class="form" v-if="data.previousPeriod && !user.statusManager">
+      <div class="container" @click="srIsDropdown = !srIsDropdown">
         <h2 class="title">
           Результаты SelfReview
-          <button onclick="toggle_sr()" class="peer dropbtn">
+          <button class="peer dropbtn">
             <a href="" class="chevron">
               <i class="fas fa-chevron-right" aria-hidden="true"></i>
             </a>
           </button>
         </h2>
-        <div id="sr" class="drop show">
-          <div class="">
-            <form id="self-review">
-              <!--Сюда self review-->
-              <div id="id53" class="self-review-manager-result gray-border">
-                <h4 id="theme53" class="grade_category_name">Вводная часть</h4>
-                <p class="description">
-                  Напишите два-три предложения об общем впечатлении от работы за
-                  последнее время
-                </p>
-
-                <p class="question">
-                  Что вам нравится в вашей текущей работе, задачах, отношениях с
-                  коллегами, процессах в компании и т.д.?
-                </p>
-                <div class="white-border">
-                  <div class="text-in-self">
-                    <span class="description">First text field</span>
-                  </div>
-                </div>
-                <p class="question">
-                  Что не нравится, что можно улучшить/ исправить?
-                </p>
-                <div class="white-border">
-                  <div class="text-in-self">
-                    <span class="description">Second text field</span>
-                  </div>
-                </div>
-              </div>
-              <div id="id55" class="self-review-manager-result gray-border">
-                <h4 id="theme55" class="grade_category_name">
-                  Успехи и неудачи
-                </h4>
-                <p class="description">
-                  Расскажите, что было сделано за этот период. Выделите те
-                  проекты, которыми особенно гордитесь. Чтобы у руководителя
-                  была полная картина ваших достижений, укажите название проекта
-                  и продолжительность работы над ним
-                </p>
-
-                <p class="question">Какие у вас были успехи?</p>
-                <div class="white-border">
-                  <div class="text-in-self">
-                    <span class="description">Third text field</span>
-                  </div>
-                </div>
-                <p class="question">Какие у вас были неудачи?</p>
-                <div class="white-border">
-                  <div class="text-in-self">
-                    <span class="description">Fourth text field</span>
-                  </div>
-                </div>
-              </div>
-              <div id="id57" class="self-review-manager-result gray-border">
-                <h4 id="theme57" class="grade_category_name">Зоны роста</h4>
-                <p class="description">
-                  Определите, какие навыки вам важно развивать в ближайшее время
-                  и что для этого вы планируете делать. Если вы не можете
-                  вспомнить проблемы с задачами, подумайте, какие компетенции
-                  стоит развивать, чтобы выполнять работу эффективнее. Например,
-                  ваша работа страдает из-за того, что сложно вести переговоры.
-                  Значит, это ваша зона роста.
-                </p>
-
-                <div class="white-border">
-                  <div class="text-in-self">
-                    <span class="description">Fifth text field</span>
-                  </div>
-                </div>
-              </div>
-              <div id="id58" class="self-review-manager-result gray-border">
-                <h4 id="theme58" class="grade_category_name">
-                  Планы на будущее
-                </h4>
-                <p class="description">
-                  Напишите долгосрочные планы — к чему хотите прийти в течение
-                  следующих нескольких месяцев, и свои пожелания. Подумайте, что
-                  вы хотели бы видеть в вашем следующем селф-ревью.
-                </p>
-
-                <div class="white-border">
-                  <div class="text-in-self">
-                    <span class="description">Six text field</span>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
+        <div class="drop show">
+          <SelfReviewContent
+            v-if="srIsDropdown && loaded"
+            :prId="$route.params.prId"
+          />
         </div>
       </div>
     </div>
@@ -265,13 +182,17 @@
 <script>
 import colorGrade from "@/helpers/colorGrade";
 import { mapState } from "vuex";
+import SelfReviewContent from "@/pages/SelfReview/SelfReviewContent.vue";
+import { types } from "@/types";
 
 export default {
   name: "OneWorker",
+  components: { SelfReviewContent },
 
   data() {
     return {
       worker: {},
+      loaded: false,
       userReadable: [
         "Соблюдение сроков",
         "Пути достижения целей",
@@ -281,6 +202,7 @@ export default {
         "Адаптивность",
         "Средняя оценка",
       ],
+      srIsDropdown: false,
     };
   },
 
@@ -349,6 +271,8 @@ export default {
           this.data.previousPeriod?.results || this.user.team
         ).filter((oneUser) => oneUser.profile_id === +this.$route.params.id)[0];
       else this.worker = this.data.previousPeriod?.results;
+
+      this.loaded = true;
     },
   },
 
@@ -364,6 +288,11 @@ export default {
         this.loadWorker();
       },
     },
+  },
+
+  beforeUnmount() {
+    this.srIsDropdown = false;
+    this.$store.commit(types.CLEAR_SELF_REVIEW);
   },
 };
 </script>

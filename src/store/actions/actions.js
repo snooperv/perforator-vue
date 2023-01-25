@@ -36,6 +36,7 @@ import {
   getMyProfile,
   getRates,
   getSelfReview,
+  getSelfReviewId,
   getStatusPerformanceReview,
   getUserReviewIsDraft,
   nextStagePerformanceReview,
@@ -259,10 +260,12 @@ const actions = {
     }
   },
 
-  async getSelfReview({ commit, state }) {
+  async getSelfReview({ commit, state }, payload) {
     try {
+      const { id } = payload;
       let contentSelfReview;
-      if (!Object.keys(state.selfReview).length)
+      if (id) contentSelfReview = await getSelfReviewId({ pr_id: id });
+      else if (!Object.keys(state.selfReview).length)
         contentSelfReview = await getSelfReview();
       else contentSelfReview = { ...state.selfReview };
       commit(types.SET_SELFREVIEW, contentSelfReview);

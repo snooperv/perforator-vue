@@ -93,12 +93,13 @@ const routes = [
         meta: { title: "Прошлые периоды оценки" },
         children: [
           {
-            path: "team",
+            path: "team/:prId",
+            name: "teamPeriods",
             component: MyTeam,
             meta: { title: "Команда менеджера" },
           },
           {
-            path: "employee/:id",
+            path: "employee/:id/:prId",
             name: "employeePeriods",
             component: OneWorker,
             meta: { title: "Итоговая обратная связь" },

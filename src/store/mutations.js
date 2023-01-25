@@ -148,6 +148,10 @@ const mutations = {
   [types.CLEAR_DATA](state) {
     state.data = [];
   },
+
+  [types.CLEAR_SELF_REVIEW](state) {
+    state.selfReview = {};
+  },
 };
 
 const peersSort = (peer1, peer2) => {
