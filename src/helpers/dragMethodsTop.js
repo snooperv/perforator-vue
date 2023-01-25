@@ -1,6 +1,6 @@
 import { closeModal } from "jenesius-vue-modal";
 
-const modalHeight = 200;
+const modalHeight = 250;
 
 const dragStop = (e) => {
   const popup =

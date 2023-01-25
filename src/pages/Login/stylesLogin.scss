@@ -527,6 +527,11 @@ input[type="password"]:invalid:not(:focus):not(:placeholder-shown)
         margin: 0;
         position: absolute;
         top: 5px;
+
+        img {
+          width: 50px;
+          height: 50px;
+        }
       }
 
       .background-photo-upload {

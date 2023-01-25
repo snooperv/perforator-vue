@@ -57,9 +57,9 @@
   </div>
 
   <div class="block-container">
-    <h2 class="block-title">Рейтинг сотрудников</h2>
+    <h2 class="block-title">Моя команда</h2>
     <p class="block-description">
-      *кликните на сотрудника, чтобы посмотреть результаты его ревью
+      *Здесь отображаются сотрудники вашей команды
     </p>
     <div class="inside-wrapper rating" style="width: 95%">
       <div class="grades" v-for="worker in user.team">
@@ -138,7 +138,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["prStatus", "user"]),
+    ...mapState(["prStatus", "user", "isMobile"]),
     getStage() {
       switch (this.prStatus.pr_status) {
         case 0:

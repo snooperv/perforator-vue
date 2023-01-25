@@ -18,7 +18,7 @@
           @click="postForm"
           v-if="isRate"
         />
-        <p class="errorForm" v-if="isError">Заполнены не все данные</p>
+        <p class="errorForm" v-if="!isNotError">{{ ErrorText }}</p>
       </form>
     </div>
   </div>
@@ -35,10 +35,11 @@ export default {
 
   data() {
     return {
-      isError: false,
+      isNotError: true,
       btnSubmit: null,
       isRate: this.$route.path.includes("i-rate"),
       isLoaded: false,
+      ErrorText: "",
     };
   },
 
@@ -72,6 +73,8 @@ export default {
             question.comment = this.rateComment[comment];
         }
       });
+    } else {
+      questions.map((question) => (question.comment = ""));
     }
 
     this.isLoaded = true;
@@ -83,7 +86,7 @@ export default {
     },
 
     isErrorFalse() {
-      this.isError = false;
+      this.isNotError = true;
     },
 
     async postForm(event) {
@@ -98,16 +101,20 @@ export default {
         Array.from(rates).map((rate) => {
           if (rate.checked) checked = true;
         });
-        if (!checked) this.isError = true;
+        if (!checked) {
+          this.isNotError = false;
+          this.ErrorText = "Одна или несколько оценок не были выставлены";
+        }
       });
 
       for (let pair of form.entries()) {
         if (pair[0] !== "profile" && !pair[1]) {
-          this.isError = true;
+          this.isNotError = false;
+          this.ErrorText = "Один или несколько комментариев не были заполнены";
         }
       }
 
-      if (!this.isError) {
+      if (this.isNotError) {
         await this.$store.dispatch("postPeersRatedMe", form);
         await this.$store.dispatch("getPeersRatedMe");
       } else {

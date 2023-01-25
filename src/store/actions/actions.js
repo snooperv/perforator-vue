@@ -153,12 +153,9 @@ const actions = {
         (user) => user.profile_id !== state.user.myId
       );
       await dispatch("getMyTeam");
-      const usersWithoutTeam = usersWithoutMe.filter((user) => {
-        for (let teamUser of state.user.team) {
-          if (teamUser.profile_id === user.profile_id) return;
-        }
-        return user;
-      });
+      const usersWithoutTeam = usersWithoutMe.filter(
+        (user) => user.team_id === 0 && !user.is_manager
+      );
       commit(types.SET_ALL_USERS, usersWithoutTeam);
     } catch (e) {
       console.log(e);

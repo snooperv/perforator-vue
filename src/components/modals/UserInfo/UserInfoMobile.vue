@@ -11,6 +11,13 @@
       </a>
     </p>
     <div class="buttons btn-mobile">
+      <button
+        class="change"
+        @click="becomeManager"
+        v-if="!user.statusManager && !user.teamId"
+      >
+        Я менеджер
+      </button>
       <button class="change" @click="openEditUserInfo">Изменить данные</button>
       <button class="exit" @click="userLogout">
         <img src="@/assets/img/exit.png" class="exit-icon" alt="Exit" />
@@ -49,6 +56,16 @@ export default {
     userLogout() {
       this.$store.commit("CLEAR_lOCALSTORGE");
       window.location = "/login";
+    },
+
+    async becomeManager() {
+      const attempt = confirm(
+        "Подтвердите, что вы менеджер. Данное действие нельзя отменить"
+      );
+      if (attempt) {
+        await this.$store.dispatch("setManagerStatus");
+        await this.$store.dispatch("getManagerStatus", this.user.myId);
+      }
     },
   },
 };

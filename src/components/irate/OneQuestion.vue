@@ -14,11 +14,11 @@
         class="ta"
         id="goals"
         :disabled="!isRate"
+        v-model="comment"
         required
-        >{{ comment }}</textarea
-      >
+      ></textarea>
       <div class="char-count" v-if="isRate">
-        <span id="imp-zones-chars" class="chars">0</span>
+        <span id="imp-zones-chars" class="chars">{{ comment.length }}</span>
         <span id="plan-max" class="max">/ 512 символов</span>
       </div>
     </div>
