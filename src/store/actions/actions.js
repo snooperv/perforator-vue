@@ -154,7 +154,7 @@ const actions = {
       );
       await dispatch("getMyTeam");
       const usersWithoutTeam = usersWithoutMe.filter(
-        (user) => user.team_id === 0 && !user.is_manager
+        (user) => !user.team_id && !user.is_manager
       );
       commit(types.SET_ALL_USERS, usersWithoutTeam);
     } catch (e) {
