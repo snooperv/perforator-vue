@@ -48,6 +48,17 @@ const request = async (url, method = "GET", data) => {
     }
 
     await processRequest();
+
+    if (
+      response.data.status?.includes("not login") ||
+      response.data.message?.includes("не авторизовались") ||
+      response.data.error?.includes("не авторизованы")
+    ) {
+      store.commit("CLEAR_lOCALSTORGE");
+      window.location = "/login";
+      return;
+    }
+
     return await response.data;
   } catch (e) {
     console.log(e);

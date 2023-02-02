@@ -19,7 +19,7 @@
         v-model="question.comment"
         rows="5"
         class="ta"
-        :disabled="!selfReview.is_draft || profileId"
+        :disabled="!selfReview.is_draft || prId"
       >
       </textarea>
 

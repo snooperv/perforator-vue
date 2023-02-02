@@ -5,7 +5,11 @@
         <img class="photo-sidebar" :src="user.photo" alt="Фото профиля" />
       </div>
       <div class="profile-name">
-        <h2>{{ user.username }}</h2>
+        <h2>
+          {{ user.username.split(" ")[0] }}
+          <br />
+          {{ user.username.split(" ")[1] }}
+        </h2>
       </div>
     </div>
 
