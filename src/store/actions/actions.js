@@ -305,7 +305,10 @@ const actions = {
       state.user.team.map(async (worker) => {
         let isDraft = await getUserReviewIsDraft(worker.profile_id);
 
-        if (isDraft.is_draft && !worker.approve)
+        if (
+          isDraft.status === "Review не найдено" ||
+          (isDraft.is_draft && !worker.approve)
+        )
           commit(types.SET_TEAM_WITHOUT_REVIEW, worker);
         else if (!isDraft.is_draft && worker.approve)
           commit(types.SET_TEAM_APPROVE, worker);

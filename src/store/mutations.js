@@ -45,7 +45,7 @@ const mutations = {
 
   [types.SET_MANAGER_STATUS](state, status) {
     state.user.statusManager = status === "True";
-    status && localStorage.setItem("isManager", "true");
+    status === "True" && localStorage.setItem("isManager", "true");
   },
 
   [types.SET_MY_MANAGER](state, manager) {
