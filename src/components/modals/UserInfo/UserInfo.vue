@@ -19,7 +19,7 @@
             <span class="text"> {{ user.phone }} </span>
           </p>
           <p class="url">
-            Профиль СБИС:
+            Профиль:
             <a class="url-sbis text" :href="user.sbis" target="_blank">
               {{ user.username }}
             </a>
