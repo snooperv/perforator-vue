@@ -20,11 +20,7 @@
           </p>
           <p class="url">
             Профиль:
-            <a
-              class="url-sbis text"
-              :href="'http://' + user.sbis"
-              target="_blank"
-            >
+            <a class="url-sbis text" :href="checkHTTP" target="_blank">
               {{ user.username }}
             </a>
           </p>
@@ -88,6 +84,13 @@ export default {
         await this.$store.dispatch("setManagerStatus");
         await this.$store.dispatch("getManagerStatus", this.user.myId);
       }
+    },
+
+    checkHTTP() {
+      return this.user.sbis.includes("http://") ||
+        this.user.sbis.includes("https://")
+        ? this.user.sbis
+        : "http://" + this.user.sbis;
     },
   },
 };
