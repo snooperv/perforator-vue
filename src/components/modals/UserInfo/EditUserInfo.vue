@@ -18,7 +18,7 @@
                 <input
                   type="text"
                   name="name"
-                  value="Менеджер Сергей1"
+                  :value="user.username"
                   placeholder="Имя и фамилия"
                   class="fadeIn second"
                   required
@@ -31,7 +31,7 @@
                 <input
                   type="text"
                   name="phone"
-                  value="+79876543211"
+                  :value="user.phone"
                   placeholder="Номер телефона"
                   class="fadeIn second"
                   required
@@ -44,7 +44,7 @@
                 <input
                   type="text"
                   name="sbis"
-                  value="https://sbis.com"
+                  :value="user.sbis"
                   placeholder="Ссылка на профиль СБИС"
                   class="fadeIn second"
                   required
