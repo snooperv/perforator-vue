@@ -20,7 +20,7 @@
           </p>
           <p class="url">
             Профиль:
-            <a class="url-sbis text" :href="checkHTTP" target="_blank">
+            <a class="url-sbis text" :href="checkHTTP()" target="_blank">
               {{ user.username }}
             </a>
           </p>
