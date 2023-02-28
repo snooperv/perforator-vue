@@ -3,7 +3,7 @@
     <h3
       v-if="prStatus && prStatus.status !== 'no pr' && prStatus.pr_status !== 0"
     >
-      До завершения {{ getStage() }}
+      До завершения {{ getStage }}
     </h3>
 
     <div
@@ -11,17 +11,17 @@
       v-if="prStatus && prStatus.status !== 'no pr' && prStatus.pr_status !== 0"
     >
       <div class="block-time">
-        <span id="days" class="time">{{ getDays() }}</span>
+        <span id="days" class="time">{{ getDays }}</span>
         <span class="under">дней</span>
       </div>
       <span class="colon">:</span>
       <div class="block-time">
-        <span id="hours" class="time">{{ getHours() }}</span>
+        <span id="hours" class="time">{{ getHours }}</span>
         <span class="under">часов</span>
       </div>
       <span class="colon">:</span>
       <div class="block-time">
-        <span id="minutes" class="time">{{ getMinutes() }}</span>
+        <span id="minutes" class="time">{{ getMinutes }}</span>
         <span class="under">минут</span>
       </div>
     </div>
