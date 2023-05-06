@@ -20,34 +20,29 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  @media (max-height: 730px) {
-    & {
-      height: 100%;
-    }
+}
+@media (max-height: 730px) {
+  .background {
+    height: 100%;
   }
 }
 
 .login {
   position: relative;
-  //top: 20vh;
-
-  @media (max-height: 730px) {
-    & {
-      margin: 70px 0 0;
-    }
+}
+@media (max-height: 730px) {
+  .login {
+    margin: 70px 0 0;
   }
-
-  @media (max-height: 590px) {
-    & {
-      margin: 0;
-    }
+}
+@media (max-height: 590px) {
+  .login {
+    margin: 0;
   }
 }
 
 .register {
   position: relative;
-  //top: 12vh;
 }
 
 .wrapper {
@@ -148,7 +143,6 @@ h1 {
   max-height: 17px;
   font-weight: 400;
   font-size: 15px;
-  //padding-left: 10px;
   color: #aaaaaa;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -164,7 +158,7 @@ h1 {
   margin: 10px 40px 25px 40px;
 }
 
-input[type="file"] {
+input[type=file] {
   display: none;
 }
 
@@ -181,7 +175,7 @@ label {
 }
 
 label:hover {
-  background-color: rgba(140, 140, 245, 1);
+  background-color: rgb(140, 140, 245);
   transition: all 0.3s ease-in-out;
 }
 
@@ -198,9 +192,9 @@ label:hover {
 }
 
 button,
-input[type="button"],
-input[type="submit"],
-input[type="reset"] {
+input[type=button],
+input[type=submit],
+input[type=reset] {
   font-family: "Gotham Pro light", sans-serif;
   font-weight: 1000;
   letter-spacing: 1px;
@@ -224,17 +218,17 @@ input[type="reset"] {
   transition: all 0.3s ease-in-out;
 }
 
-input[type="button"]:hover,
-input[type="submit"]:hover,
-input[type="reset"]:hover {
-  background-color: rgba(140, 140, 245, 1);
+input[type=button]:hover,
+input[type=submit]:hover,
+input[type=reset]:hover {
+  background-color: rgb(140, 140, 245);
   transition: 0.25s;
   cursor: pointer;
 }
 
-input[type="button"]:active,
-input[type="submit"]:active,
-input[type="reset"]:active {
+input[type=button]:active,
+input[type=submit]:active,
+input[type=reset]:active {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);
@@ -242,11 +236,11 @@ input[type="reset"]:active {
   transform: scale(0.95);
 }
 
-input[type="text"],
-input[type="password"],
-input[type="number"],
-input[type="tel"],
-input[type="url"],
+input[type=text],
+input[type=password],
+input[type=number],
+input[type=tel],
+input[type=url],
 select.third {
   background-color: #f4f4fa;
   color: #0d0d0d;
@@ -268,27 +262,27 @@ select.third {
   border-radius: 8px;
 }
 
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="number"]:focus,
-input[type="tel"]:focus,
-input[type="url"]:focus {
+input[type=text]:focus,
+input[type=password]:focus,
+input[type=number]:focus,
+input[type=tel]:focus,
+input[type=url]:focus {
   background-color: #fff;
 }
 
-input[type="text"]:focus::placeholder,
-input[type="password"]:focus::placeholder,
-input[type="number"]::placeholder,
-input[type="tel"]:focus::placeholder,
-input[type="url"]:focus::placeholder {
+input[type=text]:focus::placeholder,
+input[type=password]:focus::placeholder,
+input[type=number]::placeholder,
+input[type=tel]:focus::placeholder,
+input[type=url]:focus::placeholder {
   color: transparent;
 }
 
-input[type="text"]::placeholder,
-input[type="password"]::placeholder,
-input[type="number"]::placeholder,
-input[type="tel"]::placeholder,
-input[type="url"]::placeholder {
+input[type=text]::placeholder,
+input[type=password]::placeholder,
+input[type=number]::placeholder,
+input[type=tel]::placeholder,
+input[type=url]::placeholder {
   font-family: "Gotham Pro light", sans-serif;
   font-size: 20px;
   color: #aaaaaa;
@@ -299,15 +293,14 @@ input[type="url"]::placeholder {
 /* input[type=text]:valid, input[type=password]:valid,
   input[type=number]:valid, input[type=tel]:valid,
   input[type=url]:valid {
-  
+
   }
-  
+
   input[type=text]:invalid:not(:focus):not(:placeholder-shown), input[type=password]:invalid:not(:focus):not(:placeholder-shown),
   input[type=number]:invalid:not(:focus):not(:placeholder-shown), input[type=tel]:invalid:not(:focus):not(:placeholder-shown),
   input[type=url]:invalid:not(:focus):not(:placeholder-shown) {
-  
-  } */
 
+  } */
 .admin {
   display: inline-block;
   margin-top: 10px;
@@ -352,7 +345,6 @@ input[type="url"]::placeholder {
     transform: none;
   }
 }
-
 @keyframes fadeInDown {
   0% {
     opacity: 0;
@@ -365,7 +357,6 @@ input[type="url"]::placeholder {
     transform: none;
   }
 }
-
 @-webkit-keyframes fadeIn {
   from {
     opacity: 0;
@@ -374,7 +365,6 @@ input[type="url"]::placeholder {
     opacity: 1;
   }
 }
-
 @-moz-keyframes fadeIn {
   from {
     opacity: 0;
@@ -383,7 +373,6 @@ input[type="url"]::placeholder {
     opacity: 1;
   }
 }
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -392,7 +381,6 @@ input[type="url"]::placeholder {
     opacity: 1;
   }
 }
-
 .fadeIn {
   opacity: 0;
   -webkit-animation: fadeIn ease-in 1;
@@ -446,43 +434,42 @@ input[type="url"]::placeholder {
   margin-left: -40px;
 }
 
-input[type="text"]:valid ~ .text.check {
+input[type=text]:valid ~ .text.check {
   display: inline-block;
   color: #71f251;
 }
 
-input[type="text"]:invalid:not(:focus):not(:placeholder-shown) ~ .text.fault {
+input[type=text]:invalid:not(:focus):not(:placeholder-shown) ~ .text.fault {
   display: inline-block;
   color: #cd2525;
 }
 
-input[type="tel"]:valid ~ .tel.check {
+input[type=tel]:valid ~ .tel.check {
   display: inline-block;
   color: #71f251;
 }
 
-input[type="tel"]:invalid:not(:focus):not(:placeholder-shown) ~ .tel.fault {
+input[type=tel]:invalid:not(:focus):not(:placeholder-shown) ~ .tel.fault {
   display: inline-block;
   color: #cd2525;
 }
 
-input[type="url"]:valid ~ .url.check {
+input[type=url]:valid ~ .url.check {
   display: inline-block;
   color: #71f251;
 }
 
-input[type="url"]:invalid:not(:focus):not(:placeholder-shown) ~ .url.fault {
+input[type=url]:invalid:not(:focus):not(:placeholder-shown) ~ .url.fault {
   display: inline-block;
   color: #cd2525;
 }
 
-input[type="password"]:valid ~ .password.check {
+input[type=password]:valid ~ .password.check {
   display: inline-block;
   color: #71f251;
 }
 
-input[type="password"]:invalid:not(:focus):not(:placeholder-shown)
-  ~ .password.fault {
+input[type=password]:invalid:not(:focus):not(:placeholder-shown) ~ .password.fault {
   display: inline-block;
   color: #cd2525;
 }
@@ -497,85 +484,71 @@ input[type="password"]:invalid:not(:focus):not(:placeholder-shown)
   font-size: 14px !important;
 }
 
-.log {
-  input:last-child {
-    margin-bottom: 35px;
-  }
+.log input:last-child {
+  margin-bottom: 35px;
 }
 
 @media (max-width: 800px) {
   #formContent {
     width: 100%;
-
-    input {
-      width: 100%;
-      margin: 7px 0;
-
-      &:last-child {
-        margin-bottom: 20px;
-      }
-    }
-
-    .photo.fadeIn {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      position: relative;
-
-      .empty {
-        width: 50px;
-        height: 50px;
-        margin: 0;
-        position: absolute;
-        top: 5px;
-
-        img {
-          width: 50px;
-          height: 50px;
-        }
-      }
-
-      .background-photo-upload {
-        height: 46px;
-        width: 100%;
-        margin: 7px 0 7px 10px;
-
-        .photo-text {
-          font-size: 14px;
-          margin-left: 40px;
-        }
-
-        label {
-          padding: 7px;
-        }
-      }
-    }
-
-    .agreement {
-      margin: 0 0 20px;
-    }
   }
-
+  #formContent input {
+    width: 100%;
+    margin: 7px 0;
+  }
+  #formContent input:last-child {
+    margin-bottom: 20px;
+  }
+  #formContent .photo.fadeIn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  #formContent .photo.fadeIn .empty {
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    position: absolute;
+    top: 5px;
+  }
+  #formContent .photo.fadeIn .empty img {
+    width: 50px;
+    height: 50px;
+  }
+  #formContent .photo.fadeIn .background-photo-upload {
+    height: 46px;
+    width: 100%;
+    margin: 7px 0 7px 10px;
+  }
+  #formContent .photo.fadeIn .background-photo-upload .photo-text {
+    font-size: 14px;
+    margin-left: 40px;
+  }
+  #formContent .photo.fadeIn .background-photo-upload label {
+    padding: 7px;
+  }
+  #formContent .agreement {
+    margin: 0 0 20px;
+  }
   .logo-title {
     left: 0;
     margin: 0;
-
-    h1 {
-      font-size: 36px;
-    }
-
-    .logo {
-      width: 35px;
-    }
   }
-
+  .logo-title h1 {
+    font-size: 36px;
+  }
+  .logo-title .logo {
+    width: 35px;
+  }
   #formEnter {
     width: 100%;
     padding: 5px;
-
-    p {
-      font-size: 13px;
-      font-weight: 600;
-    }
+  }
+  #formEnter p {
+    font-size: 13px;
+    font-weight: 600;
   }
 }
+
+/*# sourceMappingURL=stylesLogin.css.map */

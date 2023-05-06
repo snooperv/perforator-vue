@@ -42,17 +42,18 @@
               <p class="input-error" v-html="phoneError"></p>
             </div>
 
-            <input
-              type="url"
-              name="sbis"
-              placeholder="Ссылка на профиль"
+            <select
+              name="company"
               class="fadeIn third"
               :class="{ hasError: this.referenceError }"
-              :value="reference"
+              v-model="reference"
               @input="updateReference"
-              @keydown.enter.prevent="registerMethod"
               required
-            />
+            >
+              <option value="" disabled hidden>Выберите компанию</option>
+              <option value="1">Company</option>
+            </select>
+
             <div v-if="this.referenceError">
               <p class="input-error" v-html="referenceError"></p>
             </div>
@@ -183,7 +184,8 @@ export default {
         let formData = new FormData();
         formData.append("name", this.login);
         formData.append("phone", formatPhone);
-        formData.append("sbis", this.reference);
+        formData.append("sbis", "url");
+        formData.append("company", this.reference);
         formData.append("password", this.password);
         formData.append("photo", this.imageFile);
         this.$store.dispatch("registerNewUser", formData);
@@ -209,6 +211,7 @@ export default {
     },
 
     updateReference(e) {
+      e.target.setAttribute("data-selected", true);
       this.reference = e.target.value;
       this.referenceValidate();
       if (this.user.authError) this.$store.commit(types.CLEAR_AUTH_ERRORS);
@@ -276,18 +279,18 @@ export default {
 
     referenceValidate() {
       if (!this.reference) {
-        this.referenceError = "Необходимо указать ссылку на профиль";
+        this.referenceError = "Необходимо выбрать компанию";
         return false;
       }
 
-      if (
-        !this.reference.match(
-          /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)/g
-        )
-      ) {
-        this.referenceError = "Укажите ссылку";
-        return false;
-      }
+      // if (
+      //   !this.reference.match(
+      //     /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)/g
+      //   )
+      // ) {
+      //   this.referenceError = "Укажите ссылку";
+      //   return false;
+      // }
 
       this.referenceError = false;
       return true;

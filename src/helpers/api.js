@@ -2,6 +2,7 @@ import urlQueryParts from "@/helpers/urlQueryParts";
 
 // export const API_URL = "https://snooperv.pythonanywhere.com";
 export const API_URL = "http://localhost:8000";
+// export const API_URL = "http://31.28.101.17:8000/";
 const MAIN_API = API_URL + "/perforator/";
 const PEERS = MAIN_API + "peers/";
 const SELF_REVIEW = MAIN_API + "self-review/";
@@ -13,7 +14,7 @@ export const getNewTokenAPI = () => MAIN_API + "api/login";
 export const registerUserAPI = () => MAIN_API + "registration/";
 export const getMyProfileAPI = () => MAIN_API + "api/myprofile";
 export const getPeersRatedMeAPI = () => MAIN_API + "rate_list";
-export const postPeersRatedMeAPI = () => MAIN_API + "process_rate/";
+export const postPeersRatedMeAPI = () => MAIN_API + "review/save/";
 
 export const getMyPeersAPI = () => PEERS + "my/";
 export const getAllPeersAPI = () => MAIN_API + "team";
