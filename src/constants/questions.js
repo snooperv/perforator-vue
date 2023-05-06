@@ -3,6 +3,7 @@ const questions = [
     name: "deadlines",
     inputName: "rates_deadlines",
     title: "Соблюдение сроков",
+    description: "",
     comment: "",
   },
   {

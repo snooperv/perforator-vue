@@ -26,7 +26,7 @@
 
 <script>
 import OneQuestion from "@/components/irate/OneQuestion.vue";
-import questions from "@/components/irate/helpers/questions";
+import questions from "@/constants/questions";
 import { mapState } from "vuex";
 
 export default {

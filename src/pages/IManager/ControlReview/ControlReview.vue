@@ -45,6 +45,16 @@
       <button class="add-peer" @click="prNext">
         Перейти к этапу {{ getStage }}
       </button>
+      <p
+        v-if="
+          questionsSelfReviewErrors.length > 0 || questionsRateErrors.length > 0
+        "
+        class="stage-error"
+      >
+        Ошибка перехода к следующему этапу: один или несколько вопросов
+        {{ getStage }} не были заполнены до конца (поле "Вопрос" обязательно для
+        заполнения)
+      </p>
     </div>
 
     <button
@@ -54,6 +64,111 @@
     >
       Завершить цикл Review
     </button>
+  </div>
+
+  <div v-if="prStatus?.pr_status === 0" class="block-container">
+    <h2 class="block-title">Вопросы для Self Review</h2>
+    <p class="block-description">
+      *В данном блоке необходимо заполнить вопросы для Self Review
+    </p>
+
+    <div class="question" v-for="(question, index) in questionsSelfReview">
+      <h3 class="question__number">{{ index + 1 }}. Добавление вопроса</h3>
+      <p class="question__title">Вопрос:</p>
+      <textarea
+        rows="2"
+        maxlength="512"
+        name="name"
+        @input="(e) => inputTitle(e, index, 'Self Review')"
+        :value="question.title"
+        class="question__input"
+      />
+      <p class="question__title">Описание вопроса:</p>
+      <textarea
+        rows="3"
+        maxlength="512"
+        name="description"
+        @input="(e) => inputDescription(e, index, 'Self Review')"
+        :value="question.description"
+        class="question__input"
+      />
+    </div>
+
+    <div class="control-buttons">
+      <button class="question-add" @click="addQuestion('Self Review')">
+        Добавить вопрос
+      </button>
+      <button class="question-delete" @click="deleteQuestion('Self Review')">
+        Удалить вопрос
+      </button>
+      <span> или </span>
+      <button
+        class="question-standard"
+        @click="standardQuestions('Self Review')"
+      >
+        Стандартные вопросы
+      </button>
+    </div>
+    <div class="control-buttons">
+      <button class="question-add" @click="saveQuestions('Self Review')">
+        Сохранить вопросы
+      </button>
+    </div>
+  </div>
+
+  <div
+    v-if="prStatus?.pr_status === 0 || prStatus?.pr_status === 1"
+    class="block-container"
+  >
+    <h2 class="block-title">Вопросы для взаимного оценивания</h2>
+    <p class="block-description">
+      *В данном блоке необходимо заполнить вопросы для этапа взаимного
+      оценивания
+    </p>
+    <p class="block-description" v-if="prStatus?.pr_status === 0">
+      *На данном этапе вопросы для взаимного оценивания заполнять необязательно,
+      их можно будет заполнить на следующем этапе
+    </p>
+
+    <div class="question" v-for="(question, index) in questionsRate">
+      <h3 class="question__number">{{ index + 1 }}. Добавление вопроса</h3>
+      <p class="question__title">Вопрос:</p>
+      <textarea
+        rows="2"
+        maxlength="512"
+        name="name"
+        @input="(e) => inputTitle(e, index, 'Rate')"
+        :value="question.title"
+        class="question__input"
+      />
+      <p class="question__title">Описание вопроса:</p>
+      <textarea
+        rows="3"
+        maxlength="512"
+        name="description"
+        @input="(e) => inputDescription(e, index, 'Rate')"
+        :value="question.description"
+        class="question__input"
+      />
+    </div>
+
+    <div class="control-buttons">
+      <button class="question-add" @click="addQuestion('Rate')">
+        Добавить вопрос
+      </button>
+      <button class="question-delete" @click="deleteQuestion('Rate')">
+        Удалить вопрос
+      </button>
+      <span> или </span>
+      <button class="question-standard" @click="standardQuestions('Rate')">
+        Стандартные вопросы
+      </button>
+    </div>
+    <div class="control-buttons">
+      <button class="question-add" @click="saveQuestions('Rate')">
+        Сохранить вопросы
+      </button>
+    </div>
   </div>
 
   <div class="block-container">
@@ -107,6 +222,9 @@ import { API_URL } from "@/helpers/api";
 import { openModal } from "jenesius-vue-modal";
 import PeersList from "@/components/modals/PeersList/PeersList.vue";
 import PeersListMobile from "@/components/modals/PeersList/peersListMobile.vue";
+import Confirmation from "@/components/modals/Confirmation/Confirmation.vue";
+import questions from "@/constants/questions";
+import questionsSelfReview from "@/constants/questionsSelfReview";
 
 export default {
   name: "ControlReview",
@@ -137,6 +255,10 @@ export default {
       date,
       time,
       format,
+      questionsSelfReview: [{ title: "", description: "" }],
+      questionsSelfReviewErrors: [],
+      questionsRate: [{ title: "", description: "" }],
+      questionsRateErrors: [],
     };
   },
 
@@ -176,9 +298,36 @@ export default {
       if (month < 10) month = "0" + month;
       if (hours < 10) hours = "0" + hours;
       if (minutes < 10) minutes = "0" + minutes;
-
       const deadline = `${this.date.getFullYear()}-${month}-${this.date.getDate()}T${hours}:${minutes}`;
-      this.$store.dispatch("nextStagePerformanceReview", deadline);
+
+      if (this.prStatus.pr_status === 0) {
+        this.questionsSelfReviewErrors = this.questionsSelfReview
+          .map(
+            (question) =>
+              question.title.length === 0 ||
+              (question.title.length === 0 && question.description.length === 0)
+          )
+          .filter((error) => error === true);
+
+        if (this.questionsSelfReviewErrors.length === 0) {
+          this.saveQuestions("Self Review");
+          this.saveQuestions("Rate");
+          this.$store.dispatch("nextStagePerformanceReview", deadline);
+        }
+      } else if (this.prStatus.pr_status === 1) {
+        this.questionsRateErrors = this.questionsRate
+          .map(
+            (question) =>
+              question.title.length === 0 && question.description.length === 0
+          )
+          .filter((error) => error === true);
+        if (this.questionsRateErrors.length === 0) {
+          this.saveQuestions("Rate");
+          this.$store.dispatch("nextStagePerformanceReview", deadline);
+        }
+      } else {
+        this.$store.dispatch("nextStagePerformanceReview", deadline);
+      }
     },
 
     prClose() {
@@ -193,6 +342,89 @@ export default {
 
     deleteUser(id) {
       this.$store.dispatch("deleteUserImMyTeam", id);
+    },
+
+    inputTitle(e, index, type) {
+      if (type === "Self Review")
+        this.questionsSelfReview[index].title = e.target.value;
+      else if (type === "Rate")
+        this.questionsRate[index].title = e.target.value;
+      this.clearErrors();
+    },
+
+    inputDescription(e, index, type) {
+      if (type === "Self Review")
+        this.questionsSelfReview[index].description = e.target.value;
+      else if (type === "Rate")
+        this.questionsRate[index].description = e.target.value;
+      this.clearErrors();
+    },
+
+    addQuestion(type) {
+      if (type === "Self Review")
+        this.questionsSelfReview.push({ title: "", description: "" });
+      else if (type === "Rate")
+        this.questionsRate.push({ title: "", description: "" });
+    },
+
+    deleteQuestion(type) {
+      if (type === "Self Review") this.questionsSelfReview.pop();
+      else if (type === "Rate") this.questionsRate.pop();
+    },
+
+    standardQuestions(type) {
+      openModal(Confirmation, {
+        rewriteQuestions: () => this.rewriteQuestions(type),
+        addListQuestions: () => this.addListQuestions(type),
+      });
+    },
+
+    rewriteQuestions(type) {
+      if (type === "Self Review") this.questionsSelfReview = [];
+      else if (type === "Rate") this.questionsRate = [];
+      this.addListQuestions(type);
+    },
+
+    addListQuestions(type) {
+      if (type === "Self Review")
+        questionsSelfReview.map((question) =>
+          this.questionsSelfReview.push({
+            title: question.title,
+            description: question.description,
+          })
+        );
+      else if (type === "Rate")
+        questions.map((question) =>
+          this.questionsRate.push({
+            title: question.title,
+            description: question.description,
+          })
+        );
+    },
+
+    saveQuestions(type) {
+      const mark_system = 4;
+      if (type === "Self Review")
+        this.$store.dispatch("saveQuestions", {
+          mark_system,
+          is_self_review: true,
+          questions: this.questionsSelfReview.map((question) => {
+            return { name: question.title, description: question.description };
+          }),
+        });
+      else if (type === "Rate")
+        this.$store.dispatch("saveQuestions", {
+          mark_system,
+          is_self_review: false,
+          questions: this.questionsRate.map((question) => {
+            return { name: question.title, description: question.description };
+          }),
+        });
+    },
+
+    clearErrors() {
+      this.questionsSelfReviewErrors = [];
+      this.questionsRateErrors = [];
     },
   },
 };

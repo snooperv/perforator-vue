@@ -11,7 +11,9 @@ import {
   getStatusPerformanceReviewAPI,
   getUserReviewIsDraftAPI,
   nextStagePerformanceReviewAPI,
+  saveQuestionsAPI,
   saveSelfReviewAPI,
+  updateQuestionsAPI,
 } from "@/helpers/api";
 
 export const getMyProfile = async () => {
@@ -62,4 +64,12 @@ export const closePerformanceReview = async () => {
 
 export const getListPerformanceReview = async () => {
   return await request(getListPerformanceReviewAPI());
+};
+
+export const saveQuestions = async (data) => {
+  return await request(saveQuestionsAPI(), "POST", data);
+};
+
+export const updateQuestions = async (data) => {
+  return await request(updateQuestionsAPI(), "POST", data);
 };

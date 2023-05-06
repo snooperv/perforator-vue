@@ -41,7 +41,9 @@ import {
   getStatusPerformanceReview,
   getUserReviewIsDraft,
   nextStagePerformanceReview,
+  saveQuestions,
   saveSelfReview,
+  updateQuestions,
 } from "@/services/basic";
 import grades from "@/helpers/grades";
 import { getManagerStatusAPI } from "@/helpers/api";
@@ -582,6 +584,16 @@ const actions = {
       });
 
       return { commonNote: commonNote.notes, privateNote: privateNote.notes };
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  async saveQuestions({ commit }, data) {
+    try {
+      // await saveQuestions(data);
+      await updateQuestions(data);
+      console.log(data);
     } catch (e) {
       console.log(e);
     }

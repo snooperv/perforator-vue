@@ -8,6 +8,7 @@ const PEERS = MAIN_API + "peers/";
 const SELF_REVIEW = MAIN_API + "self-review/";
 const MANAGER = MAIN_API + "manager/";
 const CONTROL_REVIEW = MAIN_API + "performance_review/";
+const QUESTIONS = MAIN_API + "questionary/";
 
 export const refreshTokenAPI = () => MAIN_API + "api/refresh-token";
 export const getNewTokenAPI = () => MAIN_API + "api/login";
@@ -65,3 +66,6 @@ export const getTeamScoresPreviousAPI = () =>
   CONTROL_REVIEW + "employee/rating";
 export const getSelfReviewIdAPI = () => CONTROL_REVIEW + "get/self_review";
 export const getReviewEmployeeAPI = () => CONTROL_REVIEW + "get/review";
+
+export const saveQuestionsAPI = () => QUESTIONS + "create";
+export const updateQuestionsAPI = () => QUESTIONS + "update";

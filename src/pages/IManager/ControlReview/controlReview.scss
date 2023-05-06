@@ -19,7 +19,7 @@
 
 .items {
   box-sizing: border-box;
-  width: 95%;
+  width: calc(100% - 15px);
   background-color: #f4f4fa;
   font-size: 20px;
   font-weight: 400;
@@ -127,6 +127,92 @@
     margin-right: 10px;
     width: 300px;
   }
+}
+
+.question {
+  padding: 5px 15px 5px 35px;
+
+  &__number {
+    margin: 15px 0;
+    font-size: 20px;
+  }
+
+  &__title {
+    margin: 10px 0;
+  }
+
+  &__input {
+    color: #0d0d0d;
+    padding: 15px 10px;
+    font-size: 16px;
+    width: 100%;
+    border: 1px solid #414141;
+    box-shadow: inset -1px 1px 4px rgba(0, 0, 0, 0.25);
+    transition: all 0.5s ease-in-out;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+}
+
+.control-buttons {
+  padding: 45px 15px 5px 35px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+
+  .question {
+    &-add,
+    &-delete,
+    &-standard {
+      font-family: "Gotham Pro light", sans-serif;
+      font-weight: 1000;
+      letter-spacing: 1px;
+      background-color: #c1c1ec;
+      border: none;
+      color: white;
+      padding: 7px 15px;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      cursor: pointer;
+      -webkit-border-radius: 20px;
+      border-radius: 20px;
+      -webkit-transition: all 0.3s ease-in-out;
+      -moz-transition: all 0.3s ease-in-out;
+      -ms-transition: all 0.3s ease-in-out;
+      -o-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out;
+    }
+
+    &-add:hover,
+    &-standard:hover {
+      background-color: rgba(140, 140, 245, 1);
+      transition: 0.25s;
+      cursor: pointer;
+    }
+
+    &-add:active,
+    &-delete:active,
+    &-standard:active {
+      -moz-transform: scale(0.95);
+      -webkit-transform: scale(0.95);
+      -o-transform: scale(0.95);
+      -ms-transform: scale(0.95);
+      transform: scale(0.95);
+    }
+
+    &-delete {
+      background-color: #cd2525;
+    }
+  }
+}
+
+.stage-error {
+  color: #cd2525;
+  margin: 10px 0;
+  font-size: 14px;
+  text-align: center;
 }
 
 @media (max-width: 800px) {
