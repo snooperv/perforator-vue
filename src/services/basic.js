@@ -4,6 +4,7 @@ import {
   closePerformanceReviewAPI,
   getListPerformanceReviewAPI,
   getMyProfileAPI,
+  getQuestionsAPI,
   getRatesAPI,
   getReviewEmployeeAPI,
   getSelfReviewAPI,
@@ -64,6 +65,10 @@ export const closePerformanceReview = async () => {
 
 export const getListPerformanceReview = async () => {
   return await request(getListPerformanceReviewAPI());
+};
+
+export const getQuestions = async (data) => {
+  return await request(getQuestionsAPI(), "POST", data);
 };
 
 export const saveQuestions = async (data) => {

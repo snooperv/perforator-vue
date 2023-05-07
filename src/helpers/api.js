@@ -67,5 +67,6 @@ export const getTeamScoresPreviousAPI = () =>
 export const getSelfReviewIdAPI = () => CONTROL_REVIEW + "get/self_review";
 export const getReviewEmployeeAPI = () => CONTROL_REVIEW + "get/review";
 
+export const getQuestionsAPI = () => QUESTIONS + "get";
 export const saveQuestionsAPI = () => QUESTIONS + "create";
 export const updateQuestionsAPI = () => QUESTIONS + "update";

@@ -114,6 +114,18 @@
         Сохранить вопросы
       </button>
     </div>
+    <p
+      :class="saveStatusSelfReview === 'ok' && 'active'"
+      class="question__save-status success"
+    >
+      Вопросы успешно сохранены
+    </p>
+    <p
+      :class="saveStatusSelfReview && saveStatusSelfReview !== 'ok' && 'active'"
+      class="question__save-status error"
+    >
+      При сохранении произошла ошибка: {{ saveStatusSelfReview }}
+    </p>
   </div>
 
   <div
@@ -176,6 +188,18 @@
         Сохранить вопросы
       </button>
     </div>
+    <p
+      :class="saveStatusRate === 'ok' && 'active'"
+      class="question__save-status success"
+    >
+      Вопросы успешно сохранены
+    </p>
+    <p
+      :class="saveStatusRate && saveStatusRate !== 'ok' && 'active'"
+      class="question__save-status error"
+    >
+      При сохранении произошла ошибка: {{ saveStatusRate }}
+    </p>
   </div>
 
   <div class="block-container">
@@ -268,11 +292,15 @@ export default {
       questionsRateErrors: [],
       isQuestionsSelfReviewNew: true,
       isQuestionsRateNew: true,
+      saveStatusSelfReview: null,
+      saveStatusRate: null,
     };
   },
 
   mounted() {
     if (this.user.team.length === 0) this.$store.dispatch("getMyTeam");
+
+    if (this.prStatus) this.getQuestionsList();
   },
 
   computed: {
@@ -310,20 +338,28 @@ export default {
       const deadline = `${this.date.getFullYear()}-${month}-${this.date.getDate()}T${hours}:${minutes}`;
 
       if (this.prStatus.pr_status === 0) {
-        this.questionsSelfReviewErrors = this.questionsSelfReview
-          .map(
-            (question) =>
-              question.title.length === 0 ||
-              (question.title.length === 0 && question.description.length === 0)
-          )
-          .filter((error) => error === true);
+        this.questionsSelfReviewErrors =
+          this.questionsSelfReview.length === 0
+            ? [true]
+            : this.questionsSelfReview
+                .map(
+                  (question) =>
+                    question.title.length === 0 ||
+                    (question.title.length === 0 &&
+                      question.description.length === 0)
+                )
+                .filter((error) => error === true);
       } else if (this.prStatus.pr_status === 2) {
-        this.questionsRateErrors = this.questionsRate
-          .map(
-            (question) =>
-              question.title.length === 0 && question.description.length === 0
-          )
-          .filter((error) => error === true);
+        this.questionsRateErrors =
+          this.questionsRate.length === 0
+            ? [true]
+            : this.questionsRate
+                .map(
+                  (question) =>
+                    question.title.length === 0 &&
+                    question.description.length === 0
+                )
+                .filter((error) => error === true);
       }
 
       if (
@@ -371,11 +407,13 @@ export default {
         this.questionsSelfReview.push({ title: "", description: "" });
       else if (type === "Rate")
         this.questionsRate.push({ title: "", description: "" });
+      this.clearErrors();
     },
 
     deleteQuestion(type) {
       if (type === "Self Review") this.questionsSelfReview.pop();
       else if (type === "Rate") this.questionsRate.pop();
+      this.clearErrors();
     },
 
     standardQuestions(type) {
@@ -408,48 +446,82 @@ export default {
         );
     },
 
-    saveQuestions(type) {
+    async saveQuestions(type) {
       const mark_system = 4;
-      if (type === "Self Review")
-        this.$store.dispatch("saveQuestions", {
+      const isSelfReview = type === "Self Review";
+
+      const status = await this.$store.dispatch("saveQuestions", {
+        isNew: isSelfReview
+          ? this.isQuestionsSelfReviewNew
+          : this.isQuestionsRateNew,
+        payload: {
           mark_system,
-          is_self_review: true,
-          questions: this.questionsSelfReview.map((question) => {
-            return { name: question.title, description: question.description };
-          }),
-        });
-      else if (type === "Rate")
-        this.$store.dispatch("saveQuestions", {
-          mark_system,
-          is_self_review: false,
-          questions: this.questionsRate.map((question) => {
-            return { name: question.title, description: question.description };
-          }),
-        });
+          is_self_review: isSelfReview,
+          questions: isSelfReview
+            ? this.questionsSelfReview.map((question) => {
+                return {
+                  name: question.title,
+                  description: question.description,
+                };
+              })
+            : this.questionsRate.map((question) => {
+                return {
+                  name: question.title,
+                  description: question.description,
+                };
+              }),
+        },
+      });
+
+      if (type === "Self Review") {
+        this.saveStatusSelfReview = status;
+        this.isQuestionsSelfReviewNew = false;
+        setTimeout(() => (this.saveStatusSelfReview = null), 1500);
+      } else if (type === "Rate") {
+        this.saveStatusRate = status;
+        this.isQuestionsRateNew = false;
+        setTimeout(() => (this.saveStatusRate = null), 1500);
+      }
     },
 
     clearErrors() {
       this.questionsSelfReviewErrors = [];
       this.questionsRateErrors = [];
     },
+
+    async getQuestionsList() {
+      if (this.prStatus.pr_status === 0) {
+        console.log("PR Status", 0);
+        const questions = await this.$store.dispatch("getQuestions", {
+          is_self_review: true,
+        });
+        if (questions) {
+          this.questionsSelfReview = questions;
+          this.isQuestionsSelfReviewNew = false;
+        }
+      }
+
+      if (
+        this.prStatus?.pr_status === 0 ||
+        this.prStatus?.pr_status === 1 ||
+        this.prStatus?.pr_status === 2
+      ) {
+        console.log("PR Status", 1);
+        const questions = await this.$store.dispatch("getQuestions", {
+          is_self_review: false,
+        });
+        if (questions) {
+          this.questionsRate = questions;
+          this.isQuestionsRateNew = false;
+        }
+      }
+    },
   },
 
   watch: {
     prStatus: {
       handler() {
-        if (this.prStatus.pr_status === 0) {
-          console.log("PR Status", 0);
-          // TODO
-        }
-
-        if (
-          this.prStatus?.pr_status === 0 ||
-          this.prStatus?.pr_status === 1 ||
-          this.prStatus?.pr_status === 2
-        ) {
-          console.log("PR Status", 1);
-          // TODO
-        }
+        this.getQuestionsList();
       },
     },
   },

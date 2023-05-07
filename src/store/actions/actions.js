@@ -34,6 +34,7 @@ import {
   closePerformanceReview,
   getListPerformanceReview,
   getMyProfile,
+  getQuestions,
   getRates,
   getReviewEmployee,
   getSelfReview,
@@ -587,11 +588,30 @@ const actions = {
     }
   },
 
+  async getQuestions({ commit }, data) {
+    try {
+      const questions = await getQuestions(data);
+      if (questions.status === "ok")
+        return questions.questions.map((question) => {
+          return { title: question.name, description: question.description };
+        });
+      else return null;
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
   async saveQuestions({ commit }, data) {
     try {
-      // await saveQuestions(data);
-      await updateQuestions(data);
-      console.log(data);
+      const { isNew, payload } = data;
+      console.log(isNew, payload);
+      if (isNew) {
+        const save = await saveQuestions(payload);
+        return save.status;
+      } else {
+        const save = await updateQuestions(payload);
+        return save.status;
+      }
     } catch (e) {
       console.log(e);
     }
