@@ -41,10 +41,6 @@ export const getUserReviewIsDraft = async (id) => {
   return await request(getUserReviewIsDraftAPI({ id }));
 };
 
-export const getRates = async (id) => {
-  return await request(getRatesAPI({ id }));
-};
-
 export const getStatusPerformanceReview = async () => {
   return await request(getStatusPerformanceReviewAPI());
 };

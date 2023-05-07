@@ -35,7 +35,6 @@ import {
   getListPerformanceReview,
   getMyProfile,
   getQuestions,
-  getRates,
   getReviewEmployee,
   getSelfReview,
   getSelfReviewId,
@@ -122,13 +121,13 @@ const actions = {
 
   async getMyProfile({ commit }) {
     try {
-      commit(types.SET_IS_LOADING, { getMyProfile: true });
+      commit(types.SET_IS_LOADING_SIDEBAR, { getMyProfile: true });
       const profile = await getMyProfile();
       commit("SET_MY_PROFILE", profile);
     } catch (e) {
       console.log(e);
     } finally {
-      commit(types.SET_IS_LOADING, { getMyProfile: false });
+      commit(types.SET_IS_LOADING_SIDEBAR, { getMyProfile: false });
     }
   },
 
@@ -146,13 +145,13 @@ const actions = {
 
   async getManagerStatus({ commit }, id) {
     try {
-      commit(types.SET_IS_LOADING, { getManagerStatus: true });
+      commit(types.SET_IS_LOADING_SIDEBAR, { getManagerStatus: true });
       const status = await getManagerStatus({ profile_id: id });
       commit(types.SET_MANAGER_STATUS, status.is_manager);
     } catch (e) {
       console.log(e);
     } finally {
-      commit(types.SET_IS_LOADING, { getManagerStatus: false });
+      commit(types.SET_IS_LOADING_SIDEBAR, { getManagerStatus: false });
     }
   },
 
@@ -326,22 +325,29 @@ const actions = {
       }
 
       state.user.team.map(async (worker) => {
-        let isDraft = await getUserReviewIsDraft(worker.profile_id);
+        try {
+          commit(types.SET_IS_LOADING, { getIsApprovalContent: true });
+          let isDraft = await getUserReviewIsDraft(worker.profile_id);
 
-        if (
-          isDraft.status === "Review не найдено" ||
-          (isDraft.is_draft && !worker.approve)
-        )
-          commit(types.SET_TEAM_WITHOUT_REVIEW, worker);
-        else if (!isDraft.is_draft && worker.approve)
-          commit(types.SET_TEAM_APPROVE, worker);
-        else {
-          const userPeers = await getUserPeers(worker.profile_id);
-          commit(types.SET_WORKER_PEERS, {
-            id: worker.profile_id,
-            peers: userPeers,
-          });
-          commit(types.SET_TEAM_WITH_REVIEW, worker);
+          if (
+            isDraft.status === "Review не найдено" ||
+            (isDraft.is_draft && !worker.approve)
+          )
+            commit(types.SET_TEAM_WITHOUT_REVIEW, worker);
+          else if (!isDraft.is_draft && worker.approve)
+            commit(types.SET_TEAM_APPROVE, worker);
+          else {
+            const userPeers = await getUserPeers(worker.profile_id);
+            commit(types.SET_WORKER_PEERS, {
+              id: worker.profile_id,
+              peers: userPeers,
+            });
+            commit(types.SET_TEAM_WITH_REVIEW, worker);
+          }
+        } catch (e) {
+          console.log(e);
+        } finally {
+          commit(types.SET_IS_LOADING, { getIsApprovalContent: false });
         }
       });
     } catch (e) {
@@ -649,7 +655,6 @@ const actions = {
   async saveQuestions({ commit }, data) {
     try {
       const { isNew, payload } = data;
-      console.log(isNew, payload);
       if (isNew) {
         const save = await saveQuestions(payload);
         return save.status;

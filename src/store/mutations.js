@@ -7,6 +7,11 @@ const mutations = {
     state.isLoading = { ...existsLoadingStatuses, ...payload };
   },
 
+  [types.SET_IS_LOADING_SIDEBAR](state, payload) {
+    const existsLoadingStatuses = state.isLoadingSidebar;
+    state.isLoadingSidebar = { ...existsLoadingStatuses, ...payload };
+  },
+
   [types.CLEAR_lOCALSTORGE]() {
     localStorage.removeItem("token");
     localStorage.removeItem("lifetimeToken");

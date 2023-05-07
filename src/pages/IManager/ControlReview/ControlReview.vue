@@ -491,7 +491,6 @@ export default {
 
     async getQuestionsList() {
       if (this.prStatus.pr_status === 0) {
-        console.log("PR Status", 0);
         const questions = await this.$store.dispatch("getQuestions", {
           is_self_review: true,
         });
@@ -506,7 +505,6 @@ export default {
         this.prStatus?.pr_status === 1 ||
         this.prStatus?.pr_status === 2
       ) {
-        console.log("PR Status", 1);
         const questions = await this.$store.dispatch("getQuestions", {
           is_self_review: false,
         });

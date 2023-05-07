@@ -34,8 +34,6 @@ export const getUserReviewIsDraftAPI = (id) =>
   SELF_REVIEW + "is-draft/" + urlQueryParts(id);
 
 export const getInfoTeamAPI = () => MAIN_API + "team";
-export const getRatesAPI = (id) =>
-  MAIN_API + "imanager/employee/rating" + urlQueryParts(id);
 export const getMyManagerAPI = () => MAIN_API + "manager";
 export const getTeamScoresAPI = (params) =>
   MAIN_API + "imanager/employee/rating" + params;

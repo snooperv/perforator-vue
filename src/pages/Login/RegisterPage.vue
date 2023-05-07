@@ -248,7 +248,6 @@ export default {
       const countWords = this.login.split(" ").length;
 
       if (countWords !== 2) {
-        console.log("Error");
         this.loginError = "Введите значение в формате: Имя Фамилия";
         return false;
       }

@@ -1,5 +1,6 @@
 <template>
   <div class="sidebar">
+    <Preloader :isLoading="isLoading" left="0" />
     <div class="profile-div">
       <div class="profile-pic">
         <img class="photo-sidebar" :src="user.photo" alt="Фото профиля" />
@@ -72,12 +73,23 @@
 
 <script>
 import { mapState } from "vuex";
+import Preloader from "@/components/preloader/Preloader.vue";
 
 export default {
   name: "SideBar",
+  components: { Preloader },
 
   computed: {
-    ...mapState(["user"]),
+    ...mapState(["user", "isLoadingSidebar"]),
+
+    isLoading() {
+      return (
+        this.isLoadingSidebar &&
+        Object.entries(this.isLoadingSidebar)
+          .map((loading) => loading[1])
+          .some((loading) => loading)
+      );
+    },
   },
 
   // mounted() {
@@ -114,6 +126,7 @@ a {
   border-right: 1px solid #e7e7e7;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.25);
   overflow: hidden;
+  z-index: 1001;
 }
 
 .profile-div {
