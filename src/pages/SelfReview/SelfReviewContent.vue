@@ -18,7 +18,7 @@
 
     <div class="char-count">
       <span class="chars">{{ item.text.length }}</span>
-      <span class="max">/ 512 символов</span>
+      <span class="max">/512 символов</span>
     </div>
   </div>
 </template>

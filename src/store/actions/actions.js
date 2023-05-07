@@ -265,9 +265,7 @@ const actions = {
       const { id } = payload;
       let contentSelfReview;
       if (id) contentSelfReview = await getSelfReviewId({ pr_id: id });
-      else if (!Object.keys(state.selfReview).length)
-        contentSelfReview = await getSelfReview();
-      else contentSelfReview = { ...state.selfReview };
+      else contentSelfReview = await getSelfReview();
       commit(types.SET_SELFREVIEW, contentSelfReview);
     } catch (e) {
       console.log(e);

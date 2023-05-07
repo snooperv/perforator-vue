@@ -117,7 +117,11 @@
   </div>
 
   <div
-    v-if="prStatus?.pr_status === 0 || prStatus?.pr_status === 1"
+    v-if="
+      this.prStatus?.pr_status === 0 ||
+      this.prStatus?.pr_status === 1 ||
+      this.prStatus?.pr_status === 2
+    "
     class="block-container"
   >
     <h2 class="block-title">Вопросы для взаимного оценивания</h2>
@@ -125,7 +129,10 @@
       *В данном блоке необходимо заполнить вопросы для этапа взаимного
       оценивания
     </p>
-    <p class="block-description" v-if="prStatus?.pr_status === 0">
+    <p
+      class="block-description"
+      v-if="this.prStatus?.pr_status === 0 || this.prStatus?.pr_status === 1"
+    >
       *На данном этапе вопросы для взаимного оценивания заполнять необязательно,
       их можно будет заполнить на следующем этапе
     </p>
@@ -259,6 +266,8 @@ export default {
       questionsSelfReviewErrors: [],
       questionsRate: [{ title: "", description: "" }],
       questionsRateErrors: [],
+      isQuestionsSelfReviewNew: true,
+      isQuestionsRateNew: true,
     };
   },
 
@@ -308,24 +317,21 @@ export default {
               (question.title.length === 0 && question.description.length === 0)
           )
           .filter((error) => error === true);
-
-        if (this.questionsSelfReviewErrors.length === 0) {
-          this.saveQuestions("Self Review");
-          this.saveQuestions("Rate");
-          this.$store.dispatch("nextStagePerformanceReview", deadline);
-        }
-      } else if (this.prStatus.pr_status === 1) {
+      } else if (this.prStatus.pr_status === 2) {
         this.questionsRateErrors = this.questionsRate
           .map(
             (question) =>
               question.title.length === 0 && question.description.length === 0
           )
           .filter((error) => error === true);
-        if (this.questionsRateErrors.length === 0) {
-          this.saveQuestions("Rate");
-          this.$store.dispatch("nextStagePerformanceReview", deadline);
-        }
-      } else {
+      }
+
+      if (
+        this.questionsSelfReviewErrors.length === 0 &&
+        this.questionsRateErrors.length === 0
+      ) {
+        this.saveQuestions("Self Review");
+        this.saveQuestions("Rate");
         this.$store.dispatch("nextStagePerformanceReview", deadline);
       }
     },
@@ -425,6 +431,26 @@ export default {
     clearErrors() {
       this.questionsSelfReviewErrors = [];
       this.questionsRateErrors = [];
+    },
+  },
+
+  watch: {
+    prStatus: {
+      handler() {
+        if (this.prStatus.pr_status === 0) {
+          console.log("PR Status", 0);
+          // TODO
+        }
+
+        if (
+          this.prStatus?.pr_status === 0 ||
+          this.prStatus?.pr_status === 1 ||
+          this.prStatus?.pr_status === 2
+        ) {
+          console.log("PR Status", 1);
+          // TODO
+        }
+      },
     },
   },
 };

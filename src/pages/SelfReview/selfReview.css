@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .selection h3 {
   margin-top: 10px;
   margin-left: 0;
@@ -155,7 +156,6 @@
 }
 
 /* Отображение пиров на странице */
-
 .peer-sel {
   width: 90%;
   background-color: #ececf2;
@@ -240,7 +240,7 @@ p {
 }
 
 .container {
-  width: calc(100% - 60px);
+  width: 90%;
   display: inline-block;
   margin: 0 30px;
 }
@@ -312,7 +312,7 @@ p {
   margin-bottom: 20px;
 }
 
-input[type="submit"],
+input[type=submit],
 .send {
   font-family: "Gotham Pro light", sans-serif;
   font-weight: 1000;
@@ -332,7 +332,7 @@ input[type="submit"],
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
 }
 
-input[type="submit"]:active,
+input[type=submit]:active,
 .send:active {
   transition: all 0.3s ease-in-out;
   transform: scale(0.95);
@@ -413,15 +413,6 @@ input[type="submit"]:active,
   margin: 5px 0 20px 30px;
 }
 
-@media (max-width: 1580px) {
-}
-
-@media (max-width: 1450px) {
-}
-
-@media (max-width: 1325px) {
-}
-
 .initial_draft {
   opacity: 0;
   visibility: hidden;
@@ -493,19 +484,17 @@ input[type="submit"]:active,
   background-color: #ffffff;
   border-radius: 30px;
   margin-bottom: 50px;
-
-  h3 {
-    margin-top: 20px;
-    text-align: left;
-    margin-left: 30px;
-  }
-
-  p {
-    font-size: 18px;
-    color: #686868;
-    text-align: left;
-    margin: 5px 0 20px 30px;
-  }
+}
+.stage-closed h3 {
+  margin-top: 20px;
+  text-align: left;
+  margin-left: 30px;
+}
+.stage-closed p {
+  font-size: 18px;
+  color: #686868;
+  text-align: left;
+  margin: 5px 0 20px 30px;
 }
 
 @media (max-width: 800px) {
@@ -513,153 +502,125 @@ input[type="submit"]:active,
     box-sizing: border-box;
     width: 100%;
     padding: 15px 20px;
-
-    h3 {
-      font-size: 19px;
-      margin: 0 0 10px;
-    }
-
-    p {
-      margin: 0;
-      font-family: "Gotham Pro light", sans-serif;
-      font-weight: 1000;
-    }
   }
-
+  .stage-closed h3 {
+    font-size: 19px;
+    margin: 0 0 10px;
+  }
+  .stage-closed p {
+    margin: 0;
+    font-family: "Gotham Pro light", sans-serif;
+    font-weight: 1000;
+  }
   .self-review {
     width: calc(100% - 28px);
     margin: 0 14px;
   }
-
   .title {
     margin: 20px 0;
     align-self: center;
     font-size: 28px;
   }
-
   .form {
     width: 100%;
     padding: 0;
-
-    .container {
-      margin: 0;
-      width: 100%;
-
-      #self-review {
-        .introduction {
-          box-sizing: border-box;
-          margin: 10px 5px 10px;
-          padding: 10px 10px;
-
-          h4 {
-            font-size: 18px;
-          }
-
-          .description {
-            font-size: 14px;
-          }
-
-          .question {
-            font-size: 16px;
-          }
-
-          .ta {
-            box-sizing: border-box;
-            width: 100%;
-          }
-        }
-      }
-    }
   }
-
+  .form .container {
+    margin: 0;
+    width: 100%;
+  }
+  .form .container #self-review .introduction {
+    box-sizing: border-box;
+    margin: 10px 5px 10px;
+    padding: 10px 10px;
+  }
+  .form .container #self-review .introduction h4 {
+    font-size: 18px;
+  }
+  .form .container #self-review .introduction .description {
+    font-size: 14px;
+  }
+  .form .container #self-review .introduction .question {
+    font-size: 16px;
+  }
+  .form .container #self-review .introduction .ta {
+    box-sizing: border-box;
+    width: 100%;
+  }
   .peers {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-
-    #my_peers {
-      align-self: stretch;
-    }
-
-    p {
-      margin-left: 16px;
-      margin-right: 16px;
-    }
-
-    span {
-      font-size: 18px;
-      margin-left: 7px;
-    }
-
-    .add-peer {
-      padding: 10px 15px;
-      margin-left: 0;
-      margin-right: 0;
-    }
   }
-
+  .peers #my_peers {
+    align-self: stretch;
+  }
+  .peers p {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  .peers span {
+    font-size: 18px;
+    margin-left: 7px;
+  }
+  .peers .add-peer {
+    padding: 10px 15px;
+    margin-left: 0;
+    margin-right: 0;
+  }
   .peer-sel {
     display: flex;
     align-items: center;
     padding: 0;
-
-    .peers-pic {
-      width: 40px;
-      height: 40px;
-      left: 0;
-      top: 0;
-
-      .avatar {
-        width: 40px;
-        height: 40px;
-      }
-    }
-
-    .peer-info {
-      font-size: 14px;
-      margin: 0 0 0 10px;
-    }
-
-    .close {
-      margin: 0 0 0 auto;
-    }
   }
-
+  .peer-sel .peers-pic {
+    width: 40px;
+    height: 40px;
+    left: 0;
+    top: 0;
+  }
+  .peer-sel .peers-pic .avatar {
+    width: 40px;
+    height: 40px;
+  }
+  .peer-sel .peer-info {
+    font-size: 14px;
+    margin: 0 0 0 10px;
+  }
+  .peer-sel .close {
+    margin: 0 0 0 auto;
+  }
   .wrapper-submit {
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    .send {
-      width: 90%;
-      max-width: 350px;
-      margin-left: 0;
-      margin-right: 0;
-      margin-top: 0;
-      padding: 16px;
-    }
-
-    .save {
-      width: 70%;
-      margin-top: 0;
-    }
-
-    .active_draft {
-      margin-left: 15%;
-    }
   }
-
+  .wrapper-submit .send {
+    width: 90%;
+    max-width: 350px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    padding: 16px;
+  }
+  .wrapper-submit .save {
+    width: 70%;
+    margin-top: 0;
+  }
+  .wrapper-submit .active_draft {
+    margin-left: 15%;
+  }
   .feedback {
     margin-bottom: 80px;
     width: 100%;
-
-    h3 {
-      font-size: 18px;
-    }
-
-    p {
-      font-size: 14px;
-    }
+  }
+  .feedback h3 {
+    font-size: 18px;
+  }
+  .feedback p {
+    font-size: 14px;
   }
 }
+
+/*# sourceMappingURL=selfReview.css.map */
