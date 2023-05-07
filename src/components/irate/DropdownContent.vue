@@ -12,7 +12,6 @@
           :comment="qst.text"
         />
 
-        <!--        <input type="hidden" name="profile" :value="peerId" />-->
         <input
           type="submit"
           value="Отправить отзыв"
