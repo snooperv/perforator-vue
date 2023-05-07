@@ -16,6 +16,7 @@ import {
   getOneToOnePreviousPrivate,
   getOneToOnePrivate,
   getPeersRatedMe,
+  getRateQuestions,
   getTeamScores,
   getTeamScoresPrevious,
   getUserPeers,
@@ -434,6 +435,15 @@ const actions = {
       console.log(e);
     } finally {
       commit(types.SET_IS_LOADING, { getPeersRatedMe: false });
+    }
+  },
+
+  async getRateQuestions({ commit }, data) {
+    try {
+      const questions = await getRateQuestions(data);
+      return questions.grades;
+    } catch (e) {
+      console.log(e);
     }
   },
 

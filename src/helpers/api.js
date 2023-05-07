@@ -15,6 +15,7 @@ export const getNewTokenAPI = () => MAIN_API + "api/login";
 export const registerUserAPI = () => MAIN_API + "registration/";
 export const getMyProfileAPI = () => MAIN_API + "api/myprofile";
 export const getPeersRatedMeAPI = () => MAIN_API + "rate_list";
+export const getRateQuestionsAPI = () => MAIN_API + "review/get/";
 export const postPeersRatedMeAPI = () => MAIN_API + "review/save/";
 
 export const getMyPeersAPI = () => PEERS + "my/";

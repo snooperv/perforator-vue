@@ -15,6 +15,7 @@ import {
   getOneToOnePreviousPrivateAPI,
   getOneToOnePrivateAPI,
   getPeersRatedMeAPI,
+  getRateQuestionsAPI,
   getTeamScoresAPI,
   getTeamScoresPreviousAPI,
   getUserPeersAPI,
@@ -109,6 +110,10 @@ export const postProcessOneToOnePrivate = async (data) => {
 
 export const getPeersRatedMe = async () => {
   return await request(getPeersRatedMeAPI());
+};
+
+export const getRateQuestions = async (data) => {
+  return await request(getRateQuestionsAPI(), "POST", data);
 };
 
 export const postPeersRatedMe = async (data) => {

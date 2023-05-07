@@ -3,15 +3,16 @@
     <div class="dropdown-container">
       <form name="formRate" v-if="isLoaded">
         <OneQuestion
-          v-for="(qst, index) in questions()"
-          :title="qst.title"
+          v-for="(qst, index) in questionsList"
+          :name="String(qst.id)"
+          :title="qst.name"
           :index-question="index + 1"
-          :name="qst.name"
+          :description="qst.description"
           :peer-id="peerId"
-          :comment="qst.comment"
+          :comment="qst.text"
         />
 
-        <input type="hidden" name="profile" :value="peerId" />
+        <!--        <input type="hidden" name="profile" :value="peerId" />-->
         <input
           type="submit"
           value="Отправить отзыв"
@@ -26,7 +27,6 @@
 
 <script>
 import OneQuestion from "@/components/irate/OneQuestion.vue";
-import questions from "@/constants/questions";
 import { mapState } from "vuex";
 
 export default {
@@ -40,6 +40,7 @@ export default {
       isRate: this.$route.path.includes("i-rate"),
       isLoaded: false,
       ErrorText: "",
+      questionsList: [],
     };
   },
 
@@ -54,10 +55,15 @@ export default {
   },
 
   computed: {
-    ...mapState(["rateComment", "listReviews"]),
+    ...mapState(["rateComment", "listReviews", "user"]),
   },
 
   async mounted() {
+    this.questionsList = await this.$store.dispatch("getRateQuestions", {
+      appraising_person: this.user.myId,
+      evaluated_person: this.peerId,
+    });
+
     if (!this.isRate) {
       if (!this.prId && this.listReviews.length === 0)
         await this.$store.dispatch("getListPerformanceReview");
@@ -67,24 +73,20 @@ export default {
         prId: this.prId || this.listReviews[this.listReviews.length - 1].pr_id,
       });
 
-      questions.map((question) => {
+      this.questionsList.map((question) => {
         for (let comment in this.rateComment) {
           if (question.name === comment)
-            question.comment = this.rateComment[comment];
+            question.text = this.rateComment[comment];
         }
       });
     } else {
-      questions.map((question) => (question.comment = ""));
+      this.questionsList.map((question) => (question.comment = ""));
     }
 
     this.isLoaded = true;
   },
 
   methods: {
-    questions() {
-      return questions;
-    },
-
     isErrorFalse() {
       this.isNotError = true;
     },
@@ -94,12 +96,18 @@ export default {
       this.btnSubmit = event.target.parentElement;
       const form = new FormData(this.btnSubmit);
       const rating = this.btnSubmit.querySelectorAll(".rating");
+      const ratesFromMe = [];
 
       Array.from(rating).map((elem) => {
         let checked = false;
         const rates = elem.querySelectorAll("input");
         Array.from(rates).map((rate) => {
-          if (rate.checked) checked = true;
+          if (rate.checked) {
+            checked = true;
+            const id = rate.name.split("_")[1];
+            let findRate = ratesFromMe.find((mark) => mark.id === id);
+            if (!findRate) ratesFromMe.push({ id, mark: rate.value });
+          }
         });
         if (!checked) {
           this.isNotError = false;
@@ -108,14 +116,24 @@ export default {
       });
 
       for (let pair of form.entries()) {
-        if (pair[0] !== "profile" && !pair[1]) {
+        if (!pair[1]) {
           this.isNotError = false;
           this.ErrorText = "Один или несколько комментариев не были заполнены";
+          // break;
+        } else {
+          let findComment = ratesFromMe.find(
+            (comment) => comment.id === pair[0]
+          );
+          if (findComment) findComment.text = pair[1];
         }
       }
 
       if (this.isNotError) {
-        await this.$store.dispatch("postPeersRatedMe", form);
+        await this.$store.dispatch("postPeersRatedMe", {
+          profile: this.peerId,
+          is_draft: true,
+          grades: ratesFromMe,
+        });
         await this.$store.dispatch("getPeersRatedMe");
       } else {
         this.btnSubmit.addEventListener("focusin", this.isErrorFalse);
