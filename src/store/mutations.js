@@ -2,6 +2,11 @@ import { types } from "@/types";
 import { API_URL } from "@/helpers/api";
 
 const mutations = {
+  [types.SET_IS_LOADING](state, payload) {
+    const existsLoadingStatuses = state.isLoading;
+    state.isLoading = { ...existsLoadingStatuses, ...payload };
+  },
+
   [types.CLEAR_lOCALSTORGE]() {
     localStorage.removeItem("token");
     localStorage.removeItem("lifetimeToken");

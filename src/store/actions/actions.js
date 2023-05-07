@@ -27,7 +27,6 @@ import {
   saveMyPeer,
   setManagerStatus,
 } from "@/services/peers";
-import Cockies from "vue-cookies";
 import router from "@/router";
 import {
   beginPerformanceReview,
@@ -47,12 +46,11 @@ import {
   updateQuestions,
 } from "@/services/basic";
 import grades from "@/helpers/grades";
-import { getManagerStatusAPI } from "@/helpers/api";
 
 const actions = {
-  async refreshAuthToken({ commit, getters, state }) {
+  async refreshAuthToken({ commit, state }) {
     try {
-      const cookieToken = getters.cookieToken;
+      commit(types.SET_IS_LOADING, { refreshAuthToken: true });
       const lifetimeToken = localStorage.lifetimeToken;
       if (lifetimeToken) {
         const dateNow = new Date();
@@ -73,11 +71,14 @@ const actions = {
       console.log(e);
       localStorage.token = "";
       await router.push("/login");
+    } finally {
+      commit(types.SET_IS_LOADING, { refreshAuthToken: false });
     }
   },
 
   async getToken({ commit }, { username, password }) {
     try {
+      commit(types.SET_IS_LOADING, { getToken: true });
       const token = await getNewToken({
         user: {
           id: username,
@@ -89,7 +90,6 @@ const actions = {
         throw Error(token.status);
       }
 
-      // Cockies.set("refresh_token", token.token_b, "7d");
       localStorage.token = token.token_f;
       localStorage.lifetimeToken = token.token_f_lifetime;
 
@@ -99,11 +99,14 @@ const actions = {
     } catch (e) {
       console.log(e.message);
       commit("SET_AUTH", { error: e.message });
+    } finally {
+      commit(types.SET_IS_LOADING, { getToken: false });
     }
   },
 
   async registerNewUser({ commit, dispatch }, data) {
     try {
+      commit(types.SET_IS_LOADING, { registerNewUser: true });
       const [username, password] = [data.get("phone"), data.get("password")];
       await registerUser(data);
       await dispatch("getToken", { username, password });
@@ -111,33 +114,44 @@ const actions = {
     } catch (e) {
       console.log(e.message);
       //commit("SET_AUTH", { error: "Неверный логин или пароль" });
+    } finally {
+      commit(types.SET_IS_LOADING, { registerNewUser: false });
     }
   },
 
   async getMyProfile({ commit }) {
     try {
+      commit(types.SET_IS_LOADING, { getMyProfile: true });
       const profile = await getMyProfile();
       commit("SET_MY_PROFILE", profile);
     } catch (e) {
       console.log(e);
+    } finally {
+      commit(types.SET_IS_LOADING, { getMyProfile: false });
     }
   },
 
   async getMyPeers({ commit }) {
     try {
+      commit(types.SET_IS_LOADING, { getMyPeers: true });
       const peers = await getMyPeers();
       if (!peers.error) commit(types.SET_PEERS, peers);
     } catch (e) {
       console.log(e);
+    } finally {
+      commit(types.SET_IS_LOADING, { getMyPeers: false });
     }
   },
 
   async getManagerStatus({ commit }, id) {
     try {
+      commit(types.SET_IS_LOADING, { getManagerStatus: true });
       const status = await getManagerStatus({ profile_id: id });
       commit(types.SET_MANAGER_STATUS, status.is_manager);
     } catch (e) {
       console.log(e);
+    } finally {
+      commit(types.SET_IS_LOADING, { getManagerStatus: false });
     }
   },
 
@@ -186,10 +200,13 @@ const actions = {
 
   async getMyTeam({ commit }) {
     try {
+      commit(types.SET_IS_LOADING, { getMyTeam: true });
       const team = await getMyTeam();
       if (!team.error) commit(types.SET_TEAM, team);
     } catch (e) {
       console.log(e);
+    } finally {
+      commit(types.SET_IS_LOADING, { getMyTeam: false });
     }
   },
 
@@ -263,6 +280,7 @@ const actions = {
 
   async getSelfReview({ commit, state }, payload) {
     try {
+      commit(types.SET_IS_LOADING, { getSelfReview: true });
       const { id } = payload;
       let contentSelfReview;
       if (id) contentSelfReview = await getSelfReviewId({ pr_id: id });
@@ -270,6 +288,8 @@ const actions = {
       commit(types.SET_SELFREVIEW, contentSelfReview);
     } catch (e) {
       console.log(e);
+    } finally {
+      commit(types.SET_IS_LOADING, { getSelfReview: false });
     }
   },
 
@@ -299,6 +319,7 @@ const actions = {
 
   async getIsApproval({ commit, state, dispatch }) {
     try {
+      commit(types.SET_IS_LOADING, { getIsApproval: true });
       if (state.user.team.length === 0) {
         await dispatch("getMyTeam");
       }
@@ -324,6 +345,8 @@ const actions = {
       });
     } catch (e) {
       console.log(e);
+    } finally {
+      commit(types.SET_IS_LOADING, { getIsApproval: false });
     }
   },
 
@@ -404,10 +427,13 @@ const actions = {
 
   async getPeersRatedMe({ commit }) {
     try {
+      commit(types.SET_IS_LOADING, { getPeersRatedMe: true });
       const peers = await getPeersRatedMe();
       commit("SET_PEERS_RATED_ME", peers.rated);
     } catch (e) {
       console.log(e);
+    } finally {
+      commit(types.SET_IS_LOADING, { getPeersRatedMe: false });
     }
   },
 
@@ -421,6 +447,7 @@ const actions = {
 
   async getTeamScores({ commit, dispatch, state }, payload) {
     try {
+      commit(types.SET_IS_LOADING, { getTeamScores: true });
       const { team, period } = payload;
       const averagesTeam = Object.assign({}, grades);
       let countAverages = 0;
@@ -518,15 +545,20 @@ const actions = {
       commit("SET_GENERAL_SCORE", averagesTeam);
     } catch (e) {
       console.log(e);
+    } finally {
+      commit(types.SET_IS_LOADING, { getTeamScores: false });
     }
   },
 
   async getStatusPerformanceReview({ commit }) {
     try {
+      commit(types.SET_IS_LOADING, { getStatusPerformanceReview: true });
       const status = await getStatusPerformanceReview();
       commit(types.SET_PR_STATUS, status);
     } catch (e) {
       console.log(e);
+    } finally {
+      commit(types.SET_IS_LOADING, { getStatusPerformanceReview: false });
     }
   },
 
@@ -559,10 +591,13 @@ const actions = {
 
   async getListPerformanceReview({ commit }) {
     try {
+      commit(types.SET_IS_LOADING, { getListPerformanceReview: true });
       const listReviews = await getListPerformanceReview();
       commit(types.SET_LIST_REVIEWS, listReviews.rp);
     } catch (e) {
       console.log(e);
+    } finally {
+      commit(types.SET_IS_LOADING, { getListPerformanceReview: false });
     }
   },
 

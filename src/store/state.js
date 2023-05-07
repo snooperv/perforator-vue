@@ -2,6 +2,7 @@ import Cockies from "vue-cookies";
 
 const state = {
   cookieToken: Cockies.get("token_b"),
+  isLoading: false,
   user: {
     username: "",
     phone: "",

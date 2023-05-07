@@ -124,12 +124,10 @@ p {
     position: relative;
     left: 4%;
   }
-
   .logo-div {
     margin-left: -10px;
   }
 }
-
 .header-mobile {
   height: 72px;
   position: fixed;
@@ -141,32 +139,29 @@ p {
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;
-
-  .user-info {
-    display: flex;
-    align-items: center;
-
-    .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      overflow: hidden;
-      margin-right: 14px;
-
-      img {
-        width: 40px;
-        height: 40px;
-        object-fit: cover;
-      }
-    }
-  }
-
-  .mobile-settings {
-    display: flex;
-    align-items: center;
-
-    .user-setting {
-      margin-left: 16px;
-    }
-  }
 }
+.header-mobile .user-info {
+  display: flex;
+  align-items: center;
+}
+.header-mobile .user-info .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 14px;
+}
+.header-mobile .user-info .avatar img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+.header-mobile .mobile-settings {
+  display: flex;
+  align-items: center;
+}
+.header-mobile .mobile-settings .user-setting {
+  margin-left: 16px;
+}
+
+/*# sourceMappingURL=header.css.map */

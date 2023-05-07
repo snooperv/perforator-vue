@@ -4,7 +4,7 @@ import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 import VueCookies from "vue-cookies";
-import VueTheMask from 'vue-the-mask'
+import VueTheMask from "vue-the-mask";
 
 createApp(App)
   .use(store)
