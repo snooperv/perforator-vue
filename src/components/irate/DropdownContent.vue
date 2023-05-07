@@ -118,7 +118,7 @@ export default {
         if (!pair[1]) {
           this.isNotError = false;
           this.ErrorText = "Один или несколько комментариев не были заполнены";
-          // break;
+          break;
         } else {
           let findComment = ratesFromMe.find(
             (comment) => comment.id === pair[0]
