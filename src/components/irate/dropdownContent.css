@@ -243,7 +243,7 @@ input[type=submit]:active {
     margin-bottom: 0;
   }
   .dropdown-content .dropdown-container .char-count {
-    right: 10%;
+    right: 2%;
     top: -25px;
   }
   .dropdown-content .dropdown-container .question {

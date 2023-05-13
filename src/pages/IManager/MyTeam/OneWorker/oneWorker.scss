@@ -172,7 +172,8 @@ table {
   display: flex;
   gap: 20px;
   align-items: center;
-  //align-self: flex-start;
+  position: relative;
+  z-index: 2;
 }
 
 .title-head-self {
@@ -298,10 +299,21 @@ table {
 }
 
 .drop {
-  display: none;
+  height: 0;
+  visibility: hidden;
+  opacity: 0;
+  overflow: hidden;
+  width: 100%;
+  transform: translateY(-50px);
+  z-index: 1;
+  transition: 0.3s ease-in-out;
 
   &.show {
-    display: block;
+    height: 100%;
+    padding-top: 50px;
+    padding-bottom: 10px;
+    visibility: visible;
+    opacity: 1;
   }
 }
 
