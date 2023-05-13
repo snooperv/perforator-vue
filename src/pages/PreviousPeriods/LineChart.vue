@@ -72,7 +72,7 @@ export default {
             await this.$store.dispatch("getUserScores", user);
           })
         );
-      } else if (user?.myId) {
+      } else if (user?.myId && this.user.statusManager !== undefined) {
         user.pr_id = await this.$store.dispatch("getPreviousPeriods", {
           id: user.myId,
           date,
@@ -96,18 +96,26 @@ export default {
         if (this.user.statusManager && this.user.team.length === 0) {
           await this.$store.dispatch("getMyTeam");
         }
+
         if (data.datasets[0].data.length === 0) {
           for (let review of actualReviews) {
-            await this.loadScores(review.pr_id, false);
-            const averageTeam = _.cloneDeep(this.user.team.generalRating);
+            await this.loadScores(review.pr_id);
+            const averageTeam = this.user.team.generalRating;
             if (averageTeam || this.user.team.rating) {
               const average = averageTeam
                 ? averageTeam["Средняя оценка"]
                 : this.user.team.rating.average;
               data.datasets[0].data.push(average);
+            } else {
+              break;
             }
             if (+this.$route.params.prId === review.pr_id) {
-              await this.setScores(review.pr_id);
+              if (this.user.statusManager) {
+                await this.setScores(review.pr_id);
+              } else if (this.user.myId) {
+                const user = _.cloneDeep(this.user);
+                await this.setScores(review.pr_id, user);
+              }
             }
           }
         }
@@ -153,9 +161,9 @@ export default {
   },
 
   watch: {
-    "user.statusManager": {
+    user: {
       handler() {
-        this.getScores();
+        if (this.loaded) this.getScores();
       },
       deep: true,
     },
