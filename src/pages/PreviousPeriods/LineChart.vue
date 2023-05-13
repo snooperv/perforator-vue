@@ -46,7 +46,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["listReviews", "user", "scores"]),
+    ...mapState(["listReviews", "user", "scores", "prStatus"]),
   },
 
   methods: {
@@ -73,7 +73,9 @@ export default {
       try {
         this.listReviews.length === 0 &&
           (await this.$store.dispatch("getListPerformanceReview"));
-        data.labels = this.listReviews.map(
+        const actualReviews = _.cloneDeep(this.listReviews);
+        this.prStatus?.status !== "no pr" && actualReviews.pop();
+        data.labels = actualReviews.map(
           (review) => review.closing_date.split("T")[0]
         );
 
@@ -82,7 +84,7 @@ export default {
         }
 
         if (data.datasets[0].data.length === 0) {
-          for (let review of this.listReviews) {
+          for (let review of actualReviews) {
             await this.loadScores(review.pr_id);
             const resultTeam = _.cloneDeep(this.user.team);
             const averageTeam = _.cloneDeep(this.user.team.generalRating);
@@ -111,7 +113,7 @@ export default {
           )[0]?.index;
 
           if (indexClick !== undefined) {
-            const period = this.listReviews[indexClick].pr_id;
+            const period = actualReviews[indexClick].pr_id;
 
             this.setScores(period);
 
