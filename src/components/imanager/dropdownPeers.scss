@@ -29,13 +29,24 @@
 }
 
 .dropdown-content {
-  padding-top: 50px;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
   background-color: #ececf2;
-  width: 95%;
+  width: 100%;
   border-radius: 15px;
   transform: translateY(-50px);
   position: relative;
   z-index: 1;
+  transition: 0.3s ease-in-out;
+
+  &.show {
+    height: 100%;
+    padding-top: 50px;
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
 .dropdown-container {
@@ -63,9 +74,6 @@
 }
 
 input[type="submit"]:active {
-  -moz-transform: scale(0.95);
-  -webkit-transform: scale(0.95);
-  -o-transform: scale(0.95);
   -ms-transform: scale(0.95);
   transform: scale(0.95);
 }
@@ -118,9 +126,6 @@ input[type="submit"]:active {
 }
 
 .add-peer:active {
-  -moz-transform: scale(0.95);
-  -webkit-transform: scale(0.95);
-  -o-transform: scale(0.95);
   -ms-transform: scale(0.95);
   transform: scale(0.95);
 }

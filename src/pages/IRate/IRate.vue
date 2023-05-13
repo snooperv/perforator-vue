@@ -40,7 +40,7 @@
     >
       <h2>Ожидают моей оценки</h2>
       <div class="peers">
-        <div class="one-peer" v-for="peer in user.peersIRate">
+        <div class="one-peer" v-for="(peer, index) in user.peersIRate">
           <button
             @click="() => (peer.isOpen = !peer.isOpen)"
             class="peer dropbtn"
@@ -58,7 +58,11 @@
               <i class="fas fa-chevron-right" aria-hidden="true"></i>
             </a>
           </button>
-          <DropdownContent :open="peer.isOpen" :peer-id="peer.id" />
+          <DropdownContent
+            :open="peer.isOpen"
+            :peer-id="peer.id"
+            :key="index"
+          />
         </div>
       </div>
     </div>

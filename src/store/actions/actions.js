@@ -164,13 +164,14 @@ const actions = {
     }
   },
 
-  async getAllUsers({ commit, state, dispatch }) {
+  async getAllUsers({ commit, state }) {
     try {
       const users = await getAllUsers();
       const usersWithoutMe = users.users.filter(
         (user) => user.profile_id !== state.user.myId
       );
-      await dispatch("getMyTeam");
+      const team = await getMyTeam();
+      if (!team.error) commit(types.SET_TEAM, team);
       const usersWithoutTeam = usersWithoutMe.filter(
         (user) => !user.team_id && !user.is_manager
       );
@@ -193,7 +194,8 @@ const actions = {
     try {
       await deleteUserImMyTeam({ profile_id: id });
       commit(types.DELETE_USER_TEAM);
-      await dispatch("getMyTeam");
+      const team = await getMyTeam();
+      if (!team.error) commit(types.SET_TEAM, team);
     } catch (e) {
       console.log(e);
     }

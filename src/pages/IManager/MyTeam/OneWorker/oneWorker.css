@@ -44,7 +44,6 @@ td {
 }
 
 .container {
-  display: inline-block;
   margin: 0;
 }
 
@@ -79,12 +78,13 @@ td {
 
 table {
   display: grid;
-  margin: 40px 0;
   background: #ececf2;
   padding-left: 20px;
   padding-right: 20px;
   border-radius: 35px;
   border-spacing: 10px;
+  width: 100%;
+  margin: 40px 0;
 }
 
 .grade-number {
@@ -97,10 +97,7 @@ table {
   height: 32px;
   line-height: 32px;
   display: inline-block;
-  margin-left: 15px;
-  margin-top: 7px;
-  margin-bottom: 7px;
-  margin-right: 10px;
+  margin: 7px 10px 7px 15px;
 }
 
 .great {
@@ -127,18 +124,17 @@ table {
 }
 
 .text-in-table {
-  width: 457px;
+  width: 750px;
   height: 46px;
   padding-left: 20px;
+  padding-right: 20px;
   margin-left: 20px;
   background: #ffffff;
   border-radius: 17px;
 }
 
 .text-in-self {
-  padding: 10px;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding: 10px 30px;
   font-weight: normal;
   font-size: 14px;
   line-height: 15px;
@@ -297,10 +293,9 @@ table {
 }
 
 #head {
-  text-align: center;
   color: #000;
   font-size: 26px;
-  padding: 10px;
+  padding: 10px 30px;
 }
 
 @media (max-width: 800px) {
@@ -328,7 +323,7 @@ table {
     margin-left: 0;
     margin-right: 0;
     padding: 0 5px;
-    overflow-x: scroll;
+    overflow-x: auto;
   }
   .self-review .container #finalScore td {
     font-size: 16px;

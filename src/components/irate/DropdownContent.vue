@@ -95,7 +95,7 @@ export default {
       this.isNotError = true;
     },
 
-    async postForm(event) {
+    postForm(event) {
       event.preventDefault();
       this.btnSubmit = event.target.parentElement;
       const form = new FormData(this.btnSubmit);
@@ -133,11 +133,11 @@ export default {
       }
 
       if (this.isNotError) {
-        await this.$store.dispatch("postPeersRatedMe", {
+        this.$store.dispatch("postPeersRatedMe", {
           profile: this.peerId,
           grades: ratesFromMe,
         });
-        await this.$store.dispatch("getPeersRatedMe");
+        event.target.closest(".one-peer").style.display = "none";
       } else {
         this.btnSubmit.addEventListener("focusin", this.isErrorFalse);
       }
