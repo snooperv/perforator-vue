@@ -59,6 +59,14 @@ export default {
       }
     },
 
+    setScores(id) {
+      const targetScore = this.scores.filter((score) => score.period === id);
+
+      this.$store.commit(types.SET_SCORE_BEFORE_UNMOUNT, {
+        previousPeriod: targetScore && targetScore[0],
+      });
+    },
+
     async getScores() {
       this.loaded = false;
 
@@ -83,7 +91,14 @@ export default {
               results: resultTeam,
               average: averageTeam,
             });
-            data.datasets[0].data.push(averageTeam["Средняя оценка"]);
+            data.datasets[0].data.push(
+              averageTeam
+                ? averageTeam["Средняя оценка"]
+                : resultTeam.rating.average
+            );
+            if (+this.$route.params.prId === review.pr_id) {
+              this.setScores(review.pr_id);
+            }
           }
         }
 
@@ -98,13 +113,11 @@ export default {
           if (indexClick !== undefined) {
             const period = this.listReviews[indexClick].pr_id;
 
+            this.setScores(period);
+
             const targetScore = this.scores.filter(
               (score) => score.period === period
             );
-
-            this.$store.commit(types.SET_SCORE_BEFORE_UNMOUNT, {
-              previousPeriod: targetScore && targetScore[0],
-            });
 
             if (targetScore) {
               if (this.user.statusManager) {

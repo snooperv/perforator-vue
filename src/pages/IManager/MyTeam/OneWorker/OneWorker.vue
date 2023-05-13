@@ -115,7 +115,7 @@ export default {
     colorGrade,
 
     loadScores() {
-      if (this.user.team && this.prStatus) {
+      if (this.user.team && this.prStatus && this.user.statusManager) {
         this.$store.dispatch("getTeamScores", {
           team: this.user.team,
           period: this.prStatus.pr_id,
@@ -146,6 +146,12 @@ export default {
 
   watch: {
     "user.team": {
+      handler() {
+        this.loadScores();
+      },
+    },
+
+    "user.statusManager": {
       handler() {
         this.loadScores();
       },

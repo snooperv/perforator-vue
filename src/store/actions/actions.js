@@ -18,7 +18,6 @@ import {
   getPeersRatedMe,
   getRateQuestions,
   getTeamScores,
-  getTeamScoresPrevious,
   getUserPeers,
   getWorkerScore,
   postPeersRatedMe,
@@ -88,7 +87,8 @@ const actions = {
       });
 
       if (token.status !== "ok") {
-        throw Error(token.status);
+        console.log(token.status);
+        return;
       }
 
       localStorage.token = token.token_f;
@@ -375,7 +375,7 @@ const actions = {
     }
   },
 
-  async getMyManager({ commit }, id) {
+  async getMyManager({ commit }) {
     try {
       const manager = await getMyManager();
       commit(types.SET_MY_MANAGER, manager);
@@ -425,14 +425,6 @@ const actions = {
     }
   },
 
-  async postProcessOneToOnePrivate({}, payload) {
-    const { is_manager, manager_id, employee_id, note } = payload;
-    try {
-    } catch (e) {
-      console.log(e);
-    }
-  },
-
   async getPeersRatedMe({ commit }) {
     try {
       commit(types.SET_IS_LOADING, { getPeersRatedMe: true });
@@ -467,7 +459,10 @@ const actions = {
       commit(types.SET_IS_LOADING, { getTeamScores: true });
       const { team, period } = payload;
 
-      if (_.isEmpty(state.user.team.generalRating)) {
+      if (
+        _.isEmpty(state.user.team.generalRating) &&
+        state.user.statusManager
+      ) {
         const teamScore = await getTeamScores({ id: period });
         if (teamScore.status === "ok") {
           commit("SET_GENERAL_SCORE", teamScore.rating);
@@ -478,22 +473,24 @@ const actions = {
         team.map(async (user) => {
           try {
             commit(types.SET_IS_LOADING, { getUserScores: true });
-            const workersScore = await getWorkerScore({
-              id: user.user_id,
-              pr_id: user.pr_id,
-            });
-            if (workersScore.status === "ok") {
-              const average = (workersScore.rating?.filter(
-                (score) => score.name === "Средняя оценка"
-              )[0]).average;
-              const userRating = {
-                detailed: workersScore.rating,
-                average,
-              };
-              commit("SET_WORKER_SCORE", {
-                id: user.user_id,
-                score: userRating,
+            if (!user.rating) {
+              const workersScore = await getWorkerScore({
+                id: user.user_id || user.myId,
+                pr_id: user.pr_id || period,
               });
+              if (workersScore.status === "ok") {
+                const average = (workersScore.rating?.filter(
+                  (score) => score.name === "Средняя оценка"
+                )[0]).average;
+                const userRating = {
+                  detailed: workersScore.rating,
+                  average,
+                };
+                commit("SET_WORKER_SCORE", {
+                  id: user.user_id || user.myId,
+                  score: userRating,
+                });
+              }
             }
           } catch (e) {
             console.log(e);
@@ -521,7 +518,7 @@ const actions = {
     }
   },
 
-  async beginPerformanceReview({ commit, dispatch }) {
+  async beginPerformanceReview({ dispatch }) {
     try {
       await beginPerformanceReview();
       await dispatch("getStatusPerformanceReview");
@@ -539,7 +536,7 @@ const actions = {
     }
   },
 
-  async closePerformanceReview({ commit, dispatch }) {
+  async closePerformanceReview({ dispatch }) {
     try {
       await closePerformanceReview();
       await dispatch("getStatusPerformanceReview");

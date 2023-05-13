@@ -119,7 +119,8 @@ export default {
         this.user.team &&
         !this.data.previousPeriod &&
         this.prStatus?.status !== "no pr" &&
-        this.prStatus?.pr_status > 3
+        this.prStatus?.pr_status > 3 &&
+        this.user.statusManager
       ) {
         this.$store.dispatch("getTeamScores", {
           team: this.user.team,
