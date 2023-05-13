@@ -285,9 +285,25 @@ table {
 }
 
 .feedback-manager {
+  & .fa-chevron-right {
+    transition: 0.3s;
+  }
+
   &.opened {
     padding-bottom: 30px;
     width: 100%;
+
+    & .fa-chevron-right {
+      transform: rotate(90deg);
+    }
+  }
+}
+
+.drop {
+  display: none;
+
+  &.show {
+    display: block;
   }
 }
 

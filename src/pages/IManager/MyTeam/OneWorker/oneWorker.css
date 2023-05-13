@@ -278,9 +278,22 @@ table {
   width: 100%;
 }
 
+.feedback-manager .fa-chevron-right {
+  transition: 0.3s;
+}
 .feedback-manager.opened {
   padding-bottom: 30px;
   width: 100%;
+}
+.feedback-manager.opened .fa-chevron-right {
+  transform: rotate(90deg);
+}
+
+.drop {
+  display: none;
+}
+.drop.show {
+  display: block;
 }
 
 #head {

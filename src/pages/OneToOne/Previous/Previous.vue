@@ -9,10 +9,11 @@
     <div v-for="worker in myTeam">
       <button
         @click="
-          () =>
-            (worker.isDropdown[review.pr_id] = !worker.isDropdown[review.pr_id])
+          worker.isDropdownObject[review.pr_id] =
+            !worker.isDropdownObject[review.pr_id]
         "
         class="peer dropbtn"
+        :class="{ opened: worker.isDropdownObject[review.pr_id] }"
       >
         <span class="peers-pic">
           <img :src="API_URL() + worker.photo" class="avatar" alt="Аватар" />
@@ -26,7 +27,7 @@
         </a>
       </button>
       <DropdownForm
-        v-if="worker.isDropdown[review.pr_id]"
+        :open="worker.isDropdownObject[review.pr_id]"
         :my-id="user.myId"
         :worker-id="worker.profile_id"
         period="previous"
@@ -70,12 +71,14 @@ export default {
 
     addPrIdUsers() {
       for (let user of this.myTeam) {
-        user.isDropdown = {};
+        if (user.isDropdownObject) continue;
+        user.isDropdownObject = {};
       }
 
       this.listReviews.map((review) => {
         for (let user of this.myTeam) {
-          user.isDropdown[review.pr_id] = false;
+          if (user.isDropdownObject[review.pr_id]) continue;
+          user.isDropdownObject[review.pr_id] = false;
         }
       });
     },

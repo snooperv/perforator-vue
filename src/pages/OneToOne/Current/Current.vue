@@ -9,14 +9,17 @@
 
     <div v-for="worker in myTeam">
       <button
-        @click="() => (worker.isDropdown = !worker.isDropdown)"
+        @click="worker.isDropdown = !worker.isDropdown"
         class="peer dropbtn"
+        :class="{ opened: worker.isDropdown }"
       >
         <span class="peers-pic">
           <img :src="API_URL() + worker.photo" class="avatar" alt="Аватар" />
         </span>
         <span class="name">{{ worker.username }}</span>
-
+        <span class="position" v-if="!isMobile && !user.statusManager">
+          Мой руководитель</span
+        >
         <span class="position" v-if="!isMobile && isManager">
           Мой руководитель</span
         >
@@ -25,7 +28,7 @@
         </a>
       </button>
       <DropdownForm
-        v-if="worker.isDropdown"
+        :open="worker.isDropdown"
         :my-id="user.myId"
         :worker-id="worker.profile_id"
         period="current"

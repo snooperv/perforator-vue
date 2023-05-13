@@ -218,6 +218,18 @@ input[type="submit"]:active {
   }
 }
 
+.fa-chevron-right {
+  transition: 0.3s;
+}
+
+.opened {
+  padding-bottom: 30px;
+
+  & .fa-chevron-right {
+    transform: rotate(90deg);
+  }
+}
+
 @media (max-width: 800px) {
   .stage-closed {
     box-sizing: border-box;

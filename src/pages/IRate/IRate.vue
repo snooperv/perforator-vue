@@ -44,6 +44,7 @@
           <button
             @click="() => (peer.isOpen = !peer.isOpen)"
             class="peer dropbtn"
+            :class="{ opened: peer.isOpen }"
           >
             <span class="peers-pic">
               <img
@@ -57,7 +58,7 @@
               <i class="fas fa-chevron-right" aria-hidden="true"></i>
             </a>
           </button>
-          <DropdownContent v-if="peer.isOpen" :peer-id="peer.id" />
+          <DropdownContent :open="peer.isOpen" :peer-id="peer.id" />
         </div>
       </div>
     </div>

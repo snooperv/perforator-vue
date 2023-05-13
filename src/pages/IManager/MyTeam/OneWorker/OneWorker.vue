@@ -56,7 +56,7 @@
     </div>
     <!--self review-->
     <div class="form" v-if="data.previousPeriod && !user.statusManager">
-      <div class="container feedback-manager">
+      <div class="container feedback-manager" :class="{ opened: srIsDropdown }">
         <h2
           class="title"
           @click="srIsDropdown = !srIsDropdown"
@@ -69,11 +69,8 @@
             </a>
           </button>
         </h2>
-        <div class="drop show">
-          <SelfReviewContent
-            v-if="srIsDropdown && loaded"
-            :prId="$route.params.id"
-          />
+        <div class="drop" :class="{ show: srIsDropdown && loaded }">
+          <SelfReviewContent :prId="$route.params.id" />
         </div>
       </div>
     </div>

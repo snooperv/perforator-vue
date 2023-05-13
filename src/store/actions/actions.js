@@ -560,6 +560,7 @@ const actions = {
   async getOneToOnePrevious({ commit }, payload) {
     const { is_manager, manager_id, employee_id, pr_id } = payload;
     try {
+      commit(types.SET_IS_LOADING, { getOneToOnePrevious: true });
       const commonNote = await getOneToOnePreviousCommon({
         pr_id,
         manager_id,
@@ -576,6 +577,8 @@ const actions = {
       return { commonNote: commonNote.notes, privateNote: privateNote.notes };
     } catch (e) {
       console.log(e);
+    } finally {
+      commit(types.SET_IS_LOADING, { getOneToOnePrevious: false });
     }
   },
 

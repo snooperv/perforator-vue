@@ -1,5 +1,5 @@
 <template>
-  <div id="myDropdown" class="dropdown-content" :class="open && 'show'">
+  <div id="myDropdown" class="dropdown-content" :class="{ show: open }">
     <div class="dropdown-container">
       <form name="formRate" v-if="isLoaded">
         <OneQuestion
@@ -79,6 +79,7 @@ export default {
         this.questionsList.push(question);
       }
     } else {
+      if (!this.user.myId) await this.$store.dispatch("getMyProfile");
       this.questionsList = await this.$store.dispatch("getRateQuestions", {
         appraising_person: this.user.myId,
         evaluated_person: this.peerId,
