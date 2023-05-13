@@ -103,7 +103,8 @@ export default {
   },
 
   mounted() {
-    if (this.user.team.length === 0) this.$store.dispatch("getMyTeam");
+    if (this.user.team.length === 0 && this.user.statusManager)
+      this.$store.dispatch("getMyTeam");
     this.user.statusManager && this.loadScores();
     this.loadWorker();
   },
@@ -112,25 +113,20 @@ export default {
     colorGrade,
 
     loadScores() {
-      if (this.user.team && this.prStatus && this.user.statusManager) {
-        this.$store.dispatch("getTeamScores", {
-          team: this.user.team,
-          period: this.prStatus.pr_id,
+      if (this.user.team && this.user.statusManager) {
+        this.user.team.map((user) => {
+          this.$store.dispatch("getUserScores", user);
         });
       }
       this.loadWorker();
     },
 
     loadWorker() {
-      if (
-        this.data.previousPeriod?.results.length > 0 ||
-        this.user.team.length > 0
-      ) {
-        this.worker = (
-          this.data.previousPeriod?.results || this.user.team
-        ).filter((oneUser) => oneUser.profile_id === +this.$route.params.id)[0];
-      } else this.worker = this.data.previousPeriod?.results;
-
+      if (this.user.statusManager) {
+        this.worker = this.user.team.filter(
+          (oneUser) => oneUser.profile_id === +this.$route.params.id
+        )[0];
+      } else this.worker = this.user.team;
       this.loaded = true;
     },
 

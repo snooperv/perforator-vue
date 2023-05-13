@@ -1,5 +1,5 @@
 import { types } from "@/types";
-import { refreshToken, getNewToken, registerUser } from "@/services/auth";
+import { getNewToken, refreshToken, registerUser } from "@/services/auth";
 import {
   addUserImMyTeam,
   addWorkerPeer,
@@ -34,6 +34,7 @@ import {
   closePerformanceReview,
   getListPerformanceReview,
   getMyProfile,
+  getPreviousPeriods,
   getQuestions,
   getReviewEmployee,
   getSelfReview,
@@ -45,7 +46,6 @@ import {
   saveSelfReview,
   updateQuestions,
 } from "@/services/basic";
-import _ from "lodash";
 
 const actions = {
   async refreshAuthToken({ commit, state }) {
@@ -456,55 +456,59 @@ const actions = {
     }
   },
 
-  async getTeamScores({ commit, dispatch, state }, payload) {
+  async getPreviousPeriods({ commit }, payload) {
+    try {
+      commit(types.SET_IS_LOADING, { getPreviousPeriods: true });
+      const { id, date } = payload;
+      const previous = await getPreviousPeriods({ id });
+      return previous.rp.filter((prev) => prev.closing_date === date)[0].pr_id;
+    } catch (e) {
+      console.log(e);
+    } finally {
+      commit(types.SET_IS_LOADING, { getPreviousPeriods: false });
+    }
+  },
+
+  async getTeamScores({ commit }, period) {
     try {
       commit(types.SET_IS_LOADING, { getTeamScores: true });
-      const { team, period } = payload;
 
-      if (
-        _.isEmpty(state.user.team.generalRating) &&
-        state.user.statusManager
-      ) {
-        const teamScore = await getTeamScores({ id: period });
-        if (teamScore.status === "ok") {
-          commit("SET_GENERAL_SCORE", teamScore.rating);
-        }
+      const teamScore = await getTeamScores({ id: period });
+      if (teamScore.status === "ok") {
+        commit("SET_GENERAL_SCORE", teamScore.rating);
       }
-
-      await Promise.all(
-        team.map(async (user) => {
-          try {
-            commit(types.SET_IS_LOADING, { getUserScores: true });
-            if (!user.rating) {
-              const workersScore = await getWorkerScore({
-                id: user.user_id || user.myId,
-                pr_id: user.pr_id || period,
-              });
-              if (workersScore.status === "ok") {
-                const average = (workersScore.rating?.filter(
-                  (score) => score.name === "Средняя оценка"
-                )[0]).average;
-                const userRating = {
-                  detailed: workersScore.rating,
-                  average,
-                };
-                commit("SET_WORKER_SCORE", {
-                  id: user.user_id || user.myId,
-                  score: userRating,
-                });
-              }
-            }
-          } catch (e) {
-            console.log(e);
-          } finally {
-            commit(types.SET_IS_LOADING, { getUserScores: false });
-          }
-        })
-      );
     } catch (e) {
       console.log(e);
     } finally {
       commit(types.SET_IS_LOADING, { getTeamScores: false });
+    }
+  },
+
+  async getUserScores({ commit }, user) {
+    try {
+      commit(types.SET_IS_LOADING, { getUserScores: true });
+
+      const workersScore = await getWorkerScore({
+        id: user.user_id || user.myId,
+        pr_id: user.pr_id || period,
+      });
+      if (workersScore.status === "ok") {
+        const average = (workersScore.rating?.filter(
+          (score) => score.name === "Средняя оценка"
+        )[0]).average;
+        const userRating = {
+          detailed: workersScore.rating,
+          average,
+        };
+        commit("SET_WORKER_SCORE", {
+          id: user.user_id || user.myId,
+          score: userRating,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      commit(types.SET_IS_LOADING, { getUserScores: false });
     }
   },
 

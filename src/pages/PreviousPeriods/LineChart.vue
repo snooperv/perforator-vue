@@ -15,7 +15,6 @@ import {
 import { Line } from "vue-chartjs";
 import { data, options } from "@/helpers/chartConfig";
 import { mapState } from "vuex";
-import { types } from "@/types";
 import _ from "lodash";
 
 ChartJS.register(
@@ -42,7 +41,7 @@ export default {
   },
 
   mounted() {
-    if (this.user.statusManager !== undefined) this.getScores();
+    this.getScores();
   },
 
   computed: {
@@ -51,20 +50,35 @@ export default {
 
   methods: {
     async loadScores(period) {
-      if (this.user.team) {
-        await this.$store.dispatch("getTeamScores", {
-          team: this.user.statusManager ? this.user.team : [this.user],
-          period,
-        });
+      if (this.user.statusManager) {
+        await this.$store.dispatch("getTeamScores", period);
+      } else if (this.user.myId) {
+        const user = _.cloneDeep(this.user);
+        await this.setScores(period, user);
       }
     },
 
-    setScores(id) {
-      const targetScore = this.scores.filter((score) => score.period === id);
-
-      this.$store.commit(types.SET_SCORE_BEFORE_UNMOUNT, {
-        previousPeriod: targetScore && targetScore[0],
-      });
+    async setScores(id, user) {
+      const date = this.listReviews.filter((review) => review.pr_id === id)[0]
+        .closing_date;
+      const team = _.cloneDeep(this.user.team);
+      if (this.user.statusManager) {
+        await Promise.all(
+          team.map(async (user) => {
+            user.pr_id = await this.$store.dispatch("getPreviousPeriods", {
+              id: user.user_id,
+              date,
+            });
+            await this.$store.dispatch("getUserScores", user);
+          })
+        );
+      } else if (user?.myId) {
+        user.pr_id = await this.$store.dispatch("getPreviousPeriods", {
+          id: user.myId,
+          date,
+        });
+        await this.$store.dispatch("getUserScores", user);
+      }
     },
 
     async getScores() {
@@ -82,24 +96,18 @@ export default {
         if (this.user.statusManager && this.user.team.length === 0) {
           await this.$store.dispatch("getMyTeam");
         }
-
         if (data.datasets[0].data.length === 0) {
           for (let review of actualReviews) {
-            await this.loadScores(review.pr_id);
-            const resultTeam = _.cloneDeep(this.user.team);
+            await this.loadScores(review.pr_id, false);
             const averageTeam = _.cloneDeep(this.user.team.generalRating);
-            this.scores.push({
-              period: review.pr_id,
-              results: resultTeam,
-              average: averageTeam,
-            });
-            data.datasets[0].data.push(
-              averageTeam
+            if (averageTeam || this.user.team.rating) {
+              const average = averageTeam
                 ? averageTeam["Средняя оценка"]
-                : resultTeam.rating.average
-            );
+                : this.user.team.rating.average;
+              data.datasets[0].data.push(average);
+            }
             if (+this.$route.params.prId === review.pr_id) {
-              this.setScores(review.pr_id);
+              await this.setScores(review.pr_id);
             }
           }
         }
@@ -147,8 +155,9 @@ export default {
   watch: {
     "user.statusManager": {
       handler() {
-        if (this.scores.length === 0) this.getScores();
+        this.getScores();
       },
+      deep: true,
     },
   },
 };

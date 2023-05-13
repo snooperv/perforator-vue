@@ -106,7 +106,7 @@ export default {
     colorGrade,
     toEmployee(e, id) {
       e.preventDefault();
-      if (this.data.previousPeriod?.results)
+      if (this.$route.path.includes("last-periods/team"))
         this.$router.push({
           name: "employeePeriods",
           params: { id, prId: this.$route.params.prId },
@@ -122,9 +122,9 @@ export default {
         this.prStatus?.pr_status > 3 &&
         this.user.statusManager
       ) {
-        this.$store.dispatch("getTeamScores", {
-          team: this.user.team,
-          period: this.prStatus.pr_id,
+        this.$store.dispatch("getTeamScores", this.prStatus.pr_id);
+        this.user.team.map((user) => {
+          this.$store.dispatch("getUserScores", user);
         });
       }
     },
