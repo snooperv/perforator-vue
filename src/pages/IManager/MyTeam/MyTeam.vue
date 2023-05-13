@@ -2,7 +2,7 @@
   <div
     v-if="
       this.$route.path.includes('last-periods/team') ||
-      (prStatus?.status !== 'no pr' && prStatus?.pr_status > 2)
+      (prStatus?.status !== 'no pr' && prStatus?.pr_status > 3)
     "
   >
     <div class="block-container">
@@ -22,12 +22,6 @@
             </div>
           </div>
         </div>
-        <!--<div class="items sum">
-            Нормированная оценка
-        </div>
-        <div class="grade">
-            <div class="grade-number great">3.8</div>
-        </div>-->
       </div>
     </div>
 
@@ -62,9 +56,9 @@
             <div class="grade">
               <div
                 class="grade-number"
-                :class="colorGrade(worker.rating?.averages.average)"
+                :class="colorGrade(worker.rating?.average)"
               >
-                {{ worker.rating?.averages.average }}
+                {{ worker.rating?.average }}
               </div>
             </div>
           </a>
@@ -77,7 +71,7 @@
     <h3>Данный этап сейчас закрыт</h3>
     <p>
       Вы сможете посмотреть результаты команды после того как перейдете к этапу
-      "Взаимное оценивание"
+      "One to One"
     </p>
   </div>
 </template>
@@ -86,9 +80,6 @@
 import { mapState } from "vuex";
 import colorGrade from "@/helpers/colorGrade";
 import { API_URL } from "@/helpers/api";
-import { openModal } from "jenesius-vue-modal";
-import PeersList from "@/components/modals/PeersList/PeersList.vue";
-import PeersListMobile from "@/components/modals/PeersList/peersListMobile.vue";
 
 export default {
   name: "MyTeam",
@@ -128,10 +119,11 @@ export default {
         this.user.team &&
         !this.data.previousPeriod &&
         this.prStatus?.status !== "no pr" &&
-        this.prStatus?.pr_status > 2
+        this.prStatus?.pr_status > 3
       ) {
         this.$store.dispatch("getTeamScores", {
           team: this.user.team,
+          period: this.prStatus.pr_id,
         });
       }
     },

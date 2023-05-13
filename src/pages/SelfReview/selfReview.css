@@ -240,7 +240,7 @@ p {
 }
 
 .container {
-  width: 90%;
+  width: calc(100% - 60px);
   display: inline-block;
   margin: 0 30px;
 }

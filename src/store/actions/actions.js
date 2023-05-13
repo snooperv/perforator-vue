@@ -20,6 +20,7 @@ import {
   getTeamScores,
   getTeamScoresPrevious,
   getUserPeers,
+  getWorkerScore,
   postPeersRatedMe,
   postProcessOneToOneCommon,
   postProcessOneToOnePrivate,
@@ -45,7 +46,7 @@ import {
   saveSelfReview,
   updateQuestions,
 } from "@/services/basic";
-import grades from "@/helpers/grades";
+import _ from "lodash";
 
 const actions = {
   async refreshAuthToken({ commit, state }) {
@@ -465,100 +466,42 @@ const actions = {
     try {
       commit(types.SET_IS_LOADING, { getTeamScores: true });
       const { team, period } = payload;
-      const averagesTeam = Object.assign({}, grades);
-      let countAverages = 0;
 
-      const calcAverage = (dict) => {
-        let result = 0,
-          count = 0;
-        for (let item of Object.values(dict)) {
-          count++;
-          result += item;
+      if (_.isEmpty(state.user.team.generalRating)) {
+        const teamScore = await getTeamScores({ id: period });
+        if (teamScore.status === "ok") {
+          commit("SET_GENERAL_SCORE", teamScore.rating);
         }
-        return +(result / count).toFixed(2);
-      };
-
-      for (let worker of team) {
-        let workerScore, managerId;
-
-        if (!period)
-          workerScore = await getTeamScores(`?id=${worker.profile_id}`);
-        else {
-          workerScore = await getTeamScoresPrevious({
-            id: worker.profile_id || worker.myId,
-            pr_id: period,
-          });
-          if (worker.myId) {
-            await dispatch("getMyManager");
-            managerId = state.user.manager[0].profile_id;
-          }
-        }
-
-        const finalRating = {
-          manager: Object.assign({}, grades),
-          peers: Object.assign({}, grades),
-          averages: Object.assign({}, grades),
-        };
-
-        if (workerScore[0].rates.length > 0) {
-          let countPeers = 0;
-
-          workerScore[0].rates.map((scores) => {
-            let result = {
-              deadline: scores.r_deadline,
-              approaches: scores.r_approaches,
-              teamwork: scores.r_teamwork,
-              practices: scores.r_practices,
-              experience: scores.r_experience,
-              adaptation: scores.r_adaptation,
-            };
-            if (scores.is_manager || scores.who === managerId) {
-              result.average = calcAverage(result);
-              finalRating.manager = result;
-            } else {
-              countPeers++;
-              for (let score in finalRating.peers) {
-                finalRating.peers[score] += result[score];
-              }
-              delete finalRating.peers.average;
-            }
-
-            for (let score in averagesTeam) {
-              averagesTeam[score] += result[score];
-              averagesTeam.average && delete averagesTeam.average;
-            }
-            countAverages++;
-          });
-
-          if (countPeers) {
-            for (let score in finalRating.peers) {
-              finalRating.peers[score] = +(
-                finalRating.peers[score] / countPeers
-              ).toFixed(2);
-            }
-            finalRating.peers.average = calcAverage(finalRating.peers);
-          }
-
-          for (let score in finalRating.averages) {
-            finalRating.averages[score] = +(
-              (finalRating.peers[score] + finalRating.manager[score]) /
-              2
-            ).toFixed(2);
-          }
-          finalRating.averages.average = calcAverage(finalRating.averages);
-        }
-
-        commit("SET_WORKER_SCORE", {
-          id: workerScore[0].user_id,
-          score: finalRating,
-        });
       }
 
-      for (let score in averagesTeam) {
-        averagesTeam[score] = +(averagesTeam[score] / countAverages).toFixed(2);
-      }
-      averagesTeam.average = calcAverage(averagesTeam);
-      commit("SET_GENERAL_SCORE", averagesTeam);
+      await Promise.all(
+        team.map(async (user) => {
+          try {
+            commit(types.SET_IS_LOADING, { getUserScores: true });
+            const workersScore = await getWorkerScore({
+              id: user.user_id,
+              pr_id: user.pr_id,
+            });
+            if (workersScore.status === "ok") {
+              const average = (workersScore.rating?.filter(
+                (score) => score.name === "Средняя оценка"
+              )[0]).average;
+              const userRating = {
+                detailed: workersScore.rating,
+                average,
+              };
+              commit("SET_WORKER_SCORE", {
+                id: user.user_id,
+                score: userRating,
+              });
+            }
+          } catch (e) {
+            console.log(e);
+          } finally {
+            commit(types.SET_IS_LOADING, { getUserScores: false });
+          }
+        })
+      );
     } catch (e) {
       console.log(e);
     } finally {

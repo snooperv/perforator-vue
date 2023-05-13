@@ -126,7 +126,7 @@ a {
   border-right: 1px solid #e7e7e7;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.25);
   overflow: hidden;
-  z-index: 1001;
+  z-index: 99;
 }
 
 .profile-div {

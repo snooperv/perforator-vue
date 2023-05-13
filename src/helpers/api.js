@@ -36,7 +36,8 @@ export const getUserReviewIsDraftAPI = (id) =>
 export const getInfoTeamAPI = () => MAIN_API + "team";
 export const getMyManagerAPI = () => MAIN_API + "manager";
 export const getTeamScoresAPI = (params) =>
-  MAIN_API + "imanager/employee/rating" + params;
+  MAIN_API + "rating/manager_get" + urlQueryParts(params);
+export const getWorkerScoreAPI = () => MAIN_API + "rating/user_get";
 
 export const postProcessOneToOneCommonAPI = () =>
   MAIN_API + "1to1/update_common_notes/";

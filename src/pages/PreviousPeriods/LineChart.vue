@@ -4,15 +4,13 @@
 
 <script>
 import {
-  Chart as ChartJS,
   CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  // Title,
-  Tooltip,
-  // Legend,
+  Chart as ChartJS,
   Filler,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Tooltip,
 } from "chart.js";
 import { Line } from "vue-chartjs";
 import { data, options } from "@/helpers/chartConfig";
@@ -134,7 +132,7 @@ export default {
   watch: {
     "user.statusManager": {
       handler() {
-        this.getScores();
+        if (this.scores.length === 0) this.getScores();
       },
     },
   },

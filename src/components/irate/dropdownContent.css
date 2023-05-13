@@ -204,6 +204,7 @@ input[type=submit]:active {
 .feedback-manager .dropdown-content {
   transform: none;
   padding-top: 10px;
+  margin-top: 40px;
 }
 .feedback-manager .dropdown-container {
   margin-left: 30px;
