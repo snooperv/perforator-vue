@@ -14,11 +14,13 @@
         class="ta"
         id="goals"
         :disabled="!isRate"
-        v-model="comment"
+        v-model="commentLocal"
         required
       ></textarea>
       <div class="char-count" v-if="isRate">
-        <span id="imp-zones-chars" class="chars">{{ comment.length }}</span>
+        <span id="imp-zones-chars" class="chars">{{
+          commentLocal.length
+        }}</span>
         <span id="plan-max" class="max">/ 512 символов</span>
       </div>
     </div>
@@ -50,6 +52,7 @@ export default {
   data() {
     return {
       isRate: this.$route.path.includes("i-rate"),
+      commentLocal: "",
     };
   },
 
@@ -82,6 +85,18 @@ export default {
     indexQuestion: {
       type: Number,
       required: true,
+    },
+  },
+
+  mounted() {
+    this.commentLocal = this.comment;
+  },
+
+  watch: {
+    comment: {
+      handler() {
+        this.commentLocal = this.comment;
+      },
     },
   },
 };

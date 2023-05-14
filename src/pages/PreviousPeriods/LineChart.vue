@@ -4,20 +4,17 @@
 
 <script>
 import {
-  Chart as ChartJS,
   CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  // Title,
-  Tooltip,
-  // Legend,
+  Chart as ChartJS,
   Filler,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Tooltip,
 } from "chart.js";
 import { Line } from "vue-chartjs";
 import { data, options } from "@/helpers/chartConfig";
 import { mapState } from "vuex";
-import { types } from "@/types";
 import _ from "lodash";
 
 ChartJS.register(
@@ -44,20 +41,43 @@ export default {
   },
 
   mounted() {
-    if (this.user.statusManager !== undefined) this.getScores();
+    this.getScores();
   },
 
   computed: {
-    ...mapState(["listReviews", "user", "scores"]),
+    ...mapState(["listReviews", "user", "scores", "prStatus"]),
   },
 
   methods: {
     async loadScores(period) {
-      if (this.user.team) {
-        await this.$store.dispatch("getTeamScores", {
-          team: this.user.statusManager ? this.user.team : [this.user],
-          period,
+      if (this.user.statusManager) {
+        await this.$store.dispatch("getTeamScores", period);
+      } else if (this.user.myId) {
+        const user = _.cloneDeep(this.user);
+        await this.setScores(period, user);
+      }
+    },
+
+    async setScores(id, user) {
+      const date = this.listReviews.filter((review) => review.pr_id === id)[0]
+        .closing_date;
+      const team = _.cloneDeep(this.user.team);
+      if (this.user.statusManager) {
+        await Promise.all(
+          team.map(async (user) => {
+            user.pr_id = await this.$store.dispatch("getPreviousPeriods", {
+              id: user.user_id,
+              date,
+            });
+            await this.$store.dispatch("getUserScores", user);
+          })
+        );
+      } else if (user?.myId && this.user.statusManager !== undefined) {
+        user.pr_id = await this.$store.dispatch("getPreviousPeriods", {
+          id: user.myId,
+          date,
         });
+        await this.$store.dispatch("getUserScores", user);
       }
     },
 
@@ -67,7 +87,9 @@ export default {
       try {
         this.listReviews.length === 0 &&
           (await this.$store.dispatch("getListPerformanceReview"));
-        data.labels = this.listReviews.map(
+        const actualReviews = _.cloneDeep(this.listReviews);
+        this.prStatus?.status !== "no pr" && actualReviews.pop();
+        data.labels = actualReviews.map(
           (review) => review.closing_date.split("T")[0]
         );
 
@@ -76,16 +98,26 @@ export default {
         }
 
         if (data.datasets[0].data.length === 0) {
-          for (let review of this.listReviews) {
+          for (let review of actualReviews) {
             await this.loadScores(review.pr_id);
-            const resultTeam = _.cloneDeep(this.user.team);
-            const averageTeam = _.cloneDeep(this.user.team.generalRating);
-            this.scores.push({
-              period: review.pr_id,
-              results: resultTeam,
-              average: averageTeam,
-            });
-            data.datasets[0].data.push(averageTeam["Средняя оценка"]);
+            const averageTeam = this.user.team.generalRating;
+            if (averageTeam || this.user.team.rating) {
+              const average = averageTeam
+                ? averageTeam["Средняя оценка"]
+                : this.user.team.rating.average;
+              data.datasets[0].data.push(average);
+            } else {
+              break;
+            }
+            if (+this.$route.params.prId === review.pr_id) {
+              if (this.user.statusManager) {
+                await this.setScores(review.pr_id);
+              }
+              // else if (this.user.myId) {
+              //   const user = _.cloneDeep(this.user);
+              //   await this.setScores(review.pr_id, user);
+              // }
+            }
           }
         }
 
@@ -98,15 +130,18 @@ export default {
           )[0]?.index;
 
           if (indexClick !== undefined) {
-            const period = this.listReviews[indexClick].pr_id;
+            const period = actualReviews[indexClick].pr_id;
+
+            this.loadScores(period);
+            this.setScores(period);
+            if (!this.user.statusManager)
+              this.$store.dispatch("getSelfReview", {
+                id: period,
+              });
 
             const targetScore = this.scores.filter(
               (score) => score.period === period
             );
-
-            this.$store.commit(types.SET_SCORE_BEFORE_UNMOUNT, {
-              previousPeriod: targetScore && targetScore[0],
-            });
 
             if (targetScore) {
               if (this.user.statusManager) {
@@ -132,10 +167,11 @@ export default {
   },
 
   watch: {
-    "user.statusManager": {
+    user: {
       handler() {
-        this.getScores();
+        if (this.loaded) this.getScores();
       },
+      deep: true,
     },
   },
 };

@@ -19,6 +19,7 @@ import {
   getTeamScoresAPI,
   getTeamScoresPreviousAPI,
   getUserPeersAPI,
+  getWorkerScoreAPI,
   postPeersRatedMeAPI,
   postProcessOneToOneCommonAPI,
   postProcessOneToOnePrivateAPI,
@@ -66,6 +67,10 @@ export const getMyManager = async () => {
 
 export const getTeamScores = async (params) => {
   return await request(getTeamScoresAPI(params));
+};
+
+export const getWorkerScore = async (data) => {
+  return await request(getWorkerScoreAPI(), "POST", data);
 };
 
 export const getUserPeers = async (id) => {

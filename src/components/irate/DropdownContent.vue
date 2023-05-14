@@ -1,5 +1,5 @@
 <template>
-  <div id="myDropdown" class="dropdown-content show">
+  <div id="myDropdown" class="dropdown-content" :class="{ show: open }">
     <div class="dropdown-container">
       <form name="formRate" v-if="isLoaded">
         <OneQuestion
@@ -51,6 +51,10 @@ export default {
     prId: {
       required: false,
     },
+    open: {
+      type: Boolean,
+      required: true,
+    },
   },
 
   computed: {
@@ -58,29 +62,7 @@ export default {
   },
 
   async mounted() {
-    this.questionsList = await this.$store.dispatch("getRateQuestions", {
-      appraising_person: this.user.myId,
-      evaluated_person: this.peerId,
-    });
-
-    if (!this.isRate) {
-      if (!this.prId && this.listReviews.length === 0)
-        await this.$store.dispatch("getListPerformanceReview");
-
-      await this.$store.dispatch("getReviewEmployee", {
-        evaluatedPerson: this.peerId,
-        prId: this.prId || this.listReviews[this.listReviews.length - 1].pr_id,
-      });
-
-      this.questionsList.map((question) => {
-        for (let comment in this.rateComment) {
-          if (question.name === comment)
-            question.text = this.rateComment[comment];
-        }
-      });
-    } else {
-      this.questionsList.map((question) => (question.comment = ""));
-    }
+    await this.loadContent();
 
     this.isLoaded = true;
   },
@@ -90,7 +72,7 @@ export default {
       this.isNotError = true;
     },
 
-    async postForm(event) {
+    postForm(event) {
       event.preventDefault();
       this.btnSubmit = event.target.parentElement;
       const form = new FormData(this.btnSubmit);
@@ -128,15 +110,59 @@ export default {
       }
 
       if (this.isNotError) {
-        await this.$store.dispatch("postPeersRatedMe", {
+        this.$store.dispatch("postPeersRatedMe", {
           profile: this.peerId,
-          is_draft: true,
           grades: ratesFromMe,
         });
-        await this.$store.dispatch("getPeersRatedMe");
+        event.target.closest(".one-peer").style.display = "none";
       } else {
         this.btnSubmit.addEventListener("focusin", this.isErrorFalse);
       }
+    },
+
+    async loadContent() {
+      if (!this.isRate) {
+        if (!this.prId && this.listReviews.length === 0)
+          await this.$store.dispatch("getListPerformanceReview");
+
+        if (this.user.myId)
+          await this.$store.dispatch("getReviewEmployee", {
+            evaluatedPerson: this.peerId,
+            prId:
+              this.prId || this.listReviews[this.listReviews.length - 1].pr_id,
+          });
+        else return;
+
+        this.questionsList = [];
+        for (let comment of this.rateComment.grades) {
+          const question = {};
+          for (let key in comment) {
+            question[key] = comment[key];
+          }
+          this.questionsList.push(question);
+        }
+      } else {
+        if (!this.user.myId) await this.$store.dispatch("getMyProfile");
+        this.questionsList = await this.$store.dispatch("getRateQuestions", {
+          appraising_person: this.user.myId,
+          evaluated_person: this.peerId,
+        });
+        this.questionsList.map((question) => (question.comment = ""));
+      }
+    },
+  },
+
+  watch: {
+    prId: {
+      handler() {
+        this.loadContent();
+      },
+    },
+
+    "user.myId": {
+      handler() {
+        this.loadContent();
+      },
     },
   },
 

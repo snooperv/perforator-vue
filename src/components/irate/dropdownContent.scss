@@ -74,15 +74,25 @@ b {
 }
 
 .dropdown-content {
-  display: none;
-  padding-top: 50px;
-  padding-bottom: 10px;
+  height: 0;
+  visibility: hidden;
+  opacity: 0;
+  overflow: hidden;
   background-color: #ececf2;
   width: 100%;
   border-radius: 15px;
   transform: translateY(-50px);
   position: relative;
   z-index: 1;
+  transition: 0.3s ease-in-out;
+
+  &.show {
+    height: 100%;
+    padding-top: 50px;
+    padding-bottom: 10px;
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
 .dropdown-container {
@@ -185,10 +195,6 @@ input[type="submit"]:active {
   color: #979797;
 }
 
-.show {
-  display: block;
-}
-
 .question {
   display: flex;
   width: 100%;
@@ -204,9 +210,10 @@ input[type="submit"]:active {
 }
 
 .feedback-manager {
-  .dropdown-content {
+  .show {
     transform: none;
     padding-top: 10px;
+    margin-top: 40px;
   }
 
   .dropdown-container {
@@ -246,7 +253,7 @@ input[type="submit"]:active {
       }
 
       .char-count {
-        right: 10%;
+        right: 2%;
         top: -25px;
       }
 

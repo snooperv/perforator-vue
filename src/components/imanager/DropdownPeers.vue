@@ -1,5 +1,5 @@
 <template>
-  <div id="myDropdown3" class="dropdown-content">
+  <div id="myDropdown3" class="dropdown-content" :class="{ show: open }">
     <div class="dropdown-container" id="my_peers">
       <div class="dropdown-description">пиры, которых выбрал сотрудник</div>
 
@@ -48,7 +48,7 @@ import PeersListMobile from "@/components/modals/PeersList/peersListMobile.vue";
 export default {
   name: "DropdownPeers",
 
-  props: ["id"],
+  props: ["id", "open"],
 
   computed: {
     ...mapState(["workerPeers", "isMobile"]),

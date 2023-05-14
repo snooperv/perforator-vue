@@ -36,19 +36,18 @@ h2 {
   .container {
     width: calc(100% - 28px);
     margin: 0 14px 80px;
-
-    .main-title {
-      font-size: 28px;
-      text-align: center;
-    }
-
-    .description {
-      font-size: 18px;
-      text-align: center;
-    }
-
-    .back-statistic {
-      padding: 10px;
-    }
+  }
+  .container .main-title {
+    font-size: 28px;
+    text-align: center;
+  }
+  .container .description {
+    font-size: 18px;
+    text-align: center;
+  }
+  .container .back-statistic {
+    padding: 10px;
   }
 }
+
+/*# sourceMappingURL=previousPeriods.css.map */

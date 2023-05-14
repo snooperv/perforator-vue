@@ -18,13 +18,24 @@ h2 {
 }
 
 .dropdown-content {
-  padding-top: 70px;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
   background-color: #ececf2;
   width: 95%;
   border-radius: 15px;
   transform: translateY(-50px);
   position: relative;
   z-index: 1;
+  transition: 0.3s ease-in-out;
+
+  &.show {
+    height: 100%;
+    padding-top: 70px;
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
 .dropdownTitle {

@@ -132,15 +132,10 @@ const mutations = {
   },
 
   [types.SET_GENERAL_SCORE](state, payload) {
-    state.user.team.generalRating = {
-      "Соблюдение сроков": payload.deadline || 0,
-      "Пути достижения целей": payload.approaches || 0,
-      "Умение работать в команде": payload.teamwork || 0,
-      "Приверженность к хорошим техническим практикам": payload.practices || 0,
-      "Уровень владения технологиями": payload.experience || 0,
-      Адаптивность: payload.adaptation || 0,
-      "Средняя оценка": payload.average || 0,
-    };
+    state.user.team.generalRating = {};
+    payload.forEach((rating) => {
+      state.user.team.generalRating[rating.name] = rating.mark;
+    });
   },
 
   [types.SET_PR_STATUS](state, payload) {

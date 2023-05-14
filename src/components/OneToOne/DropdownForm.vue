@@ -1,5 +1,9 @@
 <template>
-  <div :id="'myDropdown-' + workerId" class="dropdown-content">
+  <div
+    :id="'myDropdown-' + workerId"
+    class="dropdown-content"
+    :class="{ show: open }"
+  >
     <form :id="'one-to-one-' + workerId" @keyup="postNotes">
       <h3 class="dropdownTitle">Общие заметки</h3>
 
@@ -41,7 +45,7 @@ import { mapState } from "vuex";
 export default {
   name: "DropdownForm",
 
-  props: ["myId", "workerId", "period", "pr_id"],
+  props: ["myId", "workerId", "period", "pr_id", "open"],
 
   computed: {
     ...mapState(["commonNote", "privateNote", "user"]),

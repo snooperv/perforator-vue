@@ -1,5 +1,5 @@
 import { types } from "@/types";
-import { refreshToken, getNewToken, registerUser } from "@/services/auth";
+import { getNewToken, refreshToken, registerUser } from "@/services/auth";
 import {
   addUserImMyTeam,
   addWorkerPeer,
@@ -18,8 +18,8 @@ import {
   getPeersRatedMe,
   getRateQuestions,
   getTeamScores,
-  getTeamScoresPrevious,
   getUserPeers,
+  getWorkerScore,
   postPeersRatedMe,
   postProcessOneToOneCommon,
   postProcessOneToOnePrivate,
@@ -34,6 +34,7 @@ import {
   closePerformanceReview,
   getListPerformanceReview,
   getMyProfile,
+  getPreviousPeriods,
   getQuestions,
   getReviewEmployee,
   getSelfReview,
@@ -45,7 +46,6 @@ import {
   saveSelfReview,
   updateQuestions,
 } from "@/services/basic";
-import grades from "@/helpers/grades";
 
 const actions = {
   async refreshAuthToken({ commit, state }) {
@@ -87,7 +87,8 @@ const actions = {
       });
 
       if (token.status !== "ok") {
-        throw Error(token.status);
+        console.log(token.status);
+        return;
       }
 
       localStorage.token = token.token_f;
@@ -163,13 +164,14 @@ const actions = {
     }
   },
 
-  async getAllUsers({ commit, state, dispatch }) {
+  async getAllUsers({ commit, state }) {
     try {
       const users = await getAllUsers();
       const usersWithoutMe = users.users.filter(
         (user) => user.profile_id !== state.user.myId
       );
-      await dispatch("getMyTeam");
+      const team = await getMyTeam();
+      if (!team.error) commit(types.SET_TEAM, team);
       const usersWithoutTeam = usersWithoutMe.filter(
         (user) => !user.team_id && !user.is_manager
       );
@@ -192,17 +194,22 @@ const actions = {
     try {
       await deleteUserImMyTeam({ profile_id: id });
       commit(types.DELETE_USER_TEAM);
-      await dispatch("getMyTeam");
+      const team = await getMyTeam();
+      if (!team.error) commit(types.SET_TEAM, team);
     } catch (e) {
       console.log(e);
     }
   },
 
-  async getMyTeam({ commit }) {
+  async getMyTeam({ commit, state }) {
     try {
-      commit(types.SET_IS_LOADING, { getMyTeam: true });
-      const team = await getMyTeam();
-      if (!team.error) commit(types.SET_TEAM, team);
+      if (!state.isLoading.getMyTeam) {
+        commit(types.SET_IS_LOADING, { getMyTeam: true });
+        console.log(state.isLoading.getMyTeam);
+
+        const team = await getMyTeam();
+        if (!team.error) commit(types.SET_TEAM, team);
+      }
     } catch (e) {
       console.log(e);
     } finally {
@@ -296,10 +303,12 @@ const actions = {
   async getReviewEmployee({ commit, state }, payload) {
     try {
       const { evaluatedPerson, prId } = payload;
+      console.log(state.user.myId);
       const review = await getReviewEmployee({
         appraising_person: 1,
         evaluated_person: evaluatedPerson,
         pr_id: prId,
+        face: state.user.myId,
       });
       commit(types.SET_RATE_COMMENT, review);
     } catch (e) {
@@ -374,7 +383,7 @@ const actions = {
     }
   },
 
-  async getMyManager({ commit }, id) {
+  async getMyManager({ commit }) {
     try {
       const manager = await getMyManager();
       commit(types.SET_MY_MANAGER, manager);
@@ -424,14 +433,6 @@ const actions = {
     }
   },
 
-  async postProcessOneToOnePrivate({}, payload) {
-    const { is_manager, manager_id, employee_id, note } = payload;
-    try {
-    } catch (e) {
-      console.log(e);
-    }
-  },
-
   async getPeersRatedMe({ commit }) {
     try {
       commit(types.SET_IS_LOADING, { getPeersRatedMe: true });
@@ -461,108 +462,60 @@ const actions = {
     }
   },
 
-  async getTeamScores({ commit, dispatch, state }, payload) {
+  async getPreviousPeriods({ commit }, payload) {
+    try {
+      commit(types.SET_IS_LOADING, { getPreviousPeriods: true });
+      const { id, date } = payload;
+      const previous = await getPreviousPeriods({ id });
+      return previous.rp.filter((prev) => prev.closing_date === date)[0].pr_id;
+    } catch (e) {
+      console.log(e);
+    } finally {
+      commit(types.SET_IS_LOADING, { getPreviousPeriods: false });
+    }
+  },
+
+  async getTeamScores({ commit }, period) {
     try {
       commit(types.SET_IS_LOADING, { getTeamScores: true });
-      const { team, period } = payload;
-      const averagesTeam = Object.assign({}, grades);
-      let countAverages = 0;
 
-      const calcAverage = (dict) => {
-        let result = 0,
-          count = 0;
-        for (let item of Object.values(dict)) {
-          count++;
-          result += item;
-        }
-        return +(result / count).toFixed(2);
-      };
-
-      for (let worker of team) {
-        let workerScore, managerId;
-
-        if (!period)
-          workerScore = await getTeamScores(`?id=${worker.profile_id}`);
-        else {
-          workerScore = await getTeamScoresPrevious({
-            id: worker.profile_id || worker.myId,
-            pr_id: period,
-          });
-          if (worker.myId) {
-            await dispatch("getMyManager");
-            managerId = state.user.manager[0].profile_id;
-          }
-        }
-
-        const finalRating = {
-          manager: Object.assign({}, grades),
-          peers: Object.assign({}, grades),
-          averages: Object.assign({}, grades),
-        };
-
-        if (workerScore[0].rates.length > 0) {
-          let countPeers = 0;
-
-          workerScore[0].rates.map((scores) => {
-            let result = {
-              deadline: scores.r_deadline,
-              approaches: scores.r_approaches,
-              teamwork: scores.r_teamwork,
-              practices: scores.r_practices,
-              experience: scores.r_experience,
-              adaptation: scores.r_adaptation,
-            };
-            if (scores.is_manager || scores.who === managerId) {
-              result.average = calcAverage(result);
-              finalRating.manager = result;
-            } else {
-              countPeers++;
-              for (let score in finalRating.peers) {
-                finalRating.peers[score] += result[score];
-              }
-              delete finalRating.peers.average;
-            }
-
-            for (let score in averagesTeam) {
-              averagesTeam[score] += result[score];
-              averagesTeam.average && delete averagesTeam.average;
-            }
-            countAverages++;
-          });
-
-          if (countPeers) {
-            for (let score in finalRating.peers) {
-              finalRating.peers[score] = +(
-                finalRating.peers[score] / countPeers
-              ).toFixed(2);
-            }
-            finalRating.peers.average = calcAverage(finalRating.peers);
-          }
-
-          for (let score in finalRating.averages) {
-            finalRating.averages[score] = +(
-              (finalRating.peers[score] + finalRating.manager[score]) /
-              2
-            ).toFixed(2);
-          }
-          finalRating.averages.average = calcAverage(finalRating.averages);
-        }
-
-        commit("SET_WORKER_SCORE", {
-          id: workerScore[0].user_id,
-          score: finalRating,
-        });
+      const teamScore = await getTeamScores({ id: period });
+      if (teamScore.status === "ok") {
+        commit("SET_GENERAL_SCORE", teamScore.rating);
       }
-
-      for (let score in averagesTeam) {
-        averagesTeam[score] = +(averagesTeam[score] / countAverages).toFixed(2);
-      }
-      averagesTeam.average = calcAverage(averagesTeam);
-      commit("SET_GENERAL_SCORE", averagesTeam);
     } catch (e) {
       console.log(e);
     } finally {
       commit(types.SET_IS_LOADING, { getTeamScores: false });
+    }
+  },
+
+  async getUserScores({ commit }, user) {
+    try {
+      commit(types.SET_IS_LOADING, { getUserScores: true });
+      let workersScore;
+      if (user.pr_id !== -1)
+        workersScore = await getWorkerScore({
+          id: user.user_id || user.myId,
+          pr_id: user.pr_id,
+        });
+      if (workersScore && workersScore.status === "ok") {
+        const average = (workersScore.rating?.filter(
+          (score) => score.name === "Средняя оценка"
+        )[0]).average;
+        const userRating = {
+          detailed: workersScore.rating,
+          average,
+        };
+        commit("SET_WORKER_SCORE", {
+          id: user.user_id || user.myId,
+          score: userRating,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      commit(types.SET_IS_LOADING, { getUserScores: false });
     }
   },
 
@@ -578,7 +531,7 @@ const actions = {
     }
   },
 
-  async beginPerformanceReview({ commit, dispatch }) {
+  async beginPerformanceReview({ dispatch }) {
     try {
       await beginPerformanceReview();
       await dispatch("getStatusPerformanceReview");
@@ -596,7 +549,7 @@ const actions = {
     }
   },
 
-  async closePerformanceReview({ commit, dispatch }) {
+  async closePerformanceReview({ dispatch }) {
     try {
       await closePerformanceReview();
       await dispatch("getStatusPerformanceReview");
@@ -620,6 +573,7 @@ const actions = {
   async getOneToOnePrevious({ commit }, payload) {
     const { is_manager, manager_id, employee_id, pr_id } = payload;
     try {
+      commit(types.SET_IS_LOADING, { getOneToOnePrevious: true });
       const commonNote = await getOneToOnePreviousCommon({
         pr_id,
         manager_id,
@@ -636,6 +590,8 @@ const actions = {
       return { commonNote: commonNote.notes, privateNote: privateNote.notes };
     } catch (e) {
       console.log(e);
+    } finally {
+      commit(types.SET_IS_LOADING, { getOneToOnePrevious: false });
     }
   },
 

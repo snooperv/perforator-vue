@@ -13,8 +13,9 @@
     <div id="team_not_approve">
       <div class="peers" v-for="worker in user.teamWithReview">
         <button
-          @click="() => (worker.isDropdown = !worker.isDropdown)"
+          @click="worker.isDropdown = !worker.isDropdown"
           class="peer dropbtn"
+          :class="{ opened: worker.isDropdown }"
         >
           <span class="peers-pic-manager">
             <img class="avatar" :src="API_URL() + worker.photo" alt="Аватар" />
@@ -24,7 +25,7 @@
             <i class="fas fa-chevron-right" aria-hidden="true"></i>
           </a>
         </button>
-        <DropdownPeers v-if="worker.isDropdown" :id="worker.profile_id" />
+        <DropdownPeers :open="worker.isDropdown" :id="worker.profile_id" />
       </div>
     </div>
   </div>
@@ -76,7 +77,7 @@
   <div class="stage-closed" v-else>
     <h3>Данный этап сейчас закрыт</h3>
     <p>
-      Вы сможете утвердить выбранный пиров сотрудников после того как перейдете
+      Вы сможете утвердить выбранных сотрудниками пиров после того как перейдете
       к этапу "Утверждение пиров"
     </p>
   </div>

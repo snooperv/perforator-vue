@@ -1,5 +1,9 @@
 <template>
-  <transition name="loader" v-if="isLoading">
+  <transition
+    name="loader"
+    v-if="isLoading"
+    :style="left !== '0' && 'z-index: 98'"
+  >
     <div class="preloader">
       <div class="preloader__row" :style="`left: calc(${left}vw + 50%);`">
         <div class="preloader__item"></div>

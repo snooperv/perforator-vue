@@ -14,15 +14,11 @@
 
 <script>
 import LineChart from "@/pages/PreviousPeriods/LineChart.vue";
-import { mapState } from "vuex";
 import { types } from "@/types";
 
 export default {
   name: "PreviousPeriods",
   components: { LineChart },
-  computed: {
-    ...mapState(["data"]),
-  },
   beforeUnmount() {
     this.$store.commit(types.CLEAR_DATA);
   },
