@@ -91,6 +91,14 @@ export default {
   mounted() {
     this.commentLocal = this.comment;
   },
+
+  watch: {
+    comment: {
+      handler() {
+        this.commentLocal = this.comment;
+      },
+    },
+  },
 };
 </script>
 

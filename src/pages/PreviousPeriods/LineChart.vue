@@ -112,10 +112,11 @@ export default {
             if (+this.$route.params.prId === review.pr_id) {
               if (this.user.statusManager) {
                 await this.setScores(review.pr_id);
-              } else if (this.user.myId) {
-                const user = _.cloneDeep(this.user);
-                await this.setScores(review.pr_id, user);
               }
+              // else if (this.user.myId) {
+              //   const user = _.cloneDeep(this.user);
+              //   await this.setScores(review.pr_id, user);
+              // }
             }
           }
         }
@@ -131,7 +132,12 @@ export default {
           if (indexClick !== undefined) {
             const period = actualReviews[indexClick].pr_id;
 
+            this.loadScores(period);
             this.setScores(period);
+            if (!this.user.statusManager)
+              this.$store.dispatch("getSelfReview", {
+                id: period,
+              });
 
             const targetScore = this.scores.filter(
               (score) => score.period === period

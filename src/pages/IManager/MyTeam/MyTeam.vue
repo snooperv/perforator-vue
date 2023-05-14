@@ -120,7 +120,8 @@ export default {
         !this.data.previousPeriod &&
         this.prStatus?.status !== "no pr" &&
         this.prStatus?.pr_status > 3 &&
-        this.user.statusManager
+        this.user.statusManager &&
+        !this.$route.path.includes("last-periods/team")
       ) {
         this.$store.dispatch("getTeamScores", this.prStatus.pr_id);
         this.user.team.map((user) => {

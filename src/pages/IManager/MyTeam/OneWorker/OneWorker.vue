@@ -49,13 +49,19 @@
 
         <DropdownContent
           :peer-id="Number($route.params.id)"
-          :prId="$route.params.id"
+          :prId="$route.params.prId"
           :open="fbIsDropdown && loaded"
         />
       </div>
     </div>
     <!--self review-->
-    <div class="form" v-if="data.previousPeriod && !user.statusManager">
+    <div
+      class="form"
+      v-if="
+        this.$route.path.includes('last-periods/employee') &&
+        !user.statusManager
+      "
+    >
       <div class="container feedback-manager" :class="{ opened: srIsDropdown }">
         <h2
           class="title"
@@ -70,7 +76,7 @@
           </button>
         </h2>
         <div class="drop" :class="{ show: srIsDropdown && loaded }">
-          <SelfReviewContent :prId="$route.params.id" />
+          <SelfReviewContent :prId="$route.params.prId" />
         </div>
       </div>
     </div>
@@ -102,17 +108,20 @@ export default {
     ...mapState(["user", "isMobile", "data", "prStatus"]),
   },
 
-  mounted() {
+  async mounted() {
     if (this.user.team.length === 0 && this.user.statusManager)
-      this.$store.dispatch("getMyTeam");
-    this.user.statusManager && this.loadScores();
+      await this.$store.dispatch("getMyTeam");
+    this.user.statusManager && (await this.loadScores());
     this.loadWorker();
   },
 
   methods: {
     colorGrade,
 
-    loadScores() {
+    async loadScores() {
+      this.loaded = false;
+      if (this.user.team.length === 0 && this.user.statusManager)
+        await this.$store.dispatch("getMyTeam");
       if (this.user.team && this.user.statusManager) {
         this.user.team.map((user) => {
           this.$store.dispatch("getUserScores", user);
@@ -140,13 +149,13 @@ export default {
   watch: {
     "user.team": {
       handler() {
-        this.loadScores();
+        if (this.loaded) this.loadScores();
       },
     },
 
     "user.statusManager": {
       handler() {
-        this.loadScores();
+        if (this.loaded) this.loadScores();
       },
     },
 

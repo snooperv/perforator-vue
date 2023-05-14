@@ -62,30 +62,7 @@ export default {
   },
 
   async mounted() {
-    if (!this.isRate) {
-      if (!this.prId && this.listReviews.length === 0)
-        await this.$store.dispatch("getListPerformanceReview");
-
-      await this.$store.dispatch("getReviewEmployee", {
-        evaluatedPerson: this.peerId,
-        prId: this.prId || this.listReviews[this.listReviews.length - 1].pr_id,
-      });
-
-      for (let comment of this.rateComment.grades) {
-        const question = {};
-        for (let key in comment) {
-          question[key] = comment[key];
-        }
-        this.questionsList.push(question);
-      }
-    } else {
-      if (!this.user.myId) await this.$store.dispatch("getMyProfile");
-      this.questionsList = await this.$store.dispatch("getRateQuestions", {
-        appraising_person: this.user.myId,
-        evaluated_person: this.peerId,
-      });
-      this.questionsList.map((question) => (question.comment = ""));
-    }
+    await this.loadContent();
 
     this.isLoaded = true;
   },
@@ -141,6 +118,51 @@ export default {
       } else {
         this.btnSubmit.addEventListener("focusin", this.isErrorFalse);
       }
+    },
+
+    async loadContent() {
+      if (!this.isRate) {
+        if (!this.prId && this.listReviews.length === 0)
+          await this.$store.dispatch("getListPerformanceReview");
+
+        if (this.user.myId)
+          await this.$store.dispatch("getReviewEmployee", {
+            evaluatedPerson: this.peerId,
+            prId:
+              this.prId || this.listReviews[this.listReviews.length - 1].pr_id,
+          });
+        else return;
+
+        this.questionsList = [];
+        for (let comment of this.rateComment.grades) {
+          const question = {};
+          for (let key in comment) {
+            question[key] = comment[key];
+          }
+          this.questionsList.push(question);
+        }
+      } else {
+        if (!this.user.myId) await this.$store.dispatch("getMyProfile");
+        this.questionsList = await this.$store.dispatch("getRateQuestions", {
+          appraising_person: this.user.myId,
+          evaluated_person: this.peerId,
+        });
+        this.questionsList.map((question) => (question.comment = ""));
+      }
+    },
+  },
+
+  watch: {
+    prId: {
+      handler() {
+        this.loadContent();
+      },
+    },
+
+    "user.myId": {
+      handler() {
+        this.loadContent();
+      },
     },
   },
 

@@ -201,11 +201,15 @@ const actions = {
     }
   },
 
-  async getMyTeam({ commit }) {
+  async getMyTeam({ commit, state }) {
     try {
-      commit(types.SET_IS_LOADING, { getMyTeam: true });
-      const team = await getMyTeam();
-      if (!team.error) commit(types.SET_TEAM, team);
+      if (!state.isLoading.getMyTeam) {
+        commit(types.SET_IS_LOADING, { getMyTeam: true });
+        console.log(state.isLoading.getMyTeam);
+
+        const team = await getMyTeam();
+        if (!team.error) commit(types.SET_TEAM, team);
+      }
     } catch (e) {
       console.log(e);
     } finally {
@@ -299,10 +303,12 @@ const actions = {
   async getReviewEmployee({ commit, state }, payload) {
     try {
       const { evaluatedPerson, prId } = payload;
+      console.log(state.user.myId);
       const review = await getReviewEmployee({
         appraising_person: 1,
         evaluated_person: evaluatedPerson,
         pr_id: prId,
+        face: state.user.myId,
       });
       commit(types.SET_RATE_COMMENT, review);
     } catch (e) {
@@ -487,12 +493,13 @@ const actions = {
   async getUserScores({ commit }, user) {
     try {
       commit(types.SET_IS_LOADING, { getUserScores: true });
-
-      const workersScore = await getWorkerScore({
-        id: user.user_id || user.myId,
-        pr_id: user.pr_id || period,
-      });
-      if (workersScore.status === "ok") {
+      let workersScore;
+      if (user.pr_id !== -1)
+        workersScore = await getWorkerScore({
+          id: user.user_id || user.myId,
+          pr_id: user.pr_id,
+        });
+      if (workersScore && workersScore.status === "ok") {
         const average = (workersScore.rating?.filter(
           (score) => score.name === "Средняя оценка"
         )[0]).average;
