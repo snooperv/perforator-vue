@@ -23,7 +23,7 @@
                   :class="colorGrade(rate)"
                   id="average_avg_manager"
                 >
-                  {{ rate }}
+                  {{ rate % 1 === 0 ? rate : rate.toFixed(1) }}
                 </div>
               </td>
             </tr>
