@@ -12,8 +12,12 @@ export default {
 
   mounted() {
     const cookieToken = this.$store.getters.cookieToken;
+    const urlParams = new URLSearchParams(window.location.search);
 
-    if (!localStorage.token) {
+    if (
+      !localStorage.token &&
+      !(urlParams.get("username") && urlParams.get("password"))
+    ) {
       this.$router.push("/login");
     }
   },
