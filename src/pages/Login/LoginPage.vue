@@ -81,6 +81,11 @@ export default {
       return;
     }
     this.$store.commit("CLEAR_lOCALSTORGE");
+
+    if (this.$route.query.username && this.$route.query.password) {
+      this.login = this.$route.query.username.slice(2);
+      this.password = this.$route.query.password;
+    }
   },
 
   computed: { ...mapState(["user"]) },
