@@ -29,6 +29,7 @@ h1 {
 
 .login {
   position: relative;
+  width: 100%;
 }
 @media (max-height: 730px) {
   .login {
@@ -89,10 +90,13 @@ h1 {
 
 .logo-title {
   position: relative;
-  left: -10px;
   color: #414141;
   margin-top: 15px;
   font-size: 22px;
+}
+.logo-title p {
+  margin-top: 0;
+  font-size: 20px;
 }
 
 .photo {
@@ -482,10 +486,6 @@ input[type=password]:invalid:not(:focus):not(:placeholder-shown) ~ .password.fau
   color: #cd2525 !important;
   margin: 10px 0;
   font-size: 14px !important;
-}
-
-.log input:last-child {
-  margin-bottom: 35px;
 }
 
 @media (max-width: 800px) {
