@@ -14,6 +14,7 @@ import Previous from "@/pages/OneToOne/Previous/Previous";
 import OneWorker from "@/pages/IManager/MyTeam/OneWorker/OneWorker.vue";
 import PreviousPeriods from "@/pages/PreviousPeriods/PreviousPeriods.vue";
 import ControlReview from "@/pages/IManager/ControlReview/ControlReview.vue";
+import AdminPage from "@/pages/AdminPage/AdminPage.vue";
 
 const routes = [
   {
@@ -27,6 +28,12 @@ const routes = [
     name: "registration",
     component: RegisterPage,
     meta: { title: "Регистрация" },
+  },
+  {
+    path: "/admin",
+    name: "admin",
+    component: AdminPage,
+    meta: { title: "Панель администрирования" },
   },
   {
     path: "/",

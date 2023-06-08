@@ -242,6 +242,24 @@
     </p>
     <button class="add-peer" @click="openAllUsers">Добавить сотрудников</button>
   </div>
+
+  <div
+    class="block-container"
+    v-if="prStatus?.status === 'no pr' || prStatus?.pr_status < 0"
+  >
+    <h2 class="block-title">Текущая команда</h2>
+    <p class="block-description">
+      *В данном блоке можно выбрать команду, в которой вы хотите проводить
+      Performance Review
+    </p>
+    <div class="change-team">
+      Активная команда:
+      <select name="team" class="fadeIn third">
+        <option value="1" selected>Команда 1</option>
+        <option value="2">Команда 2</option>
+      </select>
+    </div>
+  </div>
 </template>
 
 <script>

@@ -7,6 +7,10 @@
           <div class="logo-title">
             <img src="@/assets/img/logo.svg" alt="Picture" class="logo" />
             <h1>Perforator</h1>
+            <p v-if="isAdmin">
+              Авторизация в панель <br />
+              администрирования
+            </p>
           </div>
           <form class="log">
             <input
@@ -49,9 +53,16 @@
               <p class="input-error" v-html="user.authError"></p>
             </div>
           </form>
-          <!--          <div class="admin fadeIn fourth">-->
-          <!--            <button class="adminLogin">Администратор</button>-->
-          <!--          </div>-->
+          <div class="admin fourth" v-if="isAdmin">
+            <button class="adminLogin" @click="changeAuthType">
+              Сотрудник / менеджер
+            </button>
+          </div>
+          <div class="admin fourth" :class="isFirstLoad && 'fadeIn'" v-else>
+            <button class="adminLogin" @click="changeAuthType">
+              Администратор
+            </button>
+          </div>
         </div>
       </div>
       <div class="enter fadeInDown">
@@ -96,6 +107,8 @@ export default {
       loginError: false,
       password: "",
       passwordError: false,
+      isAdmin: false,
+      isFirstLoad: true,
     };
   },
 
@@ -105,7 +118,20 @@ export default {
       this.passwordValidate();
       if (!this.loginError && !this.passwordError) {
         const username = "+" + this.login.replace(/[^0-9]/g, "");
-        this.$store.dispatch("getToken", { username, password: this.password });
+        if (this.isAdmin) {
+          if (
+            username === "+79876543210" &&
+            this.password === "passAdmin456789"
+          ) {
+            localStorage.adminToken = "tokenForAdmin";
+            this.$router.push("/admin");
+          } else this.user.authError = "Неверный логин или пароль";
+        } else {
+          this.$store.dispatch("getToken", {
+            username,
+            password: this.password,
+          });
+        }
       }
     },
 
@@ -140,6 +166,14 @@ export default {
 
       this.passwordError = false;
       return true;
+    },
+
+    changeAuthType() {
+      this.isAdmin = !this.isAdmin;
+      this.isFirstLoad = false;
+      this.loginError = false;
+      this.passwordError = false;
+      this.$store.commit(types.CLEAR_AUTH_ERRORS);
     },
   },
 };

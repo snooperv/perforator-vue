@@ -15,6 +15,7 @@ export default {
     const urlParams = new URLSearchParams(window.location.search);
 
     if (
+      !localStorage.adminToken &&
       !localStorage.token &&
       !(urlParams.get("username") && urlParams.get("password"))
     ) {

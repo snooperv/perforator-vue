@@ -266,5 +266,16 @@
     margin: 8px 10px;
   }
 }
+.change-team {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 15px 5px 35px;
+}
+.change-team select {
+  font-size: 16px;
+  padding: 5px 20px;
+  border-radius: 4px;
+}
 
 /*# sourceMappingURL=controlReview.css.map */

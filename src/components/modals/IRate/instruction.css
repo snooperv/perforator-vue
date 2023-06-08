@@ -1,0 +1,64 @@
+.instruction-container {
+  width: 100%;
+  position: relative;
+}
+
+.instruction-mobile {
+  height: 50px;
+  background: #a5a4f5;
+  width: 100%;
+  border-radius: 8px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+}
+.instruction-mobile .instruction-icon {
+  width: 20px;
+  height: 20px;
+}
+.instruction-mobile.open {
+  border-radius: 8px 8px 0 0;
+}
+.instruction-mobile .instruction-icon {
+  margin: 0 8px 0 20px;
+}
+.instruction-mobile .arrow-icon {
+  margin-left: auto;
+  margin-right: 15px;
+}
+
+.opened-instruction {
+  background: #a5a4f5;
+  color: #fff;
+  padding: 0 15px 0 20px;
+  border-radius: 0 0 8px 8px;
+  position: absolute;
+  z-index: 3;
+}
+.opened-instruction p {
+  margin: 0 0 0 20px;
+  padding-top: 5px;
+  padding-bottom: 15px;
+  font-size: 14px;
+  font-family: "Gotham Pro light", sans-serif;
+  font-weight: 1000;
+}
+.opened-instruction p span {
+  font-size: 16px;
+}
+.opened-instruction .number {
+  position: relative;
+  background-color: #edbd31;
+  font-size: 14px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  text-align: center;
+  top: 25px;
+  right: 10px;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+/*# sourceMappingURL=instruction.css.map */
